@@ -1,0 +1,78 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Tsukaikiri",
+  "@appTitle": { "description": "Application name" },
+
+  "inventoryTitle": "Inventory",
+  "emptyInventory": "No ingredients yet.\nTap + to add one.",
+  "addIngredient": "Add ingredient",
+  "editIngredient": "Edit ingredient",
+  "filterAll": "All",
+
+  "categoryMeat": "Meat",
+  "categoryFish": "Fish",
+  "categoryVegetable": "Vegetables",
+  "categoryFruit": "Fruit",
+  "categoryDairy": "Dairy",
+  "categoryEgg": "Eggs",
+  "categoryGrain": "Grains & Staples",
+  "categorySeasoning": "Seasoning",
+  "categoryFrozen": "Frozen",
+  "categoryBeverage": "Beverages",
+  "categoryStaple": "Pantry",
+  "categoryOther": "Other",
+
+  "unitPiece": "pcs",
+  "unitGram": "g",
+  "unitKg": "kg",
+  "unitMl": "ml",
+  "unitL": "L",
+  "unitBottle": "bottles",
+  "unitSheet": "sheets",
+  "unitPack": "packs",
+  "unitBag": "bags",
+  "unitGo": "go",
+  "unitCup": "cups",
+  "unitCan": "cans",
+  "unitCustom": "Custom…",
+
+  "fieldName": "Name",
+  "fieldCategory": "Category",
+  "fieldQuantity": "Quantity",
+  "fieldUnit": "Unit",
+  "fieldExpiry": "Expiry date",
+  "fieldExpiryOptional": "Expiry date (optional)",
+  "customUnitLabel": "Custom unit",
+
+  "actionSave": "Save",
+  "actionCancel": "Cancel",
+  "actionDelete": "Delete",
+  "actionClear": "Clear",
+
+  "validationNameRequired": "Please enter a name",
+  "validationQuantityInvalid": "Enter a number greater than 0",
+  "validationUnitRequired": "Please enter a unit",
+
+  "deleteConfirmTitle": "Delete this ingredient?",
+  "deleteConfirmBody": "{name} will be removed from your inventory.",
+  "@deleteConfirmBody": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+
+  "expiryExpired": "Expired",
+  "expiryToday": "Today",
+  "expiryInDays": "{days} days left",
+  "@expiryInDays": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+  "expiryNone": "No date",
+
+  "selectIngredientPrompt": "Select an ingredient to see details",
+
+  "settingsTitle": "Settings",
+  "settingsLanguage": "Language",
+  "languageSystem": "System default",
+  "languageJa": "日本語",
+  "languageEn": "English"
+}

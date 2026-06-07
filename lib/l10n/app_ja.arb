@@ -1,0 +1,71 @@
+{
+  "@@locale": "ja",
+
+  "appTitle": "つかいきり",
+
+  "inventoryTitle": "在庫",
+  "emptyInventory": "食材がまだありません。\n＋から追加してください。",
+  "addIngredient": "食材を追加",
+  "editIngredient": "食材を編集",
+  "filterAll": "すべて",
+
+  "categoryMeat": "肉",
+  "categoryFish": "魚",
+  "categoryVegetable": "野菜",
+  "categoryFruit": "果物",
+  "categoryDairy": "乳製品",
+  "categoryEgg": "卵",
+  "categoryGrain": "穀物・主食",
+  "categorySeasoning": "調味料",
+  "categoryFrozen": "冷凍食品",
+  "categoryBeverage": "飲料",
+  "categoryStaple": "常備品",
+  "categoryOther": "その他",
+
+  "unitPiece": "個",
+  "unitGram": "g",
+  "unitKg": "kg",
+  "unitMl": "ml",
+  "unitL": "L",
+  "unitBottle": "本",
+  "unitSheet": "枚",
+  "unitPack": "パック",
+  "unitBag": "袋",
+  "unitGo": "合",
+  "unitCup": "杯",
+  "unitCan": "缶",
+  "unitCustom": "カスタム…",
+
+  "fieldName": "名前",
+  "fieldCategory": "カテゴリ",
+  "fieldQuantity": "数量",
+  "fieldUnit": "単位",
+  "fieldExpiry": "賞味期限",
+  "fieldExpiryOptional": "賞味期限（任意）",
+  "customUnitLabel": "カスタム単位",
+
+  "actionSave": "保存",
+  "actionCancel": "キャンセル",
+  "actionDelete": "削除",
+  "actionClear": "クリア",
+
+  "validationNameRequired": "名前を入力してください",
+  "validationQuantityInvalid": "0 より大きい数値を入力してください",
+  "validationUnitRequired": "単位を入力してください",
+
+  "deleteConfirmTitle": "この食材を削除しますか？",
+  "deleteConfirmBody": "{name} を在庫から削除します。",
+
+  "expiryExpired": "期限切れ",
+  "expiryToday": "今日まで",
+  "expiryInDays": "あと{days}日",
+  "expiryNone": "期限なし",
+
+  "selectIngredientPrompt": "食材を選ぶと詳細が表示されます",
+
+  "settingsTitle": "設定",
+  "settingsLanguage": "言語",
+  "languageSystem": "システムに従う",
+  "languageJa": "日本語",
+  "languageEn": "English"
+}
