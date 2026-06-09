@@ -169,6 +169,65 @@ class AppLocalizationsJa extends AppLocalizations {
   String get selectIngredientPrompt => '食材を選ぶと詳細が表示されます';
 
   @override
+  String inventoryCountLine(int count) {
+    return '冷蔵庫に $count 点 ・ 使い切りたい順';
+  }
+
+  @override
+  String get groupNow => '今日・もうすぐ使い切りたい';
+
+  @override
+  String get groupWeek => '今週のうちに';
+
+  @override
+  String get groupPlenty => 'まだ余裕';
+
+  @override
+  String get groupNoDate => '賞味期限なし';
+
+  @override
+  String get swipeHint => '← カードを左にスワイプでクイック操作';
+
+  @override
+  String get emptyInventoryTitle => '在庫はまだ空っぽ';
+
+  @override
+  String get emptyInventoryBody => '食材を登録すると、賞味期限の近いものから使い切りメニューを提案します。';
+
+  @override
+  String get cameraRegister => 'カメラで登録';
+
+  @override
+  String get manualAdd => '手動で追加';
+
+  @override
+  String get suggestRecipes => '献立を提案';
+
+  @override
+  String get suggestRecipesSub => '使い切りメニューを見る';
+
+  @override
+  String get actionUsedUp => '使い切った';
+
+  @override
+  String get actionUndo => '元に戻す';
+
+  @override
+  String get toastUsedUp => '使い切りました';
+
+  @override
+  String get toastDeleted => '削除しました';
+
+  @override
+  String get detailAddToShoppingList => '買い物リストに追加';
+
+  @override
+  String get detailViewRecipe => 'レシピを見る';
+
+  @override
+  String get comingSoon => 'この機能は今後のアップデートで対応予定です';
+
+  @override
   String get settingsTitle => '設定';
 
   @override
@@ -182,4 +241,60 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get languageEn => 'English';
+
+  @override
+  String get languageHint => '「システムに従う」を選ぶと、端末の言語設定に合わせて表示します。';
+
+  @override
+  String get settingsSectionGeneral => '一般';
+
+  @override
+  String get settingsSectionAi => 'AI（食材認識・献立提案）';
+
+  @override
+  String get settingsSectionIntegration => '連携';
+
+  @override
+  String get settingsSectionData => 'データ';
+
+  @override
+  String get settingsSectionSupport => 'サポート';
+
+  @override
+  String get settingsAiProvider => 'AIプロバイダ';
+
+  @override
+  String get settingsApiKey => 'APIキー';
+
+  @override
+  String get settingsImageRecognition => '画像認識';
+
+  @override
+  String get settingsShoppingList => '買い物リスト';
+
+  @override
+  String get settingsAppliances => '調理家電';
+
+  @override
+  String get settingsCloudSync => 'クラウド同期';
+
+  @override
+  String get settingsSupportAuthor => '作者をサポート';
+
+  @override
+  String get settingsHelp => 'ヘルプ';
+
+  @override
+  String get settingsAbout => 'このアプリについて';
+
+  @override
+  String get settingsComingSoonValue => '準備中';
+
+  @override
+  String get settingsSyncOffNote => '同期はオフです。この端末のみにデータが保存されます。';
+
+  @override
+  String settingsVersionLine(String version) {
+    return 'つかいきり ・ v$version';
+  }
 }

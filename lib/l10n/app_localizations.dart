@@ -410,6 +410,120 @@ abstract class AppLocalizations {
   /// **'Select an ingredient to see details'**
   String get selectIngredientPrompt;
 
+  /// No description provided for @inventoryCountLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} items in the fridge · soonest first'**
+  String inventoryCountLine(int count);
+
+  /// No description provided for @groupNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Use up today or soon'**
+  String get groupNow;
+
+  /// No description provided for @groupWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get groupWeek;
+
+  /// No description provided for @groupPlenty.
+  ///
+  /// In en, this message translates to:
+  /// **'Plenty of time'**
+  String get groupPlenty;
+
+  /// No description provided for @groupNoDate.
+  ///
+  /// In en, this message translates to:
+  /// **'No expiry date'**
+  String get groupNoDate;
+
+  /// No description provided for @swipeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'← Swipe a card left for quick actions'**
+  String get swipeHint;
+
+  /// No description provided for @emptyInventoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your inventory is empty'**
+  String get emptyInventoryTitle;
+
+  /// No description provided for @emptyInventoryBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add ingredients and we\'ll suggest use-it-up meals, starting with what expires soonest.'**
+  String get emptyInventoryBody;
+
+  /// No description provided for @cameraRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Add by camera'**
+  String get cameraRegister;
+
+  /// No description provided for @manualAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add manually'**
+  String get manualAdd;
+
+  /// No description provided for @suggestRecipes.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest recipes'**
+  String get suggestRecipes;
+
+  /// No description provided for @suggestRecipesSub.
+  ///
+  /// In en, this message translates to:
+  /// **'See use-it-up menu'**
+  String get suggestRecipesSub;
+
+  /// No description provided for @actionUsedUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Used up'**
+  String get actionUsedUp;
+
+  /// No description provided for @actionUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get actionUndo;
+
+  /// No description provided for @toastUsedUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked as used up'**
+  String get toastUsedUp;
+
+  /// No description provided for @toastDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted'**
+  String get toastDeleted;
+
+  /// No description provided for @detailAddToShoppingList.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to shopping list'**
+  String get detailAddToShoppingList;
+
+  /// No description provided for @detailViewRecipe.
+  ///
+  /// In en, this message translates to:
+  /// **'See recipes'**
+  String get detailViewRecipe;
+
+  /// No description provided for @comingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'This feature is coming in a future update.'**
+  String get comingSoon;
+
   /// No description provided for @settingsTitle.
   ///
   /// In en, this message translates to:
@@ -439,6 +553,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'English'**
   String get languageEn;
+
+  /// No description provided for @languageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Choosing \"System default\" follows your device language setting.'**
+  String get languageHint;
+
+  /// No description provided for @settingsSectionGeneral.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get settingsSectionGeneral;
+
+  /// No description provided for @settingsSectionAi.
+  ///
+  /// In en, this message translates to:
+  /// **'AI (recognition & recipes)'**
+  String get settingsSectionAi;
+
+  /// No description provided for @settingsSectionIntegration.
+  ///
+  /// In en, this message translates to:
+  /// **'Integrations'**
+  String get settingsSectionIntegration;
+
+  /// No description provided for @settingsSectionData.
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get settingsSectionData;
+
+  /// No description provided for @settingsSectionSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get settingsSectionSupport;
+
+  /// No description provided for @settingsAiProvider.
+  ///
+  /// In en, this message translates to:
+  /// **'AI provider'**
+  String get settingsAiProvider;
+
+  /// No description provided for @settingsApiKey.
+  ///
+  /// In en, this message translates to:
+  /// **'API key'**
+  String get settingsApiKey;
+
+  /// No description provided for @settingsImageRecognition.
+  ///
+  /// In en, this message translates to:
+  /// **'Image recognition'**
+  String get settingsImageRecognition;
+
+  /// No description provided for @settingsShoppingList.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping list'**
+  String get settingsShoppingList;
+
+  /// No description provided for @settingsAppliances.
+  ///
+  /// In en, this message translates to:
+  /// **'Appliances'**
+  String get settingsAppliances;
+
+  /// No description provided for @settingsCloudSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud sync'**
+  String get settingsCloudSync;
+
+  /// No description provided for @settingsSupportAuthor.
+  ///
+  /// In en, this message translates to:
+  /// **'Support the developer'**
+  String get settingsSupportAuthor;
+
+  /// No description provided for @settingsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get settingsHelp;
+
+  /// No description provided for @settingsAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get settingsAbout;
+
+  /// No description provided for @settingsComingSoonValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get settingsComingSoonValue;
+
+  /// No description provided for @settingsSyncOffNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync is off. Data is stored only on this device.'**
+  String get settingsSyncOffNote;
+
+  /// No description provided for @settingsVersionLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Tsukaikiri · v{version}'**
+  String settingsVersionLine(String version);
 }
 
 class _AppLocalizationsDelegate

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>つかいきり — 設定画面（Android スマホ）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; } html, body { margin: 0; padding: 0; background: #E9E6E0; }
+  body { font-family: 'M PLUS Rounded 1c', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  button, input { font-family: inherit; } ::-webkit-scrollbar { display: none; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="android-frame.jsx"></script>
+<script type="text/babel" src="shared.jsx"></script>
+<script type="text/babel" src="settings.jsx"></script>
+<script type="text/babel" src="helpAbout.jsx"></script>
+<script type="text/babel" src="androidPlatform.jsx"></script>
+<script type="text/babel" src="androidSettings.jsx"></script>
+<script type="text/babel">
+const { T } = window;
+const { LangDetail, AIDetail, ApplianceDetail, CoffeeDetail } = window.Settings;
+const { SettingsMainAndroid, ListDetailAndroid } = window.SettingsAndroid;
+const { HelpAbout } = window.HelpAbout;
+const { AndroidPageHeader, AndroidSeg, PAGE_BG } = window.AndroidPlatform;
+const opts = [['normal','通常（登録済み）'],['nokey','APIキー未登録']];
+function App() {
+  const [state, setState] = React.useState('normal');
+  const [detail, setDetail] = React.useState(null);
+  const [lang, setLang] = React.useState('日本語');
+  const [ai, setAi] = React.useState('claude');
+  const [keys, setKeys] = React.useState({ claude:'sk-ant-a1b2c3d4e5f6', openai:'', gemini:'', grok:'' });
+  const [list, setList] = React.useState('買い物');
+  const [sync, setSync] = React.useState(true);
+  const effKeys = state==='nokey' ? { claude:'', openai:'', gemini:'', grok:'' } : keys;
+  const setEffKeys = state==='nokey' ? () => {} : setKeys;
+  let dview = null;
+  if (detail==='lang') dview = <LangDetail lang={lang} setLang={setLang} onBack={() => setDetail(null)} />;
+  else if (detail==='ai') dview = <AIDetail ai={ai} setAi={setAi} keys={effKeys} setKeys={setEffKeys} onBack={() => setDetail(null)} />;
+  else if (detail==='list') dview = <ListDetailAndroid list={list} setList={setList} onBack={() => setDetail(null)} />;
+  else if (detail==='appliance') dview = <ApplianceDetail onBack={() => setDetail(null)} />;
+  else if (detail==='coffee') dview = <CoffeeDetail onBack={() => setDetail(null)} />;
+  else if (detail==='about'||detail==='help') dview = <HelpAbout onBack={() => setDetail(null)} />;
+  return (
+    <div style={{ minHeight:'100vh', background:PAGE_BG, fontFamily:T.font, color:T.ink, display:'flex', flexDirection:'column', alignItems:'center' }}>
+      <AndroidPageHeader title="設定・スマホ（Android）" subtitle="Google ToDo 連携・Google Drive 同期" right={<AndroidSeg value={state} onChange={(v) => { setState(v); setDetail(null); }} opts={opts} />} />
+      <div style={{ padding:'40px 20px 64px' }}>
+        <window.AndroidDevice width={412} height={892}>
+          <div style={{ position:'relative', height:'100%' }}>
+            <SettingsMainAndroid state={state} lang={lang} ai={ai} list={list} sync={sync} lastSync="今日 8:24" onOpen={setDetail} onToggleSync={() => setSync((v) => !v)} />
+            <div style={{ position:'absolute', inset:0, zIndex:60, background:T.bg, transform:dview?'translateX(0)':'translateX(100%)', transition:'transform .28s cubic-bezier(.2,.8,.2,1)', boxShadow:dview?'-12px 0 30px rgba(0,0,0,0.08)':'none', pointerEvents:dview?'auto':'none' }}>
+              {dview}
+            </div>
+          </div>
+        </window.AndroidDevice>
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

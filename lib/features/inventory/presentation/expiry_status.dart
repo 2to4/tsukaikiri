@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/theme/app_colors.dart';
 import '../../../l10n/app_localizations.dart';
 
 /// 賞味期限の警告レベル。
@@ -44,5 +45,29 @@ extension ExpiryInfoX on ExpiryInfo {
         ExpiryLevel.warning => Colors.orange.shade700,
         ExpiryLevel.normal => scheme.onSurfaceVariant,
         ExpiryLevel.none => scheme.outline,
+      };
+
+  /// デザイントークンに沿ったバッジ前景色（ドット・文字）。
+  Color get badgeColor => switch (level) {
+        ExpiryLevel.expired || ExpiryLevel.today => AppColors.over,
+        ExpiryLevel.warning => AppColors.near,
+        ExpiryLevel.normal => AppColors.plenty,
+        ExpiryLevel.none => AppColors.faint,
+      };
+
+  /// バッジ背景の淡色。
+  Color get badgeSoftColor => switch (level) {
+        ExpiryLevel.expired || ExpiryLevel.today => AppColors.overSoft,
+        ExpiryLevel.warning => AppColors.nearSoft,
+        ExpiryLevel.normal => AppColors.plentySoft,
+        ExpiryLevel.none => AppColors.plentySoft,
+      };
+
+  /// 一覧の左端ストライプ／グループ見出しドットの色。
+  Color get stripeColor => switch (level) {
+        ExpiryLevel.expired || ExpiryLevel.today => AppColors.over,
+        ExpiryLevel.warning => AppColors.near,
+        ExpiryLevel.normal => AppColors.green,
+        ExpiryLevel.none => AppColors.faint,
       };
 }

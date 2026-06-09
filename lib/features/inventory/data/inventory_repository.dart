@@ -31,12 +31,17 @@ class InventoryRepository {
       (_db.delete(_db.ingredients)..where((t) => t.id.equals(id))).go();
 
   /// 在庫からの減算。0 未満にはせず、0 になっても行は残す（自動削除しない）。
-  Future<void> decrement(String id, {double by = 1}) async {
+  Future<void> decrement(String id, {double by = 1}) => _adjust(id, -by);
+
+  /// 在庫の加算。
+  Future<void> increment(String id, {double by = 1}) => _adjust(id, by);
+
+  Future<void> _adjust(String id, double delta) async {
     final row = await (_db.select(_db.ingredients)
           ..where((t) => t.id.equals(id)))
         .getSingleOrNull();
     if (row == null) return;
-    final next = (row.quantity - by).clamp(0, double.infinity).toDouble();
+    final next = (row.quantity + delta).clamp(0, double.infinity).toDouble();
     await save(row.copyWith(quantity: next, updatedAt: DateTime.now()));
   }
 }

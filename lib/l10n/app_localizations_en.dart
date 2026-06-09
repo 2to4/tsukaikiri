@@ -169,6 +169,66 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectIngredientPrompt => 'Select an ingredient to see details';
 
   @override
+  String inventoryCountLine(int count) {
+    return '$count items in the fridge · soonest first';
+  }
+
+  @override
+  String get groupNow => 'Use up today or soon';
+
+  @override
+  String get groupWeek => 'This week';
+
+  @override
+  String get groupPlenty => 'Plenty of time';
+
+  @override
+  String get groupNoDate => 'No expiry date';
+
+  @override
+  String get swipeHint => '← Swipe a card left for quick actions';
+
+  @override
+  String get emptyInventoryTitle => 'Your inventory is empty';
+
+  @override
+  String get emptyInventoryBody =>
+      'Add ingredients and we\'ll suggest use-it-up meals, starting with what expires soonest.';
+
+  @override
+  String get cameraRegister => 'Add by camera';
+
+  @override
+  String get manualAdd => 'Add manually';
+
+  @override
+  String get suggestRecipes => 'Suggest recipes';
+
+  @override
+  String get suggestRecipesSub => 'See use-it-up menu';
+
+  @override
+  String get actionUsedUp => 'Used up';
+
+  @override
+  String get actionUndo => 'Undo';
+
+  @override
+  String get toastUsedUp => 'Marked as used up';
+
+  @override
+  String get toastDeleted => 'Deleted';
+
+  @override
+  String get detailAddToShoppingList => 'Add to shopping list';
+
+  @override
+  String get detailViewRecipe => 'See recipes';
+
+  @override
+  String get comingSoon => 'This feature is coming in a future update.';
+
+  @override
   String get settingsTitle => 'Settings';
 
   @override
@@ -182,4 +242,62 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get languageEn => 'English';
+
+  @override
+  String get languageHint =>
+      'Choosing \"System default\" follows your device language setting.';
+
+  @override
+  String get settingsSectionGeneral => 'General';
+
+  @override
+  String get settingsSectionAi => 'AI (recognition & recipes)';
+
+  @override
+  String get settingsSectionIntegration => 'Integrations';
+
+  @override
+  String get settingsSectionData => 'Data';
+
+  @override
+  String get settingsSectionSupport => 'Support';
+
+  @override
+  String get settingsAiProvider => 'AI provider';
+
+  @override
+  String get settingsApiKey => 'API key';
+
+  @override
+  String get settingsImageRecognition => 'Image recognition';
+
+  @override
+  String get settingsShoppingList => 'Shopping list';
+
+  @override
+  String get settingsAppliances => 'Appliances';
+
+  @override
+  String get settingsCloudSync => 'Cloud sync';
+
+  @override
+  String get settingsSupportAuthor => 'Support the developer';
+
+  @override
+  String get settingsHelp => 'Help';
+
+  @override
+  String get settingsAbout => 'About';
+
+  @override
+  String get settingsComingSoonValue => 'Coming soon';
+
+  @override
+  String get settingsSyncOffNote =>
+      'Sync is off. Data is stored only on this device.';
+
+  @override
+  String settingsVersionLine(String version) {
+    return 'Tsukaikiri · v$version';
+  }
 }

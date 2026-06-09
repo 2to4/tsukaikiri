@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>つかいきり — カメラ登録（Android タブレット）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet" />
+<style>* { box-sizing:border-box; } html,body { margin:0; padding:0; background:#E9E6E0; } body { font-family:'M PLUS Rounded 1c',system-ui,sans-serif; -webkit-font-smoothing:antialiased; } button { font-family:inherit; } ::-webkit-scrollbar { display:none; } @keyframes campulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:0.82}}.cam-pulse{animation:campulse 1.5s ease-in-out infinite} @keyframes cambar{0%{width:8%}50%{width:72%}100%{width:96%}}.cam-bar{animation:cambar 2.3s ease-in-out forwards} @keyframes camstep{from{opacity:0.25}to{opacity:1}}.cam-step{opacity:0.25;animation:camstep 0.4s ease forwards}</style>
+</head><body><div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="shared.jsx"></script>
+<script type="text/babel" src="cameraTablet.jsx"></script>
+<script type="text/babel" src="androidPlatform.jsx"></script>
+<script type="text/babel">
+const { T } = window;
+const { TabletCapture, TabletAnalyzing, TabletReview, TabletError } = window.CameraTablet;
+const { AndroidTabletFrame, AndroidPageHeader, AndroidSeg, useFitAndroid, ATW, ATH, PAGE_BG } = window.AndroidPlatform;
+const CAND_SEED = [
+  { id:1, name:'牛乳', emoji:'🥛', qty:1, unit:'本', cat:'乳製品', conf:'high', checked:true },
+  { id:2, name:'卵', emoji:'🥚', qty:1, unit:'パック', cat:'常備品', conf:'high', checked:true },
+  { id:3, name:'ほうれん草', emoji:'🥬', qty:1, unit:'袋', cat:'野菜', conf:'high', checked:true },
+  { id:4, name:'ミニトマト', emoji:'🍅', qty:4, unit:'個', cat:'野菜', conf:'mid', checked:true },
+  { id:5, name:'鶏もも肉', emoji:'🍗', qty:1, unit:'パック', cat:'肉', conf:'high', checked:true },
+  { id:6, name:'バター', emoji:'🧈', qty:1, unit:'箱', cat:'乳製品', conf:'mid', checked:true },
+  { id:7, name:'にんじん', emoji:'🥕', qty:2, unit:'本', cat:'野菜', conf:'high', checked:true },
+  { id:8, name:'葉物野菜？', emoji:'🥬', qty:1, unit:'袋', cat:'野菜', conf:'low', checked:false },
+  { id:9, name:'飲み物？', emoji:'🥤', qty:1, unit:'本', cat:'常備品', conf:'low', checked:false },
+];
+const clone = (a) => a.map((x) => ({ ...x }));
+let pid = 300;
+const opts = [['capture','撮影前'],['analyzing','解析中'],['review','候補確認'],['error','エラー']];
+function App() {
+  const [step, setStep] = React.useState('capture');
+  const [photos, setPhotos] = React.useState([]);
+  const [candidates, setCandidates] = React.useState(clone(CAND_SEED));
+  const [selId, setSel] = React.useState(1);
+  const [toast, setToast] = React.useState(null);
+  const scale = useFitAndroid(ATW, ATH);
+  const timer = React.useRef(null); const toastT = React.useRef(null);
+  const showToast = (m) => { setToast(m); clearTimeout(toastT.current); toastT.current = setTimeout(() => setToast(null), 2000); };
+  const ensure = (p) => p.length ? p : [1,2,3,4].map(() => ++pid);
+  const startAnalyze = () => { setPhotos((p) => ensure(p)); setStep('analyzing'); clearTimeout(timer.current); timer.current = setTimeout(() => { setCandidates(clone(CAND_SEED)); setSel(1); setStep('review'); }, 2400); };
+  const jump = (s) => { clearTimeout(timer.current); if (s==='analyzing'||s==='error') setPhotos((p) => ensure(p)); if (s==='review') { setCandidates(clone(CAND_SEED)); setSel(1); } if (s==='capture') setPhotos([]); setStep(s); };
+  const confirm = () => { const n = candidates.filter((c) => c.checked).length; showToast(`${n}件を在庫に追加しました`); clearTimeout(timer.current); setTimeout(() => { setPhotos([]); setCandidates(clone(CAND_SEED)); setSel(1); setStep('capture'); }, 700); };
+  let screen;
+  if (step==='capture') screen = <TabletCapture photos={photos} onShutter={() => setPhotos((p) => p.length>=10?p:[...p,++pid])} onLibrary={() => setPhotos((p) => p.length>=10?p:[...p,++pid])} onRemove={(id) => setPhotos((p) => p.filter((x) => x!==id))} onAnalyze={startAnalyze} onClose={() => showToast('在庫画面にもどります')} />;
+  else if (step==='analyzing') screen = <TabletAnalyzing photos={photos} onCancel={() => jump('capture')} />;
+  else if (step==='review') screen = <TabletReview candidates={candidates} setCandidates={setCandidates} selId={selId} setSel={setSel} onConfirm={confirm} onClose={() => jump('capture')} />;
+  else screen = <TabletError onRetry={startAnalyze} onLater={() => jump('capture')} />;
+  return (
+    <div style={{ minHeight:'100vh', background:PAGE_BG, fontFamily:T.font, color:T.ink }}>
+      <AndroidPageHeader title="カメラ登録・タブレット（Android）" subtitle="候補確認は二ペイン（左=候補リスト／右=拡大して確認・修正）" right={<AndroidSeg value={step} onChange={jump} opts={opts} />} />
+      <div style={{ display:'flex', justifyContent:'center', padding:'40px 0 60px' }}>
+        <div style={{ width:ATW*scale, height:ATH*scale }}>
+          <div style={{ transform:`scale(${scale})`, transformOrigin:'top center', width:ATW, marginLeft:(ATW*scale-ATW)/2 }}>
+            <AndroidTabletFrame>
+              {screen}
+              {toast && <div style={{ position:'absolute', left:'50%', bottom:36, transform:'translateX(-50%)', zIndex:90, background:'rgba(42,39,35,0.94)', color:'#fff', padding:'14px 26px', borderRadius:999, fontFamily:T.font, fontSize:15, fontWeight:700, whiteSpace:'nowrap' }}>{toast}</div>}
+            </AndroidTabletFrame>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script></body></html>

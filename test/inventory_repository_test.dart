@@ -71,6 +71,12 @@ void main() {
     expect((await repo.watchInventory().first).length, 1);
   });
 
+  test('increment は数量を増やす', () async {
+    await repo.save(sample(id: '1', name: 'トマト', quantity: 1.5));
+    await repo.increment('1');
+    expect((await repo.watchInventory().first).single.quantity, 2.5);
+  });
+
   test('deleteById で削除できる', () async {
     await repo.save(sample(id: '1', name: '牛乳'));
     await repo.deleteById('1');

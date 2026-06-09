@@ -63,9 +63,58 @@
 
   "selectIngredientPrompt": "食材を選ぶと詳細が表示されます",
 
+  "inventoryCountLine": "冷蔵庫に {count} 点 ・ 使い切りたい順",
+  "@inventoryCountLine": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "groupNow": "今日・もうすぐ使い切りたい",
+  "groupWeek": "今週のうちに",
+  "groupPlenty": "まだ余裕",
+  "groupNoDate": "賞味期限なし",
+  "swipeHint": "← カードを左にスワイプでクイック操作",
+
+  "emptyInventoryTitle": "在庫はまだ空っぽ",
+  "emptyInventoryBody": "食材を登録すると、賞味期限の近いものから使い切りメニューを提案します。",
+  "cameraRegister": "カメラで登録",
+  "manualAdd": "手動で追加",
+
+  "suggestRecipes": "献立を提案",
+  "suggestRecipesSub": "使い切りメニューを見る",
+
+  "actionUsedUp": "使い切った",
+  "actionUndo": "元に戻す",
+  "toastUsedUp": "使い切りました",
+  "toastDeleted": "削除しました",
+
+  "detailAddToShoppingList": "買い物リストに追加",
+  "detailViewRecipe": "レシピを見る",
+  "comingSoon": "この機能は今後のアップデートで対応予定です",
+
   "settingsTitle": "設定",
   "settingsLanguage": "言語",
   "languageSystem": "システムに従う",
   "languageJa": "日本語",
-  "languageEn": "English"
+  "languageEn": "English",
+  "languageHint": "「システムに従う」を選ぶと、端末の言語設定に合わせて表示します。",
+
+  "settingsSectionGeneral": "一般",
+  "settingsSectionAi": "AI（食材認識・献立提案）",
+  "settingsSectionIntegration": "連携",
+  "settingsSectionData": "データ",
+  "settingsSectionSupport": "サポート",
+  "settingsAiProvider": "AIプロバイダ",
+  "settingsApiKey": "APIキー",
+  "settingsImageRecognition": "画像認識",
+  "settingsShoppingList": "買い物リスト",
+  "settingsAppliances": "調理家電",
+  "settingsCloudSync": "クラウド同期",
+  "settingsSupportAuthor": "作者をサポート",
+  "settingsHelp": "ヘルプ",
+  "settingsAbout": "このアプリについて",
+  "settingsComingSoonValue": "準備中",
+  "settingsSyncOffNote": "同期はオフです。この端末のみにデータが保存されます。",
+  "settingsVersionLine": "つかいきり ・ v{version}",
+  "@settingsVersionLine": {
+    "placeholders": { "version": { "type": "String" } }
+  }
 }

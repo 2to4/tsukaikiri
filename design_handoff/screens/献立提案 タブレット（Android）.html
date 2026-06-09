@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>つかいきり — 献立提案（Android タブレット）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet" />
+<style>* { box-sizing:border-box; } html,body { margin:0; padding:0; background:#E9E6E0; } body { font-family:'M PLUS Rounded 1c',system-ui,sans-serif; -webkit-font-smoothing:antialiased; } button { font-family:inherit; } ::-webkit-scrollbar { display:none; } @keyframes campulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:0.82}}.cam-pulse{animation:campulse 1.5s ease-in-out infinite} @keyframes cambar{0%{width:8%}50%{width:72%}100%{width:96%}}.cam-bar{animation:cambar 2.3s ease-in-out forwards} @keyframes camstep{from{opacity:0.25}to{opacity:1}}.cam-step{opacity:0.25;animation:camstep 0.4s ease forwards}</style>
+</head><body><div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="shared.jsx"></script>
+<script type="text/babel" src="meals.jsx"></script>
+<script type="text/babel" src="mealsTablet.jsx"></script>
+<script type="text/babel" src="androidPlatform.jsx"></script>
+<script type="text/babel">
+const { T } = window;
+const { MEALS, MEALS_LOW } = window.Meals;
+const { BeforePrompt, ResultsList, DetailPane, GeneratingFull, ErrorFull } = window.MealsTablet;
+const { AndroidTabletFrame, AndroidPageHeader, AndroidSeg, useFitAndroid, ATW, ATH, PAGE_BG } = window.AndroidPlatform;
+const ALL = [...MEALS, ...MEALS_LOW];
+const opts = [['before','提案前'],['generating','生成中'],['results','提案結果'],['low','在庫わずか'],['error','エラー']];
+function mealsFor(step, cond) { let b=step==='low'?MEALS_LOW:MEALS; if(cond==='時短') b=b.filter((m)=>m.time<=20); return b; }
+function App() {
+  const [step, setStep] = React.useState('before');
+  const [cond, setCond] = React.useState('おまかせ');
+  const [selId, setSel] = React.useState(null);
+  const [toast, setToast] = React.useState(null);
+  const scale = useFitAndroid(ATW, ATH);
+  const timer = React.useRef(null); const toastT = React.useRef(null);
+  const showToast = (m) => { setToast(m); clearTimeout(toastT.current); toastT.current = setTimeout(() => setToast(null), 2000); };
+  const target = React.useRef('results');
+  const startGen = (t) => { target.current=t; setStep('generating'); clearTimeout(timer.current); timer.current=setTimeout(() => { setStep(t); setSel(mealsFor(t,cond)[0]?.id||null); }, 2400); };
+  const jump = (s) => { clearTimeout(timer.current); if(s==='results'||s==='low'){const f=mealsFor(s,cond)[0]; setSel(f?f.id:null);}else setSel(null); setStep(s); };
+  const meals = mealsFor(step, cond);
+  const selMeal = ALL.find((m) => m.id===selId)||null;
+  const isResults = step==='results'||step==='low';
+  let inner;
+  if(step==='generating') inner=<GeneratingFull cond={cond} onCancel={() => jump('before')} />;
+  else if(step==='error') inner=<ErrorFull onRetry={() => startGen('results')} onBack={() => jump('before')} />;
+  else inner=(
+    <div style={{ height:'100%', display:'flex', fontFamily:T.font }}>
+      <div style={{ width:452, flexShrink:0, borderRight:`1px solid ${T.line}`, background:'#FBFAF7' }}>
+        {step==='before'?<BeforePrompt cond={cond} setCond={setCond} onGenerate={() => startGen('results')} />:<ResultsList meals={meals} low={step==='low'} cond={cond} setCond={setCond} selId={selId} setSel={setSel} onRegenerate={() => startGen(step==='low'?'low':'results')} />}
+      </div>
+      <div style={{ flex:1, background:T.bg }}>
+        {step==='before'?<DetailPane m={null} />:<DetailPane m={selMeal} onPick={() => showToast('献立に決めました')} onAddShopping={() => showToast('不足分を買い物リストに追加しました')} />}
+      </div>
+    </div>
+  );
+  return (
+    <div style={{ minHeight:'100vh', background:PAGE_BG, fontFamily:T.font, color:T.ink }}>
+      <AndroidPageHeader title="献立提案・タブレット（Android）" subtitle="左=献立候補リスト ／ 右=材料・手順" right={<AndroidSeg value={step} onChange={jump} opts={opts} />} />
+      <div style={{ display:'flex', justifyContent:'center', padding:'40px 0 60px' }}>
+        <div style={{ width:ATW*scale, height:ATH*scale }}>
+          <div style={{ transform:`scale(${scale})`, transformOrigin:'top center', width:ATW, marginLeft:(ATW*scale-ATW)/2 }}>
+            <AndroidTabletFrame>
+              {inner}
+              {toast && <div style={{ position:'absolute', left:'50%', bottom:36, transform:'translateX(-50%)', zIndex:90, background:'rgba(42,39,35,0.94)', color:'#fff', padding:'14px 26px', borderRadius:999, fontFamily:T.font, fontSize:15, fontWeight:700, whiteSpace:'nowrap' }}>{toast}</div>}
+            </AndroidTabletFrame>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script></body></html>

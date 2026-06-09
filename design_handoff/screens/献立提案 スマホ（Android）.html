@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>つかいきり — 献立提案（Android スマホ）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; } html, body { margin: 0; padding: 0; background: #E9E6E0; }
+  body { font-family: 'M PLUS Rounded 1c', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  button { font-family: inherit; } ::-webkit-scrollbar { display: none; }
+  @keyframes campulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.08); opacity:0.82; } }
+  .cam-pulse { animation: campulse 1.5s ease-in-out infinite; }
+  @keyframes cambar { 0% { width:8%; } 50% { width:72%; } 100% { width:96%; } }
+  .cam-bar { animation: cambar 2.3s ease-in-out forwards; }
+  @keyframes camstep { from { opacity:0.25; } to { opacity:1; } }
+  .cam-step { opacity:0.25; animation: camstep 0.4s ease forwards; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="android-frame.jsx"></script>
+<script type="text/babel" src="shared.jsx"></script>
+<script type="text/babel" src="meals.jsx"></script>
+<script type="text/babel" src="mealsPhone.jsx"></script>
+<script type="text/babel" src="androidPlatform.jsx"></script>
+<script type="text/babel">
+const { T } = window;
+const { MEALS, MEALS_LOW } = window.Meals;
+const { BeforeScreen, GeneratingScreen, ResultsScreen, DetailScreen, MealError } = window.MealsPhone;
+const { AndroidPageHeader, AndroidSeg, PAGE_BG } = window.AndroidPlatform;
+const ALL = [...MEALS, ...MEALS_LOW];
+const opts = [['before','提案前'],['generating','生成中'],['results','提案結果'],['low','在庫わずか'],['error','エラー']];
+function mealsFor(step, cond) { let b = step==='low' ? MEALS_LOW : MEALS; if (cond==='時短') b=b.filter((m)=>m.time<=20); return b; }
+function App() {
+  const [step, setStep] = React.useState('before');
+  const [cond, setCond] = React.useState('おまかせ');
+  const [selId, setSel] = React.useState(null);
+  const [toast, setToast] = React.useState(null);
+  const timer = React.useRef(null); const toastT = React.useRef(null);
+  const showToast = (m) => { setToast(m); clearTimeout(toastT.current); toastT.current = setTimeout(() => setToast(null), 2000); };
+  const target = React.useRef('results');
+  const startGen = (t) => { target.current=t; setSel(null); setStep('generating'); clearTimeout(timer.current); timer.current=setTimeout(() => setStep(t), 2400); };
+  const jump = (s) => { clearTimeout(timer.current); setSel(null); setStep(s); };
+  const meals = mealsFor(step==='generating' ? target.current : step, cond);
+  const selMeal = ALL.find((m) => m.id===selId) || null;
+  let screen;
+  if (step==='before') screen = <BeforeScreen cond={cond} setCond={setCond} onGenerate={() => startGen('results')} />;
+  else if (step==='generating') screen = <GeneratingScreen cond={cond} onCancel={() => jump('before')} />;
+  else if (step==='results'||step==='low') screen = <ResultsScreen meals={meals} low={step==='low'} cond={cond} setCond={setCond} onTap={(id) => setSel(id)} onBack={() => jump('before')} onRegenerate={() => startGen(step==='low'?'low':'results')} />;
+  else screen = <MealError onRetry={() => startGen('results')} onBack={() => jump('before')} />;
+  return (
+    <div style={{ minHeight:'100vh', background:PAGE_BG, fontFamily:T.font, color:T.ink, display:'flex', flexDirection:'column', alignItems:'center' }}>
+      <AndroidPageHeader title="献立提案・スマホ（Android）" subtitle="在庫から提案 → 選ぶと材料・手順へ" right={<AndroidSeg value={step} onChange={jump} opts={opts} />} />
+      <div style={{ padding:'40px 20px 64px' }}>
+        <window.AndroidDevice width={412} height={892}>
+          <div style={{ position:'relative', height:'100%' }}>
+            {screen}
+            <div style={{ position:'absolute', inset:0, zIndex:60, background:T.bg, transform: selMeal?'translateX(0)':'translateX(100%)', transition:'transform .28s cubic-bezier(.2,.8,.2,1)', boxShadow: selMeal?'-12px 0 30px rgba(0,0,0,0.08)':'none' }}>
+              {selMeal && <DetailScreen m={selMeal} onBack={() => setSel(null)} onPick={() => { showToast('献立に決めました'); setTimeout(() => setSel(null), 650); }} onAddShopping={() => showToast('不足分を買い物リストに追加しました')} />}
+            </div>
+            {toast && <div style={{ position:'absolute', left:'50%', bottom:116, transform:'translateX(-50%)', zIndex:90, background:'rgba(42,39,35,0.94)', color:'#fff', padding:'12px 22px', borderRadius:999, fontFamily:T.font, fontSize:13.5, fontWeight:700, whiteSpace:'nowrap' }}>{toast}</div>}
+          </div>
+        </window.AndroidDevice>
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

@@ -70,9 +70,58 @@
 
   "selectIngredientPrompt": "Select an ingredient to see details",
 
+  "inventoryCountLine": "{count} items in the fridge · soonest first",
+  "@inventoryCountLine": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "groupNow": "Use up today or soon",
+  "groupWeek": "This week",
+  "groupPlenty": "Plenty of time",
+  "groupNoDate": "No expiry date",
+  "swipeHint": "← Swipe a card left for quick actions",
+
+  "emptyInventoryTitle": "Your inventory is empty",
+  "emptyInventoryBody": "Add ingredients and we'll suggest use-it-up meals, starting with what expires soonest.",
+  "cameraRegister": "Add by camera",
+  "manualAdd": "Add manually",
+
+  "suggestRecipes": "Suggest recipes",
+  "suggestRecipesSub": "See use-it-up menu",
+
+  "actionUsedUp": "Used up",
+  "actionUndo": "Undo",
+  "toastUsedUp": "Marked as used up",
+  "toastDeleted": "Deleted",
+
+  "detailAddToShoppingList": "Add to shopping list",
+  "detailViewRecipe": "See recipes",
+  "comingSoon": "This feature is coming in a future update.",
+
   "settingsTitle": "Settings",
   "settingsLanguage": "Language",
   "languageSystem": "System default",
   "languageJa": "日本語",
-  "languageEn": "English"
+  "languageEn": "English",
+  "languageHint": "Choosing \"System default\" follows your device language setting.",
+
+  "settingsSectionGeneral": "General",
+  "settingsSectionAi": "AI (recognition & recipes)",
+  "settingsSectionIntegration": "Integrations",
+  "settingsSectionData": "Data",
+  "settingsSectionSupport": "Support",
+  "settingsAiProvider": "AI provider",
+  "settingsApiKey": "API key",
+  "settingsImageRecognition": "Image recognition",
+  "settingsShoppingList": "Shopping list",
+  "settingsAppliances": "Appliances",
+  "settingsCloudSync": "Cloud sync",
+  "settingsSupportAuthor": "Support the developer",
+  "settingsHelp": "Help",
+  "settingsAbout": "About",
+  "settingsComingSoonValue": "Coming soon",
+  "settingsSyncOffNote": "Sync is off. Data is stored only on this device.",
+  "settingsVersionLine": "Tsukaikiri · v{version}",
+  "@settingsVersionLine": {
+    "placeholders": { "version": { "type": "String" } }
+  }
 }

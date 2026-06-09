@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>つかいきり — オンボーディング（Android タブレット）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet" />
+<style>* { box-sizing:border-box; } html,body { margin:0; padding:0; background:#E9E6E0; } body { font-family:'M PLUS Rounded 1c',system-ui,sans-serif; -webkit-font-smoothing:antialiased; } button,input { font-family:inherit; } ::-webkit-scrollbar { display:none; } @keyframes slpop{0%{transform:scale(0.6);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}.sl-pop{animation:slpop 0.5s cubic-bezier(.2,.9,.3,1.2) forwards}</style>
+</head><body><div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="shared.jsx"></script>
+<script type="text/babel" src="onboarding.jsx"></script>
+<script type="text/babel" src="onboardingTablet.jsx"></script>
+<script type="text/babel" src="androidPlatform.jsx"></script>
+<script type="text/babel" src="androidOnboarding.jsx"></script>
+<script type="text/babel">
+const { T } = window;
+const { Rail, WelcomeT, AIT, ListT, ApplianceT, STEPS } = window.OnboardingTablet;
+const { LinkTAndroid, FinishTAndroid } = window.AndroidOnboarding;
+const { AndroidTabletFrame, AndroidPageHeader, AndroidSeg, useFitAndroid, ATW, ATH, PAGE_BG } = window.AndroidPlatform;
+const opts = STEPS.map((s, i) => [`s${i}`, `${i+1} ${['\u3088\u3046\u3053\u305d','AI','\u9023\u643a','\u30ea\u30b9\u30c8','\u5bb6\u96fb','\u5b8c\u4e86'][i]}`]);
+function App() {
+  const [i, setI] = React.useState(0);
+  const [toast, setToast] = React.useState(null);
+  const scale = useFitAndroid(ATW, ATH);
+  const toastT = React.useRef(null);
+  const showToast = (m) => { setToast(m); clearTimeout(toastT.current); toastT.current = setTimeout(() => setToast(null), 1800); };
+  const next = () => setI((v) => Math.min(5, v+1));
+  const back = i > 0 ? () => setI((v) => Math.max(0,v-1)) : null;
+  const skip = () => { showToast('\u30b9\u30ad\u30c3\u30d7\u3057\u307e\u3057\u305f\uff08\u3042\u3068\u3067\u8a2d\u5b9a\u3067\u304d\u307e\u3059\uff09'); next(); };
+  let content;
+  if(i===0) content=<WelcomeT onNext={next} />;
+  else if(i===1) content=<AIT onNext={next} onBack={back} onSkip={skip} />;
+  else if(i===2) content=<LinkTAndroid onNext={next} onBack={back} onSkip={skip} />;
+  else if(i===3) content=<ListT onNext={next} onBack={back} onSkip={skip} />;
+  else if(i===4) content=<ApplianceT onNext={next} onBack={back} onSkip={skip} />;
+  else content=<FinishTAndroid onStart={() => showToast('\u5728\u5eab\u753b\u9762\u3078\u79fb\u52d5\u3057\u307e\u3059')} />;
+  return (
+    <div style={{ minHeight:'100vh', background:PAGE_BG, fontFamily:T.font, color:T.ink }}>
+      <AndroidPageHeader title="オンボーディング・タブレット（Android）" subtitle="6ステップ・左=ステップレール ／ 右=各ステップの内容（Google サインイン連携）" right={<AndroidSeg value={`s${i}`} onChange={(v) => setI(parseInt(v[1]))} opts={opts} />} />
+      <div style={{ display:'flex', justifyContent:'center', padding:'40px 0 60px' }}>
+        <div style={{ width:ATW*scale, height:ATH*scale }}>
+          <div style={{ transform:`scale(${scale})`, transformOrigin:'top center', width:ATW, marginLeft:(ATW*scale-ATW)/2 }}>
+            <AndroidTabletFrame>
+              <div style={{ height:'100%', display:'flex' }}>
+                <Rail i={i} steps={STEPS} />
+                <div style={{ flex:1, overflow:'auto', background:T.bg }}>
+                  {content}
+                  {toast && <div style={{ position:'fixed', left:'50%', bottom:40, transform:'translateX(-50%)', zIndex:90, background:'rgba(42,39,35,0.94)', color:'#fff', padding:'14px 26px', borderRadius:999, fontFamily:T.font, fontSize:15, fontWeight:700, whiteSpace:'nowrap' }}>{toast}</div>}
+                </div>
+              </div>
+            </AndroidTabletFrame>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script></body></html>
