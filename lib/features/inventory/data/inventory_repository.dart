@@ -44,4 +44,25 @@ class InventoryRepository {
     final next = (row.quantity + delta).clamp(0, double.infinity).toDouble();
     await save(row.copyWith(quantity: next, updatedAt: DateTime.now()));
   }
+
+  // ---- normalizedName バックフィル ----
+
+  /// 名寄せキー未付与（normalizedName が name の流用のまま）の食材を返す。
+  Future<List<Ingredient>> findUnnormalized() =>
+      (_db.select(_db.ingredients)
+            ..where((t) => t.normalizedName.equalsExp(t.name)))
+          .get();
+
+  /// 名前 → 正規化キーのマップを未付与の行にだけ適用し、更新件数を返す。
+  /// updatedAt は変更しない（ユーザー編集ではないため。並び順・同期判定に影響させない）。
+  Future<int> applyNormalizedNames(Map<String, String> keysByName) async {
+    var updated = 0;
+    for (final entry in keysByName.entries) {
+      updated += await (_db.update(_db.ingredients)
+            ..where((t) =>
+                t.name.equals(entry.key) & t.normalizedName.equalsExp(t.name)))
+          .write(IngredientsCompanion(normalizedName: Value(entry.value)));
+    }
+    return updated;
+  }
 }

@@ -47,6 +47,18 @@ class SettingsRepository {
         selectedProvider: Value(provider),
       );
 
+  /// プロバイダの使用モデルを設定する。[modelId] が null なら上書きを解除し
+  /// 実装側のフォールバック既定値に戻す。
+  Future<void> setModelOverride(String provider, String? modelId) async {
+    final current = Map<String, String>.from((await get()).modelOverrides);
+    if (modelId == null) {
+      current.remove(provider);
+    } else {
+      current[provider] = modelId;
+    }
+    await _upsert(modelOverridesJson: Value(jsonEncode(current)));
+  }
+
   Future<void> setSyncEnabled(bool enabled) => _upsert(
         syncEnabled: Value(enabled),
       );
@@ -69,6 +81,7 @@ class SettingsRepository {
     Value<String?> shoppingListId = const Value.absent(),
     Value<String?> shoppingListName = const Value.absent(),
     Value<String> selectedProvider = const Value.absent(),
+    Value<String> modelOverridesJson = const Value.absent(),
     Value<bool> syncEnabled = const Value.absent(),
     Value<DateTime?> lastSyncedAt = const Value.absent(),
     Value<String> appliancesJson = const Value.absent(),
@@ -91,6 +104,9 @@ class SettingsRepository {
       selectedProvider: selectedProvider.present
           ? selectedProvider
           : Value(existing?.selectedProvider ?? 'gemini'),
+      modelOverridesJson: modelOverridesJson.present
+          ? modelOverridesJson
+          : Value(existing?.modelOverridesJson ?? '{}'),
       syncEnabled: syncEnabled.present
           ? syncEnabled
           : Value(existing?.syncEnabled ?? false),
@@ -112,6 +128,8 @@ class SettingsRepository {
       shoppingListId: row.shoppingListId,
       shoppingListName: row.shoppingListName,
       selectedProvider: row.selectedProvider,
+      modelOverrides: Map<String, String>.from(
+          jsonDecode(row.modelOverridesJson) as Map),
       syncEnabled: row.syncEnabled,
       lastSyncedAt: row.lastSyncedAt,
       appliances: appliancesRaw

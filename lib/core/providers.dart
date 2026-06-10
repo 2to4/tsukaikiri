@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../features/inventory/data/inventory_repository.dart';
+import '../features/recipe/service/recipe_provider.dart';
+import '../features/recipe/service/recipe_provider_factory.dart';
 import '../features/settings/data/settings_repository.dart';
 import '../features/settings/domain/user_settings.dart';
 import '../features/shopping/service/reminders_shopping_list_service.dart';
@@ -38,3 +40,19 @@ final secureStorageProvider = Provider<SecureStorageService>(
 final shoppingListServiceProvider = Provider<ShoppingListService>(
   (_) => RemindersShoppingListService(),
 );
+
+/// 選択中プロバイダの RecipeProvider を解決する。
+/// API キー未登録なら null（UI はキー登録を促す）。
+/// モデルはユーザーの上書き設定があればそれを、なければ実装の既定値を使う。
+final recipeProviderProvider = FutureProvider<RecipeProvider?>((ref) async {
+  final settings = await ref.watch(userSettingsProvider.future);
+  final providerId = settings.selectedProvider;
+  final apiKey =
+      await ref.watch(secureStorageProvider).getApiKey(providerId);
+  if (apiKey == null || apiKey.isEmpty) return null;
+  return createRecipeProvider(
+    providerId: providerId,
+    apiKey: apiKey,
+    model: settings.modelOverrides[providerId],
+  );
+});

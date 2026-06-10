@@ -54,6 +54,12 @@ class SettingsTable extends Table {
   TextColumn get selectedProvider =>
       text().withDefault(const Constant('gemini'))();
 
+  /// プロバイダごとのモデル上書き（JSON オブジェクト）。
+  /// {"gemini":"gemini-2.0-flash", ...} の形式。未指定のプロバイダは
+  /// 実装側のフォールバック既定値を使う。選択肢は各社のモデル一覧 API から取得。
+  TextColumn get modelOverridesJson =>
+      text().withDefault(const Constant('{}'))();
+
   // ---- 同期 ----
 
   BoolColumn get syncEnabled =>
@@ -77,7 +83,7 @@ class AppDatabase extends _$AppDatabase {
       : super(executor ?? driftDatabase(name: 'tsukaikiri'));
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -89,6 +95,9 @@ class AppDatabase extends _$AppDatabase {
             await m.addColumn(settingsTable, settingsTable.syncEnabled);
             await m.addColumn(settingsTable, settingsTable.lastSyncedAt);
             await m.addColumn(settingsTable, settingsTable.appliancesJson);
+          }
+          if (from < 3) {
+            await m.addColumn(settingsTable, settingsTable.modelOverridesJson);
           }
         },
       );

@@ -7,6 +7,7 @@ class UserSettings {
     this.shoppingListId,
     this.shoppingListName,
     this.selectedProvider = 'gemini',
+    this.modelOverrides = const {},
     this.syncEnabled = false,
     this.lastSyncedAt,
     this.appliances = const [],
@@ -24,6 +25,10 @@ class UserSettings {
   /// 選択中の AI プロバイダ識別子（'gemini' / 'claude' / 'openai' / 'grok'）
   final String selectedProvider;
 
+  /// プロバイダごとのモデル上書き（{providerId: modelId}）。
+  /// 未指定のプロバイダは実装側のフォールバック既定値を使う。
+  final Map<String, String> modelOverrides;
+
   final bool syncEnabled;
   final DateTime? lastSyncedAt;
   final List<Appliance> appliances;
@@ -33,6 +38,7 @@ class UserSettings {
     String? shoppingListId,
     String? shoppingListName,
     String? selectedProvider,
+    Map<String, String>? modelOverrides,
     bool? syncEnabled,
     DateTime? lastSyncedAt,
     List<Appliance>? appliances,
@@ -42,6 +48,7 @@ class UserSettings {
         shoppingListId: shoppingListId ?? this.shoppingListId,
         shoppingListName: shoppingListName ?? this.shoppingListName,
         selectedProvider: selectedProvider ?? this.selectedProvider,
+        modelOverrides: modelOverrides ?? this.modelOverrides,
         syncEnabled: syncEnabled ?? this.syncEnabled,
         lastSyncedAt: lastSyncedAt ?? this.lastSyncedAt,
         appliances: appliances ?? this.appliances,

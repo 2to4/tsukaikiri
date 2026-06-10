@@ -4,27 +4,37 @@ import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 
 import '../../../core/db/app_database.dart';
+import '../domain/ai_model.dart';
 import '../domain/detected_ingredient.dart';
 import '../domain/recipe_constraints.dart';
 import '../domain/suggested_recipe.dart';
+import 'recipe_prompts.dart';
 import 'recipe_provider.dart';
 
-/// Gemini Flash を使った RecipeProvider 実装。
+/// Gemini を使った RecipeProvider 実装（REST 直叩き）。
 /// API キーは呼び出し元から渡す（SecureStorageService で取得して渡す）。
 class GeminiProvider implements RecipeProvider {
   GeminiProvider({
     required this.apiKey,
     String? model,
-  }) : _model = model ?? 'gemini-2.0-flash';
+    http.Client? client,
+  })  : _model = model ?? defaultModel,
+        _client = client ?? http.Client();
+
+  /// モデル一覧取得前・オフライン時のフォールバック。
+  /// 実際の選択肢は [listModels] で API から取得する。
+  static const defaultModel = 'gemini-2.0-flash';
 
   final String apiKey;
   final String _model;
+  final http.Client _client;
 
   static const _base =
       'https://generativelanguage.googleapis.com/v1beta/models';
+  static const _timeout = Duration(seconds: 60);
 
   @override
-  String get displayName => 'Gemini Flash';
+  String get displayName => 'Gemini';
 
   @override
   String get modelId => _model;
@@ -32,91 +42,50 @@ class GeminiProvider implements RecipeProvider {
   @override
   bool get supportsVision => true;
 
-  // ---- suggestRecipes ----
+  @override
+  Future<List<AiModel>> listModels() async {
+    final response = await _client
+        .get(Uri.parse('$_base?key=$apiKey'))
+        .timeout(_timeout);
+    if (response.statusCode != 200) {
+      throw RecipeProviderException('gemini', response.statusCode, response.body);
+    }
+    final data = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+    return (data['models'] as List? ?? [])
+        .cast<Map<String, dynamic>>()
+        // 献立提案に使えるのはテキスト生成対応モデルのみ。
+        .where((m) => (m['supportedGenerationMethods'] as List? ?? [])
+            .contains('generateContent'))
+        .map((m) => AiModel(
+              // name は 'models/gemini-2.0-flash' 形式で返る。
+              id: (m['name'] as String).replaceFirst('models/', ''),
+              displayName: m['displayName'] as String?,
+            ))
+        .toList();
+  }
 
   @override
   Future<List<SuggestedRecipe>> suggestRecipes(
     List<Ingredient> inventory,
     RecipeConstraints constraints,
   ) async {
-    final prompt = _buildSuggestPrompt(inventory, constraints);
-    final raw = await _generateText(prompt);
-    final data = jsonDecode(raw) as Map<String, dynamic>;
-    return (data['recipes'] as List)
-        .map((e) => SuggestedRecipe.fromJson(e as Map<String, dynamic>))
-        .toList();
+    final raw = await _generateText(buildSuggestPrompt(inventory, constraints));
+    return parseSuggestResponse(raw);
   }
-
-  String _buildSuggestPrompt(
-      List<Ingredient> inventory, RecipeConstraints constraints) {
-    final lang = constraints.outputLocale == 'ja' ? '日本語' : 'English';
-    final now = DateTime.now();
-    final inventoryLines = inventory.map((i) {
-      final daysLeft = i.expiryDate?.difference(now).inDays;
-      final expiryNote = daysLeft != null
-          ? (daysLeft <= 2 ? '【期限間近$daysLeft日】' : '（あと$daysLeft日）')
-          : '';
-      return '- ${i.name} ${i.quantity}${i.unit}$expiryNote';
-    }).join('\n');
-
-    final applianceLines = constraints.appliances.isEmpty
-        ? '（なし）'
-        : constraints.appliances.map((a) => a.type.name).join(', ');
-
-    final extra =
-        constraints.extraRequest != null ? '\n追加条件: ${constraints.extraRequest}' : '';
-
-    return '''
-以下の在庫と条件で献立を${constraints.count}案提案してください。
-期限間近の食材を優先して使ってください。$extra
-
-【在庫】
-$inventoryLines
-
-【所有家電】
-$applianceLines
-
-返答は以下のJSON形式のみ。前置き・コードフェンス・説明文は一切禁止。
-フィールド名は変えず、自然文（title・steps等）は$langで生成すること。
-
-{"recipes":[{"title":"","ingredients":[{"name":"","amount":""}],"appliance":null,"cookMode":null,"cookMinutes":null,"steps":[""],"usesExpiringSoon":false}]}
-''';
-  }
-
-  // ---- normalize ----
 
   @override
   Future<Map<String, String>> normalize(List<String> names) async {
     if (names.isEmpty) return {};
-    final prompt = '''
-以下の食材名リストについて、表記ゆれを吸収した言語非依存の正規化キー（英小文字・アンダースコア区切り）を付与してください。
-例: "鶏むね" → "chicken_breast", "鶏胸肉" → "chicken_breast"
-
-返答はJSON形式のみ。前置き禁止。
-{"normalized":{"<元の名前>":"<キー>", ...}}
-
-食材リスト:
-${names.map((n) => '- $n').join('\n')}
-''';
-    final raw = await _generateText(prompt);
-    final data = jsonDecode(raw) as Map<String, dynamic>;
-    return Map<String, String>.from(data['normalized'] as Map);
+    final raw = await _generateText(buildNormalizePrompt(names));
+    return parseNormalizeResponse(raw);
   }
-
-  // ---- recognizeIngredients ----
 
   @override
   Future<List<DetectedIngredient>> recognizeIngredients(
       List<Uint8List> images) async {
     if (images.isEmpty) return [];
     final parts = <Map<String, dynamic>>[
-      {
-        'text': '''
-冷蔵庫内の画像から食材を検出してください。
-返答はJSON形式のみ。前置き禁止。
-{"ingredients":[{"name":"","estimatedQuantity":1,"unit":"個","confidence":0.9}]}
-'''
-      },
+      {'text': recognizePrompt},
       ...images.map((bytes) => {
             'inline_data': {
               'mime_type': 'image/jpeg',
@@ -125,10 +94,7 @@ ${names.map((n) => '- $n').join('\n')}
           }),
     ];
     final raw = await _generateWithParts(parts);
-    final data = jsonDecode(raw) as Map<String, dynamic>;
-    return (data['ingredients'] as List)
-        .map((e) => DetectedIngredient.fromJson(e as Map<String, dynamic>))
-        .toList();
+    return parseRecognizeResponse(raw);
   }
 
   // ---- HTTP helpers ----
@@ -145,28 +111,22 @@ ${names.map((n) => '- $n').join('\n')}
       ],
       'generationConfig': {'responseMimeType': 'application/json'},
     });
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: body,
-    );
+    final response = await _client
+        .post(
+          url,
+          headers: {'Content-Type': 'application/json'},
+          body: body,
+        )
+        .timeout(_timeout);
     if (response.statusCode != 200) {
-      throw GeminiApiException(response.statusCode, response.body);
+      throw RecipeProviderException('gemini', response.statusCode, response.body);
     }
-    final data = jsonDecode(response.body) as Map<String, dynamic>;
+    final data = jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
     final candidates = data['candidates'] as List?;
     if (candidates == null || candidates.isEmpty) {
-      throw const GeminiApiException(0, 'No candidates in response');
+      throw const RecipeProviderException(
+          'gemini', 0, 'No candidates in response');
     }
     return candidates.first['content']['parts'][0]['text'] as String;
   }
-}
-
-class GeminiApiException implements Exception {
-  const GeminiApiException(this.statusCode, this.body);
-  final int statusCode;
-  final String body;
-
-  @override
-  String toString() => 'GeminiApiException($statusCode): $body';
 }

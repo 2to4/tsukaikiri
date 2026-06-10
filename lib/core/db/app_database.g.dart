@@ -598,6 +598,18 @@ class $SettingsTableTable extends SettingsTable
     requiredDuringInsert: false,
     defaultValue: const Constant('gemini'),
   );
+  static const VerificationMeta _modelOverridesJsonMeta =
+      const VerificationMeta('modelOverridesJson');
+  @override
+  late final GeneratedColumn<String> modelOverridesJson =
+      GeneratedColumn<String>(
+        'model_overrides_json',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultValue: const Constant('{}'),
+      );
   static const VerificationMeta _syncEnabledMeta = const VerificationMeta(
     'syncEnabled',
   );
@@ -643,6 +655,7 @@ class $SettingsTableTable extends SettingsTable
     shoppingListId,
     shoppingListName,
     selectedProvider,
+    modelOverridesJson,
     syncEnabled,
     lastSyncedAt,
     appliancesJson,
@@ -692,6 +705,15 @@ class $SettingsTableTable extends SettingsTable
         selectedProvider.isAcceptableOrUnknown(
           data['selected_provider']!,
           _selectedProviderMeta,
+        ),
+      );
+    }
+    if (data.containsKey('model_overrides_json')) {
+      context.handle(
+        _modelOverridesJsonMeta,
+        modelOverridesJson.isAcceptableOrUnknown(
+          data['model_overrides_json']!,
+          _modelOverridesJsonMeta,
         ),
       );
     }
@@ -751,6 +773,10 @@ class $SettingsTableTable extends SettingsTable
         DriftSqlType.string,
         data['${effectivePrefix}selected_provider'],
       )!,
+      modelOverridesJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}model_overrides_json'],
+      )!,
       syncEnabled: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
         data['${effectivePrefix}sync_enabled'],
@@ -786,6 +812,11 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
 
   /// 'gemini' / 'claude' / 'openai' / 'grok'
   final String selectedProvider;
+
+  /// プロバイダごとのモデル上書き（JSON オブジェクト）。
+  /// {"gemini":"gemini-2.0-flash", ...} の形式。未指定のプロバイダは
+  /// 実装側のフォールバック既定値を使う。選択肢は各社のモデル一覧 API から取得。
+  final String modelOverridesJson;
   final bool syncEnabled;
   final DateTime? lastSyncedAt;
 
@@ -797,6 +828,7 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
     this.shoppingListId,
     this.shoppingListName,
     required this.selectedProvider,
+    required this.modelOverridesJson,
     required this.syncEnabled,
     this.lastSyncedAt,
     required this.appliancesJson,
@@ -813,6 +845,7 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
       map['shopping_list_name'] = Variable<String>(shoppingListName);
     }
     map['selected_provider'] = Variable<String>(selectedProvider);
+    map['model_overrides_json'] = Variable<String>(modelOverridesJson);
     map['sync_enabled'] = Variable<bool>(syncEnabled);
     if (!nullToAbsent || lastSyncedAt != null) {
       map['last_synced_at'] = Variable<DateTime>(lastSyncedAt);
@@ -832,6 +865,7 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
           ? const Value.absent()
           : Value(shoppingListName),
       selectedProvider: Value(selectedProvider),
+      modelOverridesJson: Value(modelOverridesJson),
       syncEnabled: Value(syncEnabled),
       lastSyncedAt: lastSyncedAt == null && nullToAbsent
           ? const Value.absent()
@@ -851,6 +885,9 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
       shoppingListId: serializer.fromJson<String?>(json['shoppingListId']),
       shoppingListName: serializer.fromJson<String?>(json['shoppingListName']),
       selectedProvider: serializer.fromJson<String>(json['selectedProvider']),
+      modelOverridesJson: serializer.fromJson<String>(
+        json['modelOverridesJson'],
+      ),
       syncEnabled: serializer.fromJson<bool>(json['syncEnabled']),
       lastSyncedAt: serializer.fromJson<DateTime?>(json['lastSyncedAt']),
       appliancesJson: serializer.fromJson<String>(json['appliancesJson']),
@@ -865,6 +902,7 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
       'shoppingListId': serializer.toJson<String?>(shoppingListId),
       'shoppingListName': serializer.toJson<String?>(shoppingListName),
       'selectedProvider': serializer.toJson<String>(selectedProvider),
+      'modelOverridesJson': serializer.toJson<String>(modelOverridesJson),
       'syncEnabled': serializer.toJson<bool>(syncEnabled),
       'lastSyncedAt': serializer.toJson<DateTime?>(lastSyncedAt),
       'appliancesJson': serializer.toJson<String>(appliancesJson),
@@ -877,6 +915,7 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
     Value<String?> shoppingListId = const Value.absent(),
     Value<String?> shoppingListName = const Value.absent(),
     String? selectedProvider,
+    String? modelOverridesJson,
     bool? syncEnabled,
     Value<DateTime?> lastSyncedAt = const Value.absent(),
     String? appliancesJson,
@@ -890,6 +929,7 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
         ? shoppingListName.value
         : this.shoppingListName,
     selectedProvider: selectedProvider ?? this.selectedProvider,
+    modelOverridesJson: modelOverridesJson ?? this.modelOverridesJson,
     syncEnabled: syncEnabled ?? this.syncEnabled,
     lastSyncedAt: lastSyncedAt.present ? lastSyncedAt.value : this.lastSyncedAt,
     appliancesJson: appliancesJson ?? this.appliancesJson,
@@ -909,6 +949,9 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
       selectedProvider: data.selectedProvider.present
           ? data.selectedProvider.value
           : this.selectedProvider,
+      modelOverridesJson: data.modelOverridesJson.present
+          ? data.modelOverridesJson.value
+          : this.modelOverridesJson,
       syncEnabled: data.syncEnabled.present
           ? data.syncEnabled.value
           : this.syncEnabled,
@@ -929,6 +972,7 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
           ..write('shoppingListId: $shoppingListId, ')
           ..write('shoppingListName: $shoppingListName, ')
           ..write('selectedProvider: $selectedProvider, ')
+          ..write('modelOverridesJson: $modelOverridesJson, ')
           ..write('syncEnabled: $syncEnabled, ')
           ..write('lastSyncedAt: $lastSyncedAt, ')
           ..write('appliancesJson: $appliancesJson')
@@ -943,6 +987,7 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
     shoppingListId,
     shoppingListName,
     selectedProvider,
+    modelOverridesJson,
     syncEnabled,
     lastSyncedAt,
     appliancesJson,
@@ -956,6 +1001,7 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
           other.shoppingListId == this.shoppingListId &&
           other.shoppingListName == this.shoppingListName &&
           other.selectedProvider == this.selectedProvider &&
+          other.modelOverridesJson == this.modelOverridesJson &&
           other.syncEnabled == this.syncEnabled &&
           other.lastSyncedAt == this.lastSyncedAt &&
           other.appliancesJson == this.appliancesJson);
@@ -967,6 +1013,7 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
   final Value<String?> shoppingListId;
   final Value<String?> shoppingListName;
   final Value<String> selectedProvider;
+  final Value<String> modelOverridesJson;
   final Value<bool> syncEnabled;
   final Value<DateTime?> lastSyncedAt;
   final Value<String> appliancesJson;
@@ -976,6 +1023,7 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
     this.shoppingListId = const Value.absent(),
     this.shoppingListName = const Value.absent(),
     this.selectedProvider = const Value.absent(),
+    this.modelOverridesJson = const Value.absent(),
     this.syncEnabled = const Value.absent(),
     this.lastSyncedAt = const Value.absent(),
     this.appliancesJson = const Value.absent(),
@@ -986,6 +1034,7 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
     this.shoppingListId = const Value.absent(),
     this.shoppingListName = const Value.absent(),
     this.selectedProvider = const Value.absent(),
+    this.modelOverridesJson = const Value.absent(),
     this.syncEnabled = const Value.absent(),
     this.lastSyncedAt = const Value.absent(),
     this.appliancesJson = const Value.absent(),
@@ -996,6 +1045,7 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
     Expression<String>? shoppingListId,
     Expression<String>? shoppingListName,
     Expression<String>? selectedProvider,
+    Expression<String>? modelOverridesJson,
     Expression<bool>? syncEnabled,
     Expression<DateTime>? lastSyncedAt,
     Expression<String>? appliancesJson,
@@ -1006,6 +1056,8 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
       if (shoppingListId != null) 'shopping_list_id': shoppingListId,
       if (shoppingListName != null) 'shopping_list_name': shoppingListName,
       if (selectedProvider != null) 'selected_provider': selectedProvider,
+      if (modelOverridesJson != null)
+        'model_overrides_json': modelOverridesJson,
       if (syncEnabled != null) 'sync_enabled': syncEnabled,
       if (lastSyncedAt != null) 'last_synced_at': lastSyncedAt,
       if (appliancesJson != null) 'appliances_json': appliancesJson,
@@ -1018,6 +1070,7 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
     Value<String?>? shoppingListId,
     Value<String?>? shoppingListName,
     Value<String>? selectedProvider,
+    Value<String>? modelOverridesJson,
     Value<bool>? syncEnabled,
     Value<DateTime?>? lastSyncedAt,
     Value<String>? appliancesJson,
@@ -1028,6 +1081,7 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
       shoppingListId: shoppingListId ?? this.shoppingListId,
       shoppingListName: shoppingListName ?? this.shoppingListName,
       selectedProvider: selectedProvider ?? this.selectedProvider,
+      modelOverridesJson: modelOverridesJson ?? this.modelOverridesJson,
       syncEnabled: syncEnabled ?? this.syncEnabled,
       lastSyncedAt: lastSyncedAt ?? this.lastSyncedAt,
       appliancesJson: appliancesJson ?? this.appliancesJson,
@@ -1052,6 +1106,9 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
     if (selectedProvider.present) {
       map['selected_provider'] = Variable<String>(selectedProvider.value);
     }
+    if (modelOverridesJson.present) {
+      map['model_overrides_json'] = Variable<String>(modelOverridesJson.value);
+    }
     if (syncEnabled.present) {
       map['sync_enabled'] = Variable<bool>(syncEnabled.value);
     }
@@ -1072,6 +1129,7 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
           ..write('shoppingListId: $shoppingListId, ')
           ..write('shoppingListName: $shoppingListName, ')
           ..write('selectedProvider: $selectedProvider, ')
+          ..write('modelOverridesJson: $modelOverridesJson, ')
           ..write('syncEnabled: $syncEnabled, ')
           ..write('lastSyncedAt: $lastSyncedAt, ')
           ..write('appliancesJson: $appliancesJson')
@@ -1364,6 +1422,7 @@ typedef $$SettingsTableTableCreateCompanionBuilder =
       Value<String?> shoppingListId,
       Value<String?> shoppingListName,
       Value<String> selectedProvider,
+      Value<String> modelOverridesJson,
       Value<bool> syncEnabled,
       Value<DateTime?> lastSyncedAt,
       Value<String> appliancesJson,
@@ -1375,6 +1434,7 @@ typedef $$SettingsTableTableUpdateCompanionBuilder =
       Value<String?> shoppingListId,
       Value<String?> shoppingListName,
       Value<String> selectedProvider,
+      Value<String> modelOverridesJson,
       Value<bool> syncEnabled,
       Value<DateTime?> lastSyncedAt,
       Value<String> appliancesJson,
@@ -1411,6 +1471,11 @@ class $$SettingsTableTableFilterComposer
 
   ColumnFilters<String> get selectedProvider => $composableBuilder(
     column: $table.selectedProvider,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get modelOverridesJson => $composableBuilder(
+    column: $table.modelOverridesJson,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1464,6 +1529,11 @@ class $$SettingsTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get modelOverridesJson => $composableBuilder(
+    column: $table.modelOverridesJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<bool> get syncEnabled => $composableBuilder(
     column: $table.syncEnabled,
     builder: (column) => ColumnOrderings(column),
@@ -1509,6 +1579,11 @@ class $$SettingsTableTableAnnotationComposer
 
   GeneratedColumn<String> get selectedProvider => $composableBuilder(
     column: $table.selectedProvider,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get modelOverridesJson => $composableBuilder(
+    column: $table.modelOverridesJson,
     builder: (column) => column,
   );
 
@@ -1564,6 +1639,7 @@ class $$SettingsTableTableTableManager
                 Value<String?> shoppingListId = const Value.absent(),
                 Value<String?> shoppingListName = const Value.absent(),
                 Value<String> selectedProvider = const Value.absent(),
+                Value<String> modelOverridesJson = const Value.absent(),
                 Value<bool> syncEnabled = const Value.absent(),
                 Value<DateTime?> lastSyncedAt = const Value.absent(),
                 Value<String> appliancesJson = const Value.absent(),
@@ -1573,6 +1649,7 @@ class $$SettingsTableTableTableManager
                 shoppingListId: shoppingListId,
                 shoppingListName: shoppingListName,
                 selectedProvider: selectedProvider,
+                modelOverridesJson: modelOverridesJson,
                 syncEnabled: syncEnabled,
                 lastSyncedAt: lastSyncedAt,
                 appliancesJson: appliancesJson,
@@ -1584,6 +1661,7 @@ class $$SettingsTableTableTableManager
                 Value<String?> shoppingListId = const Value.absent(),
                 Value<String?> shoppingListName = const Value.absent(),
                 Value<String> selectedProvider = const Value.absent(),
+                Value<String> modelOverridesJson = const Value.absent(),
                 Value<bool> syncEnabled = const Value.absent(),
                 Value<DateTime?> lastSyncedAt = const Value.absent(),
                 Value<String> appliancesJson = const Value.absent(),
@@ -1593,6 +1671,7 @@ class $$SettingsTableTableTableManager
                 shoppingListId: shoppingListId,
                 shoppingListName: shoppingListName,
                 selectedProvider: selectedProvider,
+                modelOverridesJson: modelOverridesJson,
                 syncEnabled: syncEnabled,
                 lastSyncedAt: lastSyncedAt,
                 appliancesJson: appliancesJson,
