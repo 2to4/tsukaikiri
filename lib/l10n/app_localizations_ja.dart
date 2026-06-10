@@ -672,4 +672,93 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get mealsStepsHeading => '手順';
+
+  @override
+  String shoppingMissingCount(int n) {
+    return '不足食材 $n品';
+  }
+
+  @override
+  String get shoppingSelectAll => 'すべて選択';
+
+  @override
+  String get shoppingDeselectAll => 'すべて解除';
+
+  @override
+  String shoppingForLabel(String meal) {
+    return '$meal 用';
+  }
+
+  @override
+  String get shoppingRightPanelTitle => '追加先リスト';
+
+  @override
+  String get shoppingAppLabel => 'アプリ';
+
+  @override
+  String get shoppingRemindersApp => 'リマインダー（macOS）';
+
+  @override
+  String get shoppingLoadLists => 'リストを読み込む';
+
+  @override
+  String get shoppingLoadingLists => '読み込み中…';
+
+  @override
+  String get shoppingNewListName => '新しいリスト名';
+
+  @override
+  String get shoppingCreateList => '作成';
+
+  @override
+  String shoppingAddButton(String list, int n) {
+    return '「$list」に追加（$n件）';
+  }
+
+  @override
+  String get shoppingAddButtonNoList => '先にリストを選んでください';
+
+  @override
+  String shoppingDoneTitle(int n) {
+    return '$n品を追加しました';
+  }
+
+  @override
+  String shoppingDoneBody(String list) {
+    return 'リマインダーの「$list」で確認できます';
+  }
+
+  @override
+  String get shoppingOpenReminders => 'リマインダーを開く';
+
+  @override
+  String get shoppingBackToInventory => '在庫に戻る';
+
+  @override
+  String get shoppingEmptyTitle => '不足食材はありません';
+
+  @override
+  String get shoppingEmptyBody => '献立を決めると不足食材がここに出ます。';
+
+  @override
+  String get shoppingGoToMeals => '献立提案へ';
+
+  @override
+  String get shoppingErrorTitle => 'リストに追加できませんでした';
+
+  @override
+  String get shoppingErrorNetwork =>
+      '電波の良い場所か Wi-Fi に接続してください。リマインダーへのアクセス許可もご確認ください。';
+
+  @override
+  String get shoppingRetry => '再試行';
+
+  @override
+  String get shoppingListLoadError =>
+      'リストを取得できませんでした。リマインダーへのアクセスを許可しているか確認してください。';
+
+  @override
+  String shoppingQtyUnit(int qty) {
+    return '$qty個';
+  }
 }

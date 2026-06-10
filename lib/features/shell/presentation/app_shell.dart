@@ -9,6 +9,7 @@ import '../../../features/inventory/presentation/inventory_providers.dart';
 import '../../../features/recipe/presentation/meal_suggestion_controller.dart';
 import '../../../features/recipe/presentation/meals_desktop_view.dart';
 import '../../../features/settings/presentation/settings_desktop_view.dart';
+import '../../../features/shopping/presentation/shopping_desktop_view.dart';
 import '../../../l10n/app_localizations.dart';
 import 'shell_providers.dart';
 
@@ -499,6 +500,7 @@ class _ContentArea extends StatelessWidget {
     return switch (section) {
       ShellSection.inventory => const InventoryDesktopView(),
       ShellSection.meals => const MealsDesktopView(),
+      ShellSection.shopping => const ShoppingDesktopView(),
       ShellSection.settings => const SettingsDesktopView(),
       _ => _Placeholder(section: section),
     };

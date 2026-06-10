@@ -1357,6 +1357,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Steps'**
   String get mealsStepsHeading;
+
+  /// No description provided for @shoppingMissingCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing items ({n})'**
+  String shoppingMissingCount(int n);
+
+  /// No description provided for @shoppingSelectAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Select all'**
+  String get shoppingSelectAll;
+
+  /// No description provided for @shoppingDeselectAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Deselect all'**
+  String get shoppingDeselectAll;
+
+  /// No description provided for @shoppingForLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'for {meal}'**
+  String shoppingForLabel(String meal);
+
+  /// No description provided for @shoppingRightPanelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination list'**
+  String get shoppingRightPanelTitle;
+
+  /// No description provided for @shoppingAppLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'App'**
+  String get shoppingAppLabel;
+
+  /// No description provided for @shoppingRemindersApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders (macOS)'**
+  String get shoppingRemindersApp;
+
+  /// No description provided for @shoppingLoadLists.
+  ///
+  /// In en, this message translates to:
+  /// **'Load lists'**
+  String get shoppingLoadLists;
+
+  /// No description provided for @shoppingLoadingLists.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading…'**
+  String get shoppingLoadingLists;
+
+  /// No description provided for @shoppingNewListName.
+  ///
+  /// In en, this message translates to:
+  /// **'New list name'**
+  String get shoppingNewListName;
+
+  /// No description provided for @shoppingCreateList.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get shoppingCreateList;
+
+  /// No description provided for @shoppingAddButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to \"{list}\" ({n} items)'**
+  String shoppingAddButton(String list, int n);
+
+  /// No description provided for @shoppingAddButtonNoList.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a list first'**
+  String get shoppingAddButtonNoList;
+
+  /// No description provided for @shoppingDoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} items added'**
+  String shoppingDoneTitle(int n);
+
+  /// No description provided for @shoppingDoneBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Find them in Reminders: \"{list}\"'**
+  String shoppingDoneBody(String list);
+
+  /// No description provided for @shoppingOpenReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Reminders'**
+  String get shoppingOpenReminders;
+
+  /// No description provided for @shoppingBackToInventory.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to inventory'**
+  String get shoppingBackToInventory;
+
+  /// No description provided for @shoppingEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No missing ingredients'**
+  String get shoppingEmptyTitle;
+
+  /// No description provided for @shoppingEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Decide on meals to see what you need to buy.'**
+  String get shoppingEmptyBody;
+
+  /// No description provided for @shoppingGoToMeals.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to meal planner'**
+  String get shoppingGoToMeals;
+
+  /// No description provided for @shoppingErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not add to list'**
+  String get shoppingErrorTitle;
+
+  /// No description provided for @shoppingErrorNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Please move to an area with good signal or connect to Wi-Fi. Also check that Reminders access is allowed.'**
+  String get shoppingErrorNetwork;
+
+  /// No description provided for @shoppingRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get shoppingRetry;
+
+  /// No description provided for @shoppingListLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load lists. Check that Reminders access is allowed.'**
+  String get shoppingListLoadError;
+
+  /// No description provided for @shoppingQtyUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'{qty} pcs'**
+  String shoppingQtyUnit(int qty);
 }
 
 class _AppLocalizationsDelegate

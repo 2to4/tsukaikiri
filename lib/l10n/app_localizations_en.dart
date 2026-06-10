@@ -681,4 +681,94 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mealsStepsHeading => 'Steps';
+
+  @override
+  String shoppingMissingCount(int n) {
+    return 'Missing items ($n)';
+  }
+
+  @override
+  String get shoppingSelectAll => 'Select all';
+
+  @override
+  String get shoppingDeselectAll => 'Deselect all';
+
+  @override
+  String shoppingForLabel(String meal) {
+    return 'for $meal';
+  }
+
+  @override
+  String get shoppingRightPanelTitle => 'Destination list';
+
+  @override
+  String get shoppingAppLabel => 'App';
+
+  @override
+  String get shoppingRemindersApp => 'Reminders (macOS)';
+
+  @override
+  String get shoppingLoadLists => 'Load lists';
+
+  @override
+  String get shoppingLoadingLists => 'Loading…';
+
+  @override
+  String get shoppingNewListName => 'New list name';
+
+  @override
+  String get shoppingCreateList => 'Create';
+
+  @override
+  String shoppingAddButton(String list, int n) {
+    return 'Add to \"$list\" ($n items)';
+  }
+
+  @override
+  String get shoppingAddButtonNoList => 'Select a list first';
+
+  @override
+  String shoppingDoneTitle(int n) {
+    return '$n items added';
+  }
+
+  @override
+  String shoppingDoneBody(String list) {
+    return 'Find them in Reminders: \"$list\"';
+  }
+
+  @override
+  String get shoppingOpenReminders => 'Open Reminders';
+
+  @override
+  String get shoppingBackToInventory => 'Back to inventory';
+
+  @override
+  String get shoppingEmptyTitle => 'No missing ingredients';
+
+  @override
+  String get shoppingEmptyBody =>
+      'Decide on meals to see what you need to buy.';
+
+  @override
+  String get shoppingGoToMeals => 'Go to meal planner';
+
+  @override
+  String get shoppingErrorTitle => 'Could not add to list';
+
+  @override
+  String get shoppingErrorNetwork =>
+      'Please move to an area with good signal or connect to Wi-Fi. Also check that Reminders access is allowed.';
+
+  @override
+  String get shoppingRetry => 'Retry';
+
+  @override
+  String get shoppingListLoadError =>
+      'Could not load lists. Check that Reminders access is allowed.';
+
+  @override
+  String shoppingQtyUnit(int qty) {
+    return '$qty pcs';
+  }
 }

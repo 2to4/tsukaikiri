@@ -289,5 +289,52 @@
   "mealsDecide": "Choose this recipe",
   "mealsDecided": "Chosen",
   "mealsIngredientsHeading": "Ingredients",
-  "mealsStepsHeading": "Steps"
+  "mealsStepsHeading": "Steps",
+
+  "shoppingMissingCount": "Missing items ({n})",
+  "@shoppingMissingCount": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "shoppingSelectAll": "Select all",
+  "shoppingDeselectAll": "Deselect all",
+  "shoppingForLabel": "for {meal}",
+  "@shoppingForLabel": {
+    "placeholders": { "meal": { "type": "String" } }
+  },
+  "shoppingRightPanelTitle": "Destination list",
+  "shoppingAppLabel": "App",
+  "shoppingRemindersApp": "Reminders (macOS)",
+  "shoppingLoadLists": "Load lists",
+  "shoppingLoadingLists": "Loading…",
+  "shoppingNewListName": "New list name",
+  "shoppingCreateList": "Create",
+  "shoppingAddButton": "Add to \"{list}\" ({n} items)",
+  "@shoppingAddButton": {
+    "placeholders": {
+      "list": { "type": "String" },
+      "n": { "type": "int" }
+    }
+  },
+  "shoppingAddButtonNoList": "Select a list first",
+  "shoppingDoneTitle": "{n} items added",
+  "@shoppingDoneTitle": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "shoppingDoneBody": "Find them in Reminders: \"{list}\"",
+  "@shoppingDoneBody": {
+    "placeholders": { "list": { "type": "String" } }
+  },
+  "shoppingOpenReminders": "Open Reminders",
+  "shoppingBackToInventory": "Back to inventory",
+  "shoppingEmptyTitle": "No missing ingredients",
+  "shoppingEmptyBody": "Decide on meals to see what you need to buy.",
+  "shoppingGoToMeals": "Go to meal planner",
+  "shoppingErrorTitle": "Could not add to list",
+  "shoppingErrorNetwork": "Please move to an area with good signal or connect to Wi-Fi. Also check that Reminders access is allowed.",
+  "shoppingRetry": "Retry",
+  "shoppingListLoadError": "Could not load lists. Check that Reminders access is allowed.",
+  "shoppingQtyUnit": "{qty} pcs",
+  "@shoppingQtyUnit": {
+    "placeholders": { "qty": { "type": "int" } }
+  }
 }

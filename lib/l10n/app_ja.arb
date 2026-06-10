@@ -282,5 +282,52 @@
   "mealsDecide": "献立に決める",
   "mealsDecided": "決定済み",
   "mealsIngredientsHeading": "材料",
-  "mealsStepsHeading": "手順"
+  "mealsStepsHeading": "手順",
+
+  "shoppingMissingCount": "不足食材 {n}品",
+  "@shoppingMissingCount": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "shoppingSelectAll": "すべて選択",
+  "shoppingDeselectAll": "すべて解除",
+  "shoppingForLabel": "{meal} 用",
+  "@shoppingForLabel": {
+    "placeholders": { "meal": { "type": "String" } }
+  },
+  "shoppingRightPanelTitle": "追加先リスト",
+  "shoppingAppLabel": "アプリ",
+  "shoppingRemindersApp": "リマインダー（macOS）",
+  "shoppingLoadLists": "リストを読み込む",
+  "shoppingLoadingLists": "読み込み中…",
+  "shoppingNewListName": "新しいリスト名",
+  "shoppingCreateList": "作成",
+  "shoppingAddButton": "「{list}」に追加（{n}件）",
+  "@shoppingAddButton": {
+    "placeholders": {
+      "list": { "type": "String" },
+      "n": { "type": "int" }
+    }
+  },
+  "shoppingAddButtonNoList": "先にリストを選んでください",
+  "shoppingDoneTitle": "{n}品を追加しました",
+  "@shoppingDoneTitle": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "shoppingDoneBody": "リマインダーの「{list}」で確認できます",
+  "@shoppingDoneBody": {
+    "placeholders": { "list": { "type": "String" } }
+  },
+  "shoppingOpenReminders": "リマインダーを開く",
+  "shoppingBackToInventory": "在庫に戻る",
+  "shoppingEmptyTitle": "不足食材はありません",
+  "shoppingEmptyBody": "献立を決めると不足食材がここに出ます。",
+  "shoppingGoToMeals": "献立提案へ",
+  "shoppingErrorTitle": "リストに追加できませんでした",
+  "shoppingErrorNetwork": "電波の良い場所か Wi-Fi に接続してください。リマインダーへのアクセス許可もご確認ください。",
+  "shoppingRetry": "再試行",
+  "shoppingListLoadError": "リストを取得できませんでした。リマインダーへのアクセスを許可しているか確認してください。",
+  "shoppingQtyUnit": "{qty}個",
+  "@shoppingQtyUnit": {
+    "placeholders": { "qty": { "type": "int" } }
+  }
 }

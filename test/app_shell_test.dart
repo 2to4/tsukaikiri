@@ -105,13 +105,17 @@ void main() {
     await unmountApp(tester);
   });
 
-  testWidgets('買い物リストをタップするとプレースホルダが表示される', (tester) async {
+  testWidgets('買い物リストをタップすると買い物リストビューが表示される', (tester) async {
     await pumpShell(tester);
 
     await tester.tap(find.text('買い物リスト'));
-    await tester.pumpAndSettle();
+    // 非同期の initialize() が走るため pump を複数回行う。
+    for (var i = 0; i < 8; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
 
-    expect(find.text('準備中'), findsOneWidget);
+    // M5 実装済み: 献立なし状態の案内テキストが表示される。
+    expect(find.textContaining('献立を決めると'), findsOneWidget);
 
     await unmountApp(tester);
   });
