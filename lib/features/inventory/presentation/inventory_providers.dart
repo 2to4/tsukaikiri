@@ -32,3 +32,29 @@ class SelectedIngredientId extends Notifier<String?> {
 
 final selectedIngredientIdProvider =
     NotifierProvider<SelectedIngredientId, String?>(SelectedIngredientId.new);
+
+/// デスクトップ在庫ビュー用の検索クエリ。
+/// ツールバーの MacSearch と InventoryDesktopView が共有する。
+class DesktopSearchQuery extends Notifier<String> {
+  @override
+  String build() => '';
+
+  void update(String q) => state = q;
+  void clear() => state = '';
+}
+
+final desktopSearchQueryProvider =
+    NotifierProvider<DesktopSearchQuery, String>(DesktopSearchQuery.new);
+
+/// デスクトップ在庫ビュー用のカテゴリフィルタ。
+/// 左レールの FilterRow と InventoryDesktopView が共有する。
+class DesktopCategoryFilter extends Notifier<IngredientCategory?> {
+  @override
+  IngredientCategory? build() => null;
+
+  void set(IngredientCategory? cat) => state = cat;
+}
+
+final desktopCategoryFilterProvider =
+    NotifierProvider<DesktopCategoryFilter, IngredientCategory?>(
+        DesktopCategoryFilter.new);

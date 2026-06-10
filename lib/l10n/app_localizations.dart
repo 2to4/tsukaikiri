@@ -629,7 +629,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsSupportAuthor.
   ///
   /// In en, this message translates to:
-  /// **'Support the developer'**
+  /// **'Support the author'**
   String get settingsSupportAuthor;
 
   /// No description provided for @settingsHelp.
@@ -661,6 +661,702 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tsukaikiri · v{version}'**
   String settingsVersionLine(String version);
+
+  /// No description provided for @shellNavInventory.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory'**
+  String get shellNavInventory;
+
+  /// No description provided for @shellNavCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get shellNavCamera;
+
+  /// No description provided for @shellNavMeals.
+  ///
+  /// In en, this message translates to:
+  /// **'Meal Planner'**
+  String get shellNavMeals;
+
+  /// No description provided for @shellNavShopping.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping List'**
+  String get shellNavShopping;
+
+  /// No description provided for @shellNavOnboarding.
+  ///
+  /// In en, this message translates to:
+  /// **'Setup Assistant'**
+  String get shellNavOnboarding;
+
+  /// No description provided for @shellNavSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get shellNavSettings;
+
+  /// No description provided for @shellNavHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get shellNavHelp;
+
+  /// No description provided for @shellSectionMain.
+  ///
+  /// In en, this message translates to:
+  /// **'MAIN'**
+  String get shellSectionMain;
+
+  /// No description provided for @shellSectionOther.
+  ///
+  /// In en, this message translates to:
+  /// **'OTHER'**
+  String get shellSectionOther;
+
+  /// No description provided for @shellInventoryCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} items'**
+  String shellInventoryCount(int count);
+
+  /// No description provided for @shellPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'This screen is coming soon.'**
+  String get shellPlaceholder;
+
+  /// No description provided for @shellPlaceholderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Work in progress'**
+  String get shellPlaceholderTitle;
+
+  /// No description provided for @desktopCategoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get desktopCategoryLabel;
+
+  /// No description provided for @desktopGroupNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Today & Soon'**
+  String get desktopGroupNow;
+
+  /// No description provided for @desktopGroupWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This Week'**
+  String get desktopGroupWeek;
+
+  /// No description provided for @desktopGroupPlenty.
+  ///
+  /// In en, this message translates to:
+  /// **'Plenty of Time'**
+  String get desktopGroupPlenty;
+
+  /// No description provided for @desktopSearchPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Search ingredients…'**
+  String get desktopSearchPlaceholder;
+
+  /// No description provided for @desktopNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No matching ingredients'**
+  String get desktopNoResults;
+
+  /// No description provided for @desktopSelectPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an ingredient'**
+  String get desktopSelectPrompt;
+
+  /// No description provided for @desktopSelectBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Click an item in the list to view details and edit.'**
+  String get desktopSelectBody;
+
+  /// No description provided for @desktopAddIngredient.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Ingredient'**
+  String get desktopAddIngredient;
+
+  /// No description provided for @desktopAddIngredientShortcut.
+  ///
+  /// In en, this message translates to:
+  /// **'⌘N'**
+  String get desktopAddIngredientShortcut;
+
+  /// No description provided for @desktopCameraRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get desktopCameraRegister;
+
+  /// No description provided for @desktopCameraShortcut.
+  ///
+  /// In en, this message translates to:
+  /// **'⌘K'**
+  String get desktopCameraShortcut;
+
+  /// No description provided for @desktopSuggestMeals.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest Meals'**
+  String get desktopSuggestMeals;
+
+  /// No description provided for @desktopSuggestMealsShortcut.
+  ///
+  /// In en, this message translates to:
+  /// **'⌘R'**
+  String get desktopSuggestMealsShortcut;
+
+  /// No description provided for @desktopQuantityUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'{qty} {unit}'**
+  String desktopQuantityUnit(String qty, String unit);
+
+  /// No description provided for @desktopExpiryDaysOver.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} days over'**
+  String desktopExpiryDaysOver(int n);
+
+  /// No description provided for @desktopExpiryToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get desktopExpiryToday;
+
+  /// No description provided for @desktopExpiryDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} days left'**
+  String desktopExpiryDaysLeft(int n);
+
+  /// No description provided for @desktopDetailQty.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get desktopDetailQty;
+
+  /// No description provided for @desktopDetailCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get desktopDetailCategory;
+
+  /// No description provided for @desktopDetailExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry'**
+  String get desktopDetailExpiry;
+
+  /// No description provided for @desktopSuggestWithIngredient.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest meal with this'**
+  String get desktopSuggestWithIngredient;
+
+  /// No description provided for @desktopUsedUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as used up'**
+  String get desktopUsedUp;
+
+  /// No description provided for @desktopDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get desktopDelete;
+
+  /// No description provided for @desktopEditHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the edit button to change name and quantity.'**
+  String get desktopEditHint;
+
+  /// No description provided for @desktopCountSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} items'**
+  String desktopCountSuffix(int n);
+
+  /// No description provided for @settingsNavAi.
+  ///
+  /// In en, this message translates to:
+  /// **'AI'**
+  String get settingsNavAi;
+
+  /// No description provided for @settingsNavGeneral.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get settingsNavGeneral;
+
+  /// No description provided for @settingsNavShopping.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping List'**
+  String get settingsNavShopping;
+
+  /// No description provided for @settingsNavAppliance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appliances'**
+  String get settingsNavAppliance;
+
+  /// No description provided for @settingsNavData.
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get settingsNavData;
+
+  /// No description provided for @settingsNavSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get settingsNavSupport;
+
+  /// No description provided for @settingsAiHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'AI (recognition & meal suggestions)'**
+  String get settingsAiHeading;
+
+  /// No description provided for @settingsAiVisionYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Image recognition'**
+  String get settingsAiVisionYes;
+
+  /// No description provided for @settingsAiVisionNo.
+  ///
+  /// In en, this message translates to:
+  /// **'No image recognition'**
+  String get settingsAiVisionNo;
+
+  /// No description provided for @settingsApiKeyHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'API Key'**
+  String get settingsApiKeyHeading;
+
+  /// No description provided for @settingsApiKeyPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste your API key'**
+  String get settingsApiKeyPlaceholder;
+
+  /// No description provided for @settingsApiKeyNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Your key is stored securely on this device.'**
+  String get settingsApiKeyNote;
+
+  /// No description provided for @settingsApiKeySave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get settingsApiKeySave;
+
+  /// No description provided for @settingsApiKeyChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get settingsApiKeyChange;
+
+  /// No description provided for @settingsApiKeyDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get settingsApiKeyDelete;
+
+  /// No description provided for @settingsApiKeyGetLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Get {provider} key'**
+  String settingsApiKeyGetLink(String provider);
+
+  /// No description provided for @settingsApiKeySavedMasked.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved: {masked}'**
+  String settingsApiKeySavedMasked(String masked);
+
+  /// No description provided for @settingsModelHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Model'**
+  String get settingsModelHeading;
+
+  /// No description provided for @settingsModelFetch.
+  ///
+  /// In en, this message translates to:
+  /// **'Fetch models'**
+  String get settingsModelFetch;
+
+  /// No description provided for @settingsModelFetching.
+  ///
+  /// In en, this message translates to:
+  /// **'Fetching…'**
+  String get settingsModelFetching;
+
+  /// No description provided for @settingsModelNeedKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Save an API key first to fetch models.'**
+  String get settingsModelNeedKey;
+
+  /// No description provided for @settingsModelCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'In use: {model}'**
+  String settingsModelCurrent(String model);
+
+  /// No description provided for @settingsModelDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Default (auto)'**
+  String get settingsModelDefault;
+
+  /// No description provided for @settingsNetworkError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please move to an area with good signal or connect to Wi-Fi.'**
+  String get settingsNetworkError;
+
+  /// No description provided for @settingsGeneralHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get settingsGeneralHeading;
+
+  /// No description provided for @settingsShoppingHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping List'**
+  String get settingsShoppingHeading;
+
+  /// No description provided for @settingsShoppingLinkedApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked app'**
+  String get settingsShoppingLinkedApp;
+
+  /// No description provided for @settingsShoppingReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders (macOS)'**
+  String get settingsShoppingReminders;
+
+  /// No description provided for @settingsShoppingLists.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination list'**
+  String get settingsShoppingLists;
+
+  /// No description provided for @settingsShoppingLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Load lists'**
+  String get settingsShoppingLoad;
+
+  /// No description provided for @settingsShoppingLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading…'**
+  String get settingsShoppingLoading;
+
+  /// No description provided for @settingsShoppingCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'Current: {name}'**
+  String settingsShoppingCurrent(String name);
+
+  /// No description provided for @settingsShoppingNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Not selected'**
+  String get settingsShoppingNone;
+
+  /// No description provided for @settingsShoppingNewName.
+  ///
+  /// In en, this message translates to:
+  /// **'New list name'**
+  String get settingsShoppingNewName;
+
+  /// No description provided for @settingsShoppingCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get settingsShoppingCreate;
+
+  /// No description provided for @settingsShoppingLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load lists. Check that access to Reminders is allowed.'**
+  String get settingsShoppingLoadError;
+
+  /// No description provided for @settingsApplianceHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Appliances'**
+  String get settingsApplianceHeading;
+
+  /// No description provided for @settingsApplianceHotcook.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotcook'**
+  String get settingsApplianceHotcook;
+
+  /// No description provided for @settingsApplianceHealsio.
+  ///
+  /// In en, this message translates to:
+  /// **'Healsio'**
+  String get settingsApplianceHealsio;
+
+  /// No description provided for @settingsApplianceNotOwned.
+  ///
+  /// In en, this message translates to:
+  /// **'Not owned'**
+  String get settingsApplianceNotOwned;
+
+  /// No description provided for @settingsApplianceSeries.
+  ///
+  /// In en, this message translates to:
+  /// **'Series'**
+  String get settingsApplianceSeries;
+
+  /// No description provided for @settingsApplianceCapacity.
+  ///
+  /// In en, this message translates to:
+  /// **'Capacity'**
+  String get settingsApplianceCapacity;
+
+  /// No description provided for @settingsApplianceNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered appliances get prioritized recipes, with portions adjusted to the model and capacity.'**
+  String get settingsApplianceNote;
+
+  /// No description provided for @settingsDataHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Sync'**
+  String get settingsDataHeading;
+
+  /// No description provided for @settingsDataICloud.
+  ///
+  /// In en, this message translates to:
+  /// **'iCloud Sync'**
+  String get settingsDataICloud;
+
+  /// No description provided for @settingsDataComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync is coming soon.'**
+  String get settingsDataComingSoon;
+
+  /// No description provided for @settingsSupportHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get settingsSupportHeading;
+
+  /// No description provided for @settingsSupportComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'(coming soon)'**
+  String get settingsSupportComingSoon;
+
+  /// No description provided for @settingsSupportHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get settingsSupportHelp;
+
+  /// No description provided for @settingsSupportAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get settingsSupportAbout;
+
+  /// No description provided for @settingsAboutVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String settingsAboutVersion(String version);
+
+  /// No description provided for @settingsAboutClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get settingsAboutClose;
+
+  /// No description provided for @mealsConditionsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Conditions'**
+  String get mealsConditionsLabel;
+
+  /// No description provided for @mealsCondAuto.
+  ///
+  /// In en, this message translates to:
+  /// **'Any'**
+  String get mealsCondAuto;
+
+  /// No description provided for @mealsCondMainOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Main only'**
+  String get mealsCondMainOnly;
+
+  /// No description provided for @mealsCondOneMore.
+  ///
+  /// In en, this message translates to:
+  /// **'One more dish'**
+  String get mealsCondOneMore;
+
+  /// No description provided for @mealsCondQuick.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick'**
+  String get mealsCondQuick;
+
+  /// No description provided for @mealsSuggestButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest from inventory'**
+  String get mealsSuggestButton;
+
+  /// No description provided for @mealsSuggestShortcut.
+  ///
+  /// In en, this message translates to:
+  /// **'⌘R'**
+  String get mealsSuggestShortcut;
+
+  /// No description provided for @mealsBeforeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Click \"Suggest from inventory\"'**
+  String get mealsBeforeBody;
+
+  /// No description provided for @mealsGenerating.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating recipes…'**
+  String get mealsGenerating;
+
+  /// No description provided for @mealsLowStockBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory is low, so suggestions include recipes that need shopping.'**
+  String get mealsLowStockBanner;
+
+  /// No description provided for @mealsErrorNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t get suggestions. Move to a spot with better signal or connect to Wi-Fi, then retry.'**
+  String get mealsErrorNetwork;
+
+  /// No description provided for @mealsErrorNoApiKey.
+  ///
+  /// In en, this message translates to:
+  /// **'No AI API key is registered. Add an API key in Settings.'**
+  String get mealsErrorNoApiKey;
+
+  /// No description provided for @mealsRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get mealsRetry;
+
+  /// No description provided for @mealsOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get mealsOpenSettings;
+
+  /// No description provided for @mealsBadgeUseNear.
+  ///
+  /// In en, this message translates to:
+  /// **'Use soon'**
+  String get mealsBadgeUseNear;
+
+  /// No description provided for @mealsApplianceHotcook.
+  ///
+  /// In en, this message translates to:
+  /// **'🍲 Hotcook'**
+  String get mealsApplianceHotcook;
+
+  /// No description provided for @mealsApplianceHealsio.
+  ///
+  /// In en, this message translates to:
+  /// **'♨️ Healsio'**
+  String get mealsApplianceHealsio;
+
+  /// No description provided for @mealsApplianceNormal.
+  ///
+  /// In en, this message translates to:
+  /// **'🔥 Stovetop'**
+  String get mealsApplianceNormal;
+
+  /// No description provided for @mealsCookMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'⏱ {minutes} min'**
+  String mealsCookMinutes(int minutes);
+
+  /// No description provided for @mealsDetailEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a recipe'**
+  String get mealsDetailEmpty;
+
+  /// No description provided for @mealsCookTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Cook time {minutes} min'**
+  String mealsCookTime(int minutes);
+
+  /// No description provided for @mealsToShopping.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to shopping list'**
+  String get mealsToShopping;
+
+  /// No description provided for @mealsDecide.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose this recipe'**
+  String get mealsDecide;
+
+  /// No description provided for @mealsDecided.
+  ///
+  /// In en, this message translates to:
+  /// **'Chosen'**
+  String get mealsDecided;
+
+  /// No description provided for @mealsIngredientsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Ingredients'**
+  String get mealsIngredientsHeading;
+
+  /// No description provided for @mealsStepsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Steps'**
+  String get mealsStepsHeading;
 }
 
 class _AppLocalizationsDelegate

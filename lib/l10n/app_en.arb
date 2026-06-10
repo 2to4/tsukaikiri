@@ -123,5 +123,171 @@
   "settingsVersionLine": "Tsukaikiri · v{version}",
   "@settingsVersionLine": {
     "placeholders": { "version": { "type": "String" } }
-  }
+  },
+
+  "shellNavInventory": "Inventory",
+  "shellNavCamera": "Camera",
+  "shellNavMeals": "Meal Planner",
+  "shellNavShopping": "Shopping List",
+  "shellNavOnboarding": "Setup Assistant",
+  "shellNavSettings": "Settings",
+  "shellNavHelp": "Help",
+  "shellSectionMain": "MAIN",
+  "shellSectionOther": "OTHER",
+  "shellInventoryCount": "{count} items",
+  "@shellInventoryCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "shellPlaceholder": "This screen is coming soon.",
+  "shellPlaceholderTitle": "Work in progress",
+
+  "desktopCategoryLabel": "Category",
+  "desktopGroupNow": "Today & Soon",
+  "desktopGroupWeek": "This Week",
+  "desktopGroupPlenty": "Plenty of Time",
+  "desktopSearchPlaceholder": "Search ingredients…",
+  "desktopNoResults": "No matching ingredients",
+  "desktopSelectPrompt": "Select an ingredient",
+  "desktopSelectBody": "Click an item in the list to view details and edit.",
+  "desktopAddIngredient": "Add Ingredient",
+  "desktopAddIngredientShortcut": "⌘N",
+  "desktopCameraRegister": "Camera",
+  "desktopCameraShortcut": "⌘K",
+  "desktopSuggestMeals": "Suggest Meals",
+  "desktopSuggestMealsShortcut": "⌘R",
+  "desktopQuantityUnit": "{qty} {unit}",
+  "@desktopQuantityUnit": {
+    "placeholders": {
+      "qty": { "type": "String" },
+      "unit": { "type": "String" }
+    }
+  },
+  "desktopExpiryDaysOver": "{n} days over",
+  "@desktopExpiryDaysOver": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "desktopExpiryToday": "Today",
+  "desktopExpiryDaysLeft": "{n} days left",
+  "@desktopExpiryDaysLeft": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "desktopDetailQty": "Quantity",
+  "desktopDetailCategory": "Category",
+  "desktopDetailExpiry": "Expiry",
+  "desktopSuggestWithIngredient": "Suggest meal with this",
+  "desktopUsedUp": "Mark as used up",
+  "desktopDelete": "Delete",
+  "desktopEditHint": "Use the edit button to change name and quantity.",
+  "desktopCountSuffix": "{n} items",
+  "@desktopCountSuffix": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+
+  "settingsNavAi": "AI",
+  "settingsNavGeneral": "General",
+  "settingsNavShopping": "Shopping List",
+  "settingsNavAppliance": "Appliances",
+  "settingsNavData": "Data",
+  "settingsNavSupport": "Support",
+
+  "settingsAiHeading": "AI (recognition & meal suggestions)",
+  "settingsAiVisionYes": "Image recognition",
+  "settingsAiVisionNo": "No image recognition",
+  "settingsApiKeyHeading": "API Key",
+  "settingsApiKeyPlaceholder": "Paste your API key",
+  "settingsApiKeyNote": "Your key is stored securely on this device.",
+  "settingsApiKeySave": "Save",
+  "settingsApiKeyChange": "Change",
+  "settingsApiKeyDelete": "Delete",
+  "settingsApiKeyGetLink": "Get {provider} key",
+  "@settingsApiKeyGetLink": {
+    "placeholders": { "provider": { "type": "String" } }
+  },
+  "settingsApiKeySavedMasked": "Saved: {masked}",
+  "@settingsApiKeySavedMasked": {
+    "placeholders": { "masked": { "type": "String" } }
+  },
+  "settingsModelHeading": "Model",
+  "settingsModelFetch": "Fetch models",
+  "settingsModelFetching": "Fetching…",
+  "settingsModelNeedKey": "Save an API key first to fetch models.",
+  "settingsModelCurrent": "In use: {model}",
+  "@settingsModelCurrent": {
+    "placeholders": { "model": { "type": "String" } }
+  },
+  "settingsModelDefault": "Default (auto)",
+  "settingsNetworkError": "Please move to an area with good signal or connect to Wi-Fi.",
+
+  "settingsGeneralHeading": "General",
+
+  "settingsShoppingHeading": "Shopping List",
+  "settingsShoppingLinkedApp": "Linked app",
+  "settingsShoppingReminders": "Reminders (macOS)",
+  "settingsShoppingLists": "Destination list",
+  "settingsShoppingLoad": "Load lists",
+  "settingsShoppingLoading": "Loading…",
+  "settingsShoppingCurrent": "Current: {name}",
+  "@settingsShoppingCurrent": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "settingsShoppingNone": "Not selected",
+  "settingsShoppingNewName": "New list name",
+  "settingsShoppingCreate": "Create",
+  "settingsShoppingLoadError": "Could not load lists. Check that access to Reminders is allowed.",
+
+  "settingsApplianceHeading": "Appliances",
+  "settingsApplianceHotcook": "Hotcook",
+  "settingsApplianceHealsio": "Healsio",
+  "settingsApplianceNotOwned": "Not owned",
+  "settingsApplianceSeries": "Series",
+  "settingsApplianceCapacity": "Capacity",
+  "settingsApplianceNote": "Registered appliances get prioritized recipes, with portions adjusted to the model and capacity.",
+
+  "settingsDataHeading": "Data Sync",
+  "settingsDataICloud": "iCloud Sync",
+  "settingsDataComingSoon": "Sync is coming soon.",
+
+  "settingsSupportHeading": "Support",
+  "settingsSupportAuthor": "Support the author",
+  "settingsSupportComingSoon": "(coming soon)",
+  "settingsSupportHelp": "Help",
+  "settingsSupportAbout": "About",
+  "settingsAboutVersion": "Version {version}",
+  "@settingsAboutVersion": {
+    "placeholders": { "version": { "type": "String" } }
+  },
+  "settingsAboutClose": "Close",
+
+  "mealsConditionsLabel": "Conditions",
+  "mealsCondAuto": "Any",
+  "mealsCondMainOnly": "Main only",
+  "mealsCondOneMore": "One more dish",
+  "mealsCondQuick": "Quick",
+  "mealsSuggestButton": "Suggest from inventory",
+  "mealsSuggestShortcut": "⌘R",
+  "mealsBeforeBody": "Click \"Suggest from inventory\"",
+  "mealsGenerating": "Generating recipes…",
+  "mealsLowStockBanner": "Inventory is low, so suggestions include recipes that need shopping.",
+  "mealsErrorNetwork": "Couldn't get suggestions. Move to a spot with better signal or connect to Wi-Fi, then retry.",
+  "mealsErrorNoApiKey": "No AI API key is registered. Add an API key in Settings.",
+  "mealsRetry": "Retry",
+  "mealsOpenSettings": "Open Settings",
+  "mealsBadgeUseNear": "Use soon",
+  "mealsApplianceHotcook": "🍲 Hotcook",
+  "mealsApplianceHealsio": "♨️ Healsio",
+  "mealsApplianceNormal": "🔥 Stovetop",
+  "mealsCookMinutes": "⏱ {minutes} min",
+  "@mealsCookMinutes": {
+    "placeholders": { "minutes": { "type": "int" } }
+  },
+  "mealsDetailEmpty": "Select a recipe",
+  "mealsCookTime": "Cook time {minutes} min",
+  "@mealsCookTime": {
+    "placeholders": { "minutes": { "type": "int" } }
+  },
+  "mealsToShopping": "Add to shopping list",
+  "mealsDecide": "Choose this recipe",
+  "mealsDecided": "Chosen",
+  "mealsIngredientsHeading": "Ingredients",
+  "mealsStepsHeading": "Steps"
 }

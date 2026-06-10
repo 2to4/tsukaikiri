@@ -31,12 +31,30 @@ String buildSuggestPrompt(
       ? '（なし）'
       : constraints.appliances.map((a) => a.type.name).join(', ');
 
-  final extra =
-      constraints.extraRequest != null ? '\n追加条件: ${constraints.extraRequest}' : '';
+  // 条件チップ → プロンプトの自然文表現（言語非依存の指示文。出力言語とは独立）。
+  final kindLine = switch (constraints.mealKind) {
+    MealKind.auto => '・献立の種類は問いません（主菜・副菜どちらでも可）。',
+    MealKind.mainOnly => '・主菜（メインのおかず）のみを提案してください。',
+    MealKind.oneMore => '・もう一品ほしいときの軽い副菜・汁物を中心に提案してください。',
+    MealKind.quick => '・調理時間が短い（目安15分以内）時短レシピを優先してください。',
+  };
+
+  // 在庫が少ないときは買い足し前提の提案を許可する。
+  final stockLine = constraints.allowNewIngredients
+      ? '・在庫が少ないため、在庫にない食材を買い足す前提の献立も提案して構いません。'
+      : '・できるだけ在庫にある食材だけで作れる献立を優先してください。';
+
+  final extra = constraints.extraRequest != null
+      ? '\n・追加条件: ${constraints.extraRequest}'
+      : '';
 
   return '''
 以下の在庫と条件で献立を${constraints.count}案提案してください。
-期限間近の食材を優先して使ってください。$extra
+期限間近の食材を優先して使ってください。
+
+【条件】
+$kindLine
+$stockLine$extra
 
 【在庫】
 $inventoryLines
@@ -46,6 +64,7 @@ $applianceLines
 
 返答は以下のJSON形式のみ。前置き・コードフェンス・説明文は一切禁止。
 フィールド名は変えず、自然文（title・steps等）は$langで生成すること。
+appliance は所有家電に合わせて "hotcook" / "healsio" / null（通常調理）のいずれかにすること。
 
 {"recipes":[{"title":"","ingredients":[{"name":"","amount":""}],"appliance":null,"cookMode":null,"cookMinutes":null,"steps":[""],"usesExpiringSoon":false}]}
 ''';

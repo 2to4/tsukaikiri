@@ -297,4 +297,379 @@ class AppLocalizationsJa extends AppLocalizations {
   String settingsVersionLine(String version) {
     return 'つかいきり ・ v$version';
   }
+
+  @override
+  String get shellNavInventory => '在庫';
+
+  @override
+  String get shellNavCamera => 'カメラ登録';
+
+  @override
+  String get shellNavMeals => '献立提案';
+
+  @override
+  String get shellNavShopping => '買い物リスト';
+
+  @override
+  String get shellNavOnboarding => '設定アシスタント';
+
+  @override
+  String get shellNavSettings => '設定';
+
+  @override
+  String get shellNavHelp => 'ヘルプ';
+
+  @override
+  String get shellSectionMain => 'メイン';
+
+  @override
+  String get shellSectionOther => 'その他';
+
+  @override
+  String shellInventoryCount(int count) {
+    return '$count品の食材';
+  }
+
+  @override
+  String get shellPlaceholder => 'この画面は準備中です。';
+
+  @override
+  String get shellPlaceholderTitle => '準備中';
+
+  @override
+  String get desktopCategoryLabel => 'カテゴリ';
+
+  @override
+  String get desktopGroupNow => '今日・もうすぐ';
+
+  @override
+  String get desktopGroupWeek => '今週のうちに';
+
+  @override
+  String get desktopGroupPlenty => 'まだ余裕';
+
+  @override
+  String get desktopSearchPlaceholder => '食材を検索…';
+
+  @override
+  String get desktopNoResults => '該当する食材がありません';
+
+  @override
+  String get desktopSelectPrompt => '食材を選択してください';
+
+  @override
+  String get desktopSelectBody => '一覧から食材をクリックすると\n詳細・編集できます';
+
+  @override
+  String get desktopAddIngredient => '食材を追加';
+
+  @override
+  String get desktopAddIngredientShortcut => '⌘N';
+
+  @override
+  String get desktopCameraRegister => 'カメラ登録';
+
+  @override
+  String get desktopCameraShortcut => '⌘K';
+
+  @override
+  String get desktopSuggestMeals => '献立を提案';
+
+  @override
+  String get desktopSuggestMealsShortcut => '⌘R';
+
+  @override
+  String desktopQuantityUnit(String qty, String unit) {
+    return '$qty $unit';
+  }
+
+  @override
+  String desktopExpiryDaysOver(int n) {
+    return '$n日超過';
+  }
+
+  @override
+  String get desktopExpiryToday => '今日まで';
+
+  @override
+  String desktopExpiryDaysLeft(int n) {
+    return 'あと$n日';
+  }
+
+  @override
+  String get desktopDetailQty => '数量';
+
+  @override
+  String get desktopDetailCategory => 'カテゴリ';
+
+  @override
+  String get desktopDetailExpiry => '賞味期限まで';
+
+  @override
+  String get desktopSuggestWithIngredient => 'この食材で献立を提案';
+
+  @override
+  String get desktopUsedUp => '使い切りにする';
+
+  @override
+  String get desktopDelete => '削除';
+
+  @override
+  String get desktopEditHint => '編集ボタンから名前・数量を変更できます';
+
+  @override
+  String desktopCountSuffix(int n) {
+    return '$n品';
+  }
+
+  @override
+  String get settingsNavAi => 'AI設定';
+
+  @override
+  String get settingsNavGeneral => '一般';
+
+  @override
+  String get settingsNavShopping => '買い物リスト';
+
+  @override
+  String get settingsNavAppliance => '調理家電';
+
+  @override
+  String get settingsNavData => 'データ';
+
+  @override
+  String get settingsNavSupport => 'サポート';
+
+  @override
+  String get settingsAiHeading => 'AI（食材認識・献立提案）';
+
+  @override
+  String get settingsAiVisionYes => '画像認識あり';
+
+  @override
+  String get settingsAiVisionNo => '画像認識なし';
+
+  @override
+  String get settingsApiKeyHeading => 'APIキー';
+
+  @override
+  String get settingsApiKeyPlaceholder => 'APIキーを貼り付け';
+
+  @override
+  String get settingsApiKeyNote => 'キーはこの端末内に安全に保存されます。';
+
+  @override
+  String get settingsApiKeySave => '保存';
+
+  @override
+  String get settingsApiKeyChange => '変更';
+
+  @override
+  String get settingsApiKeyDelete => '削除';
+
+  @override
+  String settingsApiKeyGetLink(String provider) {
+    return '$provider のキーを取得';
+  }
+
+  @override
+  String settingsApiKeySavedMasked(String masked) {
+    return '保存済み: $masked';
+  }
+
+  @override
+  String get settingsModelHeading => 'モデル';
+
+  @override
+  String get settingsModelFetch => 'モデルを取得';
+
+  @override
+  String get settingsModelFetching => '取得中…';
+
+  @override
+  String get settingsModelNeedKey => 'モデルを取得するには先に APIキーを保存してください。';
+
+  @override
+  String settingsModelCurrent(String model) {
+    return '使用中: $model';
+  }
+
+  @override
+  String get settingsModelDefault => '既定（自動）';
+
+  @override
+  String get settingsNetworkError => '電波の良い場所か Wi-Fi に接続してください。';
+
+  @override
+  String get settingsGeneralHeading => '一般';
+
+  @override
+  String get settingsShoppingHeading => '買い物リスト';
+
+  @override
+  String get settingsShoppingLinkedApp => '連携先アプリ';
+
+  @override
+  String get settingsShoppingReminders => 'リマインダー（macOS）';
+
+  @override
+  String get settingsShoppingLists => '追加先リスト';
+
+  @override
+  String get settingsShoppingLoad => 'リストを読み込む';
+
+  @override
+  String get settingsShoppingLoading => '読み込み中…';
+
+  @override
+  String settingsShoppingCurrent(String name) {
+    return '現在: $name';
+  }
+
+  @override
+  String get settingsShoppingNone => '未選択';
+
+  @override
+  String get settingsShoppingNewName => '新しいリスト名';
+
+  @override
+  String get settingsShoppingCreate => '作成';
+
+  @override
+  String get settingsShoppingLoadError =>
+      'リストを取得できませんでした。リマインダーへのアクセスを許可しているか確認してください。';
+
+  @override
+  String get settingsApplianceHeading => '調理家電';
+
+  @override
+  String get settingsApplianceHotcook => 'ホットクック';
+
+  @override
+  String get settingsApplianceHealsio => 'ヘルシオ';
+
+  @override
+  String get settingsApplianceNotOwned => '持っていない';
+
+  @override
+  String get settingsApplianceSeries => '型（シリーズ）';
+
+  @override
+  String get settingsApplianceCapacity => '容量';
+
+  @override
+  String get settingsApplianceNote =>
+      '登録すると、その家電で作れるレシピを優先表示します。型・容量に合わせて分量も調整します。';
+
+  @override
+  String get settingsDataHeading => 'データ同期';
+
+  @override
+  String get settingsDataICloud => 'iCloud 同期';
+
+  @override
+  String get settingsDataComingSoon => '同期機能は準備中です。';
+
+  @override
+  String get settingsSupportHeading => 'サポート';
+
+  @override
+  String get settingsSupportComingSoon => '（準備中）';
+
+  @override
+  String get settingsSupportHelp => 'ヘルプ';
+
+  @override
+  String get settingsSupportAbout => 'このアプリについて';
+
+  @override
+  String settingsAboutVersion(String version) {
+    return 'バージョン $version';
+  }
+
+  @override
+  String get settingsAboutClose => '閉じる';
+
+  @override
+  String get mealsConditionsLabel => '条件';
+
+  @override
+  String get mealsCondAuto => 'おまかせ';
+
+  @override
+  String get mealsCondMainOnly => '主菜のみ';
+
+  @override
+  String get mealsCondOneMore => 'あと1品';
+
+  @override
+  String get mealsCondQuick => '時短';
+
+  @override
+  String get mealsSuggestButton => '在庫から提案する';
+
+  @override
+  String get mealsSuggestShortcut => '⌘R';
+
+  @override
+  String get mealsBeforeBody => '「在庫から提案する」をクリックしてください';
+
+  @override
+  String get mealsGenerating => '献立を生成中…';
+
+  @override
+  String get mealsLowStockBanner => '在庫が少ないため、買い足し前提の献立も含めて提案しています。';
+
+  @override
+  String get mealsErrorNetwork =>
+      '提案を取得できませんでした。電波の良い場所か Wi-Fi に接続して再試行してください。';
+
+  @override
+  String get mealsErrorNoApiKey => 'AI の API キーが未登録です。設定で API キーを登録してください。';
+
+  @override
+  String get mealsRetry => '再試行';
+
+  @override
+  String get mealsOpenSettings => '設定を開く';
+
+  @override
+  String get mealsBadgeUseNear => '期限近い';
+
+  @override
+  String get mealsApplianceHotcook => '🍲 ホットクック';
+
+  @override
+  String get mealsApplianceHealsio => '♨️ ヘルシオ';
+
+  @override
+  String get mealsApplianceNormal => '🔥 通常調理';
+
+  @override
+  String mealsCookMinutes(int minutes) {
+    return '⏱ $minutes分';
+  }
+
+  @override
+  String get mealsDetailEmpty => '献立を選択してください';
+
+  @override
+  String mealsCookTime(int minutes) {
+    return '調理時間 $minutes分';
+  }
+
+  @override
+  String get mealsToShopping => '買い物リストへ';
+
+  @override
+  String get mealsDecide => '献立に決める';
+
+  @override
+  String get mealsDecided => '決定済み';
+
+  @override
+  String get mealsIngredientsHeading => '材料';
+
+  @override
+  String get mealsStepsHeading => '手順';
 }

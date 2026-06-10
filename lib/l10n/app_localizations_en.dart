@@ -281,7 +281,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsCloudSync => 'Cloud sync';
 
   @override
-  String get settingsSupportAuthor => 'Support the developer';
+  String get settingsSupportAuthor => 'Support the author';
 
   @override
   String get settingsHelp => 'Help';
@@ -300,4 +300,385 @@ class AppLocalizationsEn extends AppLocalizations {
   String settingsVersionLine(String version) {
     return 'Tsukaikiri · v$version';
   }
+
+  @override
+  String get shellNavInventory => 'Inventory';
+
+  @override
+  String get shellNavCamera => 'Camera';
+
+  @override
+  String get shellNavMeals => 'Meal Planner';
+
+  @override
+  String get shellNavShopping => 'Shopping List';
+
+  @override
+  String get shellNavOnboarding => 'Setup Assistant';
+
+  @override
+  String get shellNavSettings => 'Settings';
+
+  @override
+  String get shellNavHelp => 'Help';
+
+  @override
+  String get shellSectionMain => 'MAIN';
+
+  @override
+  String get shellSectionOther => 'OTHER';
+
+  @override
+  String shellInventoryCount(int count) {
+    return '$count items';
+  }
+
+  @override
+  String get shellPlaceholder => 'This screen is coming soon.';
+
+  @override
+  String get shellPlaceholderTitle => 'Work in progress';
+
+  @override
+  String get desktopCategoryLabel => 'Category';
+
+  @override
+  String get desktopGroupNow => 'Today & Soon';
+
+  @override
+  String get desktopGroupWeek => 'This Week';
+
+  @override
+  String get desktopGroupPlenty => 'Plenty of Time';
+
+  @override
+  String get desktopSearchPlaceholder => 'Search ingredients…';
+
+  @override
+  String get desktopNoResults => 'No matching ingredients';
+
+  @override
+  String get desktopSelectPrompt => 'Select an ingredient';
+
+  @override
+  String get desktopSelectBody =>
+      'Click an item in the list to view details and edit.';
+
+  @override
+  String get desktopAddIngredient => 'Add Ingredient';
+
+  @override
+  String get desktopAddIngredientShortcut => '⌘N';
+
+  @override
+  String get desktopCameraRegister => 'Camera';
+
+  @override
+  String get desktopCameraShortcut => '⌘K';
+
+  @override
+  String get desktopSuggestMeals => 'Suggest Meals';
+
+  @override
+  String get desktopSuggestMealsShortcut => '⌘R';
+
+  @override
+  String desktopQuantityUnit(String qty, String unit) {
+    return '$qty $unit';
+  }
+
+  @override
+  String desktopExpiryDaysOver(int n) {
+    return '$n days over';
+  }
+
+  @override
+  String get desktopExpiryToday => 'Today';
+
+  @override
+  String desktopExpiryDaysLeft(int n) {
+    return '$n days left';
+  }
+
+  @override
+  String get desktopDetailQty => 'Quantity';
+
+  @override
+  String get desktopDetailCategory => 'Category';
+
+  @override
+  String get desktopDetailExpiry => 'Expiry';
+
+  @override
+  String get desktopSuggestWithIngredient => 'Suggest meal with this';
+
+  @override
+  String get desktopUsedUp => 'Mark as used up';
+
+  @override
+  String get desktopDelete => 'Delete';
+
+  @override
+  String get desktopEditHint =>
+      'Use the edit button to change name and quantity.';
+
+  @override
+  String desktopCountSuffix(int n) {
+    return '$n items';
+  }
+
+  @override
+  String get settingsNavAi => 'AI';
+
+  @override
+  String get settingsNavGeneral => 'General';
+
+  @override
+  String get settingsNavShopping => 'Shopping List';
+
+  @override
+  String get settingsNavAppliance => 'Appliances';
+
+  @override
+  String get settingsNavData => 'Data';
+
+  @override
+  String get settingsNavSupport => 'Support';
+
+  @override
+  String get settingsAiHeading => 'AI (recognition & meal suggestions)';
+
+  @override
+  String get settingsAiVisionYes => 'Image recognition';
+
+  @override
+  String get settingsAiVisionNo => 'No image recognition';
+
+  @override
+  String get settingsApiKeyHeading => 'API Key';
+
+  @override
+  String get settingsApiKeyPlaceholder => 'Paste your API key';
+
+  @override
+  String get settingsApiKeyNote =>
+      'Your key is stored securely on this device.';
+
+  @override
+  String get settingsApiKeySave => 'Save';
+
+  @override
+  String get settingsApiKeyChange => 'Change';
+
+  @override
+  String get settingsApiKeyDelete => 'Delete';
+
+  @override
+  String settingsApiKeyGetLink(String provider) {
+    return 'Get $provider key';
+  }
+
+  @override
+  String settingsApiKeySavedMasked(String masked) {
+    return 'Saved: $masked';
+  }
+
+  @override
+  String get settingsModelHeading => 'Model';
+
+  @override
+  String get settingsModelFetch => 'Fetch models';
+
+  @override
+  String get settingsModelFetching => 'Fetching…';
+
+  @override
+  String get settingsModelNeedKey => 'Save an API key first to fetch models.';
+
+  @override
+  String settingsModelCurrent(String model) {
+    return 'In use: $model';
+  }
+
+  @override
+  String get settingsModelDefault => 'Default (auto)';
+
+  @override
+  String get settingsNetworkError =>
+      'Please move to an area with good signal or connect to Wi-Fi.';
+
+  @override
+  String get settingsGeneralHeading => 'General';
+
+  @override
+  String get settingsShoppingHeading => 'Shopping List';
+
+  @override
+  String get settingsShoppingLinkedApp => 'Linked app';
+
+  @override
+  String get settingsShoppingReminders => 'Reminders (macOS)';
+
+  @override
+  String get settingsShoppingLists => 'Destination list';
+
+  @override
+  String get settingsShoppingLoad => 'Load lists';
+
+  @override
+  String get settingsShoppingLoading => 'Loading…';
+
+  @override
+  String settingsShoppingCurrent(String name) {
+    return 'Current: $name';
+  }
+
+  @override
+  String get settingsShoppingNone => 'Not selected';
+
+  @override
+  String get settingsShoppingNewName => 'New list name';
+
+  @override
+  String get settingsShoppingCreate => 'Create';
+
+  @override
+  String get settingsShoppingLoadError =>
+      'Could not load lists. Check that access to Reminders is allowed.';
+
+  @override
+  String get settingsApplianceHeading => 'Appliances';
+
+  @override
+  String get settingsApplianceHotcook => 'Hotcook';
+
+  @override
+  String get settingsApplianceHealsio => 'Healsio';
+
+  @override
+  String get settingsApplianceNotOwned => 'Not owned';
+
+  @override
+  String get settingsApplianceSeries => 'Series';
+
+  @override
+  String get settingsApplianceCapacity => 'Capacity';
+
+  @override
+  String get settingsApplianceNote =>
+      'Registered appliances get prioritized recipes, with portions adjusted to the model and capacity.';
+
+  @override
+  String get settingsDataHeading => 'Data Sync';
+
+  @override
+  String get settingsDataICloud => 'iCloud Sync';
+
+  @override
+  String get settingsDataComingSoon => 'Sync is coming soon.';
+
+  @override
+  String get settingsSupportHeading => 'Support';
+
+  @override
+  String get settingsSupportComingSoon => '(coming soon)';
+
+  @override
+  String get settingsSupportHelp => 'Help';
+
+  @override
+  String get settingsSupportAbout => 'About';
+
+  @override
+  String settingsAboutVersion(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get settingsAboutClose => 'Close';
+
+  @override
+  String get mealsConditionsLabel => 'Conditions';
+
+  @override
+  String get mealsCondAuto => 'Any';
+
+  @override
+  String get mealsCondMainOnly => 'Main only';
+
+  @override
+  String get mealsCondOneMore => 'One more dish';
+
+  @override
+  String get mealsCondQuick => 'Quick';
+
+  @override
+  String get mealsSuggestButton => 'Suggest from inventory';
+
+  @override
+  String get mealsSuggestShortcut => '⌘R';
+
+  @override
+  String get mealsBeforeBody => 'Click \"Suggest from inventory\"';
+
+  @override
+  String get mealsGenerating => 'Generating recipes…';
+
+  @override
+  String get mealsLowStockBanner =>
+      'Inventory is low, so suggestions include recipes that need shopping.';
+
+  @override
+  String get mealsErrorNetwork =>
+      'Couldn\'t get suggestions. Move to a spot with better signal or connect to Wi-Fi, then retry.';
+
+  @override
+  String get mealsErrorNoApiKey =>
+      'No AI API key is registered. Add an API key in Settings.';
+
+  @override
+  String get mealsRetry => 'Retry';
+
+  @override
+  String get mealsOpenSettings => 'Open Settings';
+
+  @override
+  String get mealsBadgeUseNear => 'Use soon';
+
+  @override
+  String get mealsApplianceHotcook => '🍲 Hotcook';
+
+  @override
+  String get mealsApplianceHealsio => '♨️ Healsio';
+
+  @override
+  String get mealsApplianceNormal => '🔥 Stovetop';
+
+  @override
+  String mealsCookMinutes(int minutes) {
+    return '⏱ $minutes min';
+  }
+
+  @override
+  String get mealsDetailEmpty => 'Select a recipe';
+
+  @override
+  String mealsCookTime(int minutes) {
+    return 'Cook time $minutes min';
+  }
+
+  @override
+  String get mealsToShopping => 'Add to shopping list';
+
+  @override
+  String get mealsDecide => 'Choose this recipe';
+
+  @override
+  String get mealsDecided => 'Chosen';
+
+  @override
+  String get mealsIngredientsHeading => 'Ingredients';
+
+  @override
+  String get mealsStepsHeading => 'Steps';
 }

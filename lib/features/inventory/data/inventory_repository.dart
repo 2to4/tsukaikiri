@@ -10,7 +10,18 @@ class InventoryRepository {
   final AppDatabase _db;
 
   /// 期限が近い順（期限なしは末尾）→ 同順なら更新日時の新しい順で監視する。
-  Stream<List<Ingredient>> watchInventory({IngredientCategory? filter}) {
+  Stream<List<Ingredient>> watchInventory({IngredientCategory? filter}) =>
+      _inventoryQuery(filter: filter).watch();
+
+  /// [watchInventory] と同じ並び・フィルタの一発取得版。
+  /// stream の初回発行は widget テストの FakeAsync 下で pump しても進まないことが
+  /// あるため、画面以外（コントローラ等）からの読み出しはこちらを使う。
+  Future<List<Ingredient>> getInventory({IngredientCategory? filter}) =>
+      _inventoryQuery(filter: filter).get();
+
+  SimpleSelectStatement<Ingredients, Ingredient> _inventoryQuery({
+    IngredientCategory? filter,
+  }) {
     final query = _db.select(_db.ingredients)
       ..orderBy([
         // expiryDate が NULL のものを後ろへ（false=0 が先）
@@ -21,7 +32,7 @@ class InventoryRepository {
     if (filter != null) {
       query.where((t) => t.category.equalsValue(filter));
     }
-    return query.watch();
+    return query;
   }
 
   Future<void> save(Ingredient ingredient) =>

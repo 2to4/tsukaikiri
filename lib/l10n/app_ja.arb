@@ -116,5 +116,171 @@
   "settingsVersionLine": "つかいきり ・ v{version}",
   "@settingsVersionLine": {
     "placeholders": { "version": { "type": "String" } }
-  }
+  },
+
+  "shellNavInventory": "在庫",
+  "shellNavCamera": "カメラ登録",
+  "shellNavMeals": "献立提案",
+  "shellNavShopping": "買い物リスト",
+  "shellNavOnboarding": "設定アシスタント",
+  "shellNavSettings": "設定",
+  "shellNavHelp": "ヘルプ",
+  "shellSectionMain": "メイン",
+  "shellSectionOther": "その他",
+  "shellInventoryCount": "{count}品の食材",
+  "@shellInventoryCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "shellPlaceholder": "この画面は準備中です。",
+  "shellPlaceholderTitle": "準備中",
+
+  "desktopCategoryLabel": "カテゴリ",
+  "desktopGroupNow": "今日・もうすぐ",
+  "desktopGroupWeek": "今週のうちに",
+  "desktopGroupPlenty": "まだ余裕",
+  "desktopSearchPlaceholder": "食材を検索…",
+  "desktopNoResults": "該当する食材がありません",
+  "desktopSelectPrompt": "食材を選択してください",
+  "desktopSelectBody": "一覧から食材をクリックすると\n詳細・編集できます",
+  "desktopAddIngredient": "食材を追加",
+  "desktopAddIngredientShortcut": "⌘N",
+  "desktopCameraRegister": "カメラ登録",
+  "desktopCameraShortcut": "⌘K",
+  "desktopSuggestMeals": "献立を提案",
+  "desktopSuggestMealsShortcut": "⌘R",
+  "desktopQuantityUnit": "{qty} {unit}",
+  "@desktopQuantityUnit": {
+    "placeholders": {
+      "qty": { "type": "String" },
+      "unit": { "type": "String" }
+    }
+  },
+  "desktopExpiryDaysOver": "{n}日超過",
+  "@desktopExpiryDaysOver": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "desktopExpiryToday": "今日まで",
+  "desktopExpiryDaysLeft": "あと{n}日",
+  "@desktopExpiryDaysLeft": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "desktopDetailQty": "数量",
+  "desktopDetailCategory": "カテゴリ",
+  "desktopDetailExpiry": "賞味期限まで",
+  "desktopSuggestWithIngredient": "この食材で献立を提案",
+  "desktopUsedUp": "使い切りにする",
+  "desktopDelete": "削除",
+  "desktopEditHint": "編集ボタンから名前・数量を変更できます",
+  "desktopCountSuffix": "{n}品",
+  "@desktopCountSuffix": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+
+  "settingsNavAi": "AI設定",
+  "settingsNavGeneral": "一般",
+  "settingsNavShopping": "買い物リスト",
+  "settingsNavAppliance": "調理家電",
+  "settingsNavData": "データ",
+  "settingsNavSupport": "サポート",
+
+  "settingsAiHeading": "AI（食材認識・献立提案）",
+  "settingsAiVisionYes": "画像認識あり",
+  "settingsAiVisionNo": "画像認識なし",
+  "settingsApiKeyHeading": "APIキー",
+  "settingsApiKeyPlaceholder": "APIキーを貼り付け",
+  "settingsApiKeyNote": "キーはこの端末内に安全に保存されます。",
+  "settingsApiKeySave": "保存",
+  "settingsApiKeyChange": "変更",
+  "settingsApiKeyDelete": "削除",
+  "settingsApiKeyGetLink": "{provider} のキーを取得",
+  "@settingsApiKeyGetLink": {
+    "placeholders": { "provider": { "type": "String" } }
+  },
+  "settingsApiKeySavedMasked": "保存済み: {masked}",
+  "@settingsApiKeySavedMasked": {
+    "placeholders": { "masked": { "type": "String" } }
+  },
+  "settingsModelHeading": "モデル",
+  "settingsModelFetch": "モデルを取得",
+  "settingsModelFetching": "取得中…",
+  "settingsModelNeedKey": "モデルを取得するには先に APIキーを保存してください。",
+  "settingsModelCurrent": "使用中: {model}",
+  "@settingsModelCurrent": {
+    "placeholders": { "model": { "type": "String" } }
+  },
+  "settingsModelDefault": "既定（自動）",
+  "settingsNetworkError": "電波の良い場所か Wi-Fi に接続してください。",
+
+  "settingsGeneralHeading": "一般",
+
+  "settingsShoppingHeading": "買い物リスト",
+  "settingsShoppingLinkedApp": "連携先アプリ",
+  "settingsShoppingReminders": "リマインダー（macOS）",
+  "settingsShoppingLists": "追加先リスト",
+  "settingsShoppingLoad": "リストを読み込む",
+  "settingsShoppingLoading": "読み込み中…",
+  "settingsShoppingCurrent": "現在: {name}",
+  "@settingsShoppingCurrent": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "settingsShoppingNone": "未選択",
+  "settingsShoppingNewName": "新しいリスト名",
+  "settingsShoppingCreate": "作成",
+  "settingsShoppingLoadError": "リストを取得できませんでした。リマインダーへのアクセスを許可しているか確認してください。",
+
+  "settingsApplianceHeading": "調理家電",
+  "settingsApplianceHotcook": "ホットクック",
+  "settingsApplianceHealsio": "ヘルシオ",
+  "settingsApplianceNotOwned": "持っていない",
+  "settingsApplianceSeries": "型（シリーズ）",
+  "settingsApplianceCapacity": "容量",
+  "settingsApplianceNote": "登録すると、その家電で作れるレシピを優先表示します。型・容量に合わせて分量も調整します。",
+
+  "settingsDataHeading": "データ同期",
+  "settingsDataICloud": "iCloud 同期",
+  "settingsDataComingSoon": "同期機能は準備中です。",
+
+  "settingsSupportHeading": "サポート",
+  "settingsSupportAuthor": "作者をサポート",
+  "settingsSupportComingSoon": "（準備中）",
+  "settingsSupportHelp": "ヘルプ",
+  "settingsSupportAbout": "このアプリについて",
+  "settingsAboutVersion": "バージョン {version}",
+  "@settingsAboutVersion": {
+    "placeholders": { "version": { "type": "String" } }
+  },
+  "settingsAboutClose": "閉じる",
+
+  "mealsConditionsLabel": "条件",
+  "mealsCondAuto": "おまかせ",
+  "mealsCondMainOnly": "主菜のみ",
+  "mealsCondOneMore": "あと1品",
+  "mealsCondQuick": "時短",
+  "mealsSuggestButton": "在庫から提案する",
+  "mealsSuggestShortcut": "⌘R",
+  "mealsBeforeBody": "「在庫から提案する」をクリックしてください",
+  "mealsGenerating": "献立を生成中…",
+  "mealsLowStockBanner": "在庫が少ないため、買い足し前提の献立も含めて提案しています。",
+  "mealsErrorNetwork": "提案を取得できませんでした。電波の良い場所か Wi-Fi に接続して再試行してください。",
+  "mealsErrorNoApiKey": "AI の API キーが未登録です。設定で API キーを登録してください。",
+  "mealsRetry": "再試行",
+  "mealsOpenSettings": "設定を開く",
+  "mealsBadgeUseNear": "期限近い",
+  "mealsApplianceHotcook": "🍲 ホットクック",
+  "mealsApplianceHealsio": "♨️ ヘルシオ",
+  "mealsApplianceNormal": "🔥 通常調理",
+  "mealsCookMinutes": "⏱ {minutes}分",
+  "@mealsCookMinutes": {
+    "placeholders": { "minutes": { "type": "int" } }
+  },
+  "mealsDetailEmpty": "献立を選択してください",
+  "mealsCookTime": "調理時間 {minutes}分",
+  "@mealsCookTime": {
+    "placeholders": { "minutes": { "type": "int" } }
+  },
+  "mealsToShopping": "買い物リストへ",
+  "mealsDecide": "献立に決める",
+  "mealsDecided": "決定済み",
+  "mealsIngredientsHeading": "材料",
+  "mealsStepsHeading": "手順"
 }

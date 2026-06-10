@@ -8,7 +8,20 @@
 
 `design_handoff/screens/` 以下の HTML ファイルは **HTML プロトタイプ（デザインリファレンス）** です。実際の見た目・インタラクション・状態遷移を確認するための参照物であり、本番コードとして直接使うものではありません。
 
-開発タスクは、これらの HTML デザインを **ターゲットコードベースの環境（React Native / SwiftUI / Jetpack Compose など）で忠実に再実装すること** です。コードベースが存在しない場合は、iOS = SwiftUI + UIKit、Android = Jetpack Compose が推奨です。
+開発タスクは、これらの HTML デザインを **ターゲットコードベースの環境で忠実に再実装すること** です。
+- **iOS**: SwiftUI + UIKit
+- **Android**: Jetpack Compose
+- **macOS**: SwiftUI (AppKit 補完) — Mac Catalyst ではなくネイティブ macOS 推奨
+
+## Platforms
+
+| プラットフォーム | フォームファクタ | レイアウト | 参照ファイル |
+|---|---|---|---|
+| iOS | スマホ (393×852) | 単一ペイン | `*スマホ（iOS）.html` |
+| iOS | iPad 横向き (1194×834) | 二ペイン | `*タブレット（iOS）.html` |
+| Android | スマホ (412×892) | 単一ペイン | `*スマホ（Android）.html` |
+| Android | タブレット横向き (1194×834) | 二ペイン | `*タブレット（Android）.html` |
+| **macOS** | **ウィンドウ (1280×800)** | **サイドバー＋三ペイン** | `つかいきり macOS.html` |
 
 ## Fidelity
 
@@ -299,6 +312,56 @@ interface AppSettings {
 | `androidPlatform.jsx` | Androidプラットフォーム差分 |
 | `androidSettings.jsx` | Android設定差分（Google ToDo/Drive） |
 | `androidOnboarding.jsx` | Androidオンボーディング差分（Googleサインイン） |
+| `macos-window.jsx` | macOS Tahoe 風ウィンドウ（Traffic Lights・Liquid Glass） |
+| `macosShell.jsx` | macOS シェル（サイドバーナビ・ツールバー・ホバー utilities） |
+| `macosOnboarding.jsx` | macOS 設定アシスタント（6ステップ・ステップレール） |
+| `macosApp.jsx` | macOS 全7画面コンポーネント＋ルート App |
+
+---
+
+## macOS Screen — つかいきり macOS.html
+
+**ファイル**: `screens/つかいきり macOS.html`（全7画面を1ファイルに統合）
+
+**ウィンドウ構成** (1280×800)
+```
+MacWindow
+├── AppSidebar (216px)  — Traffic Lights + アプリ名 + nav items
+└── Content area (1064px)
+    ├── MacBar (50px)  — 画面ごとのツールバー（⌘ショートカット付き）
+    └── Screen content (750px high)
+```
+
+**画面一覧（サイドバーで切替）**
+
+| nav key | 画面 | レイアウト |
+|---|---|---|
+| `inventory` | 在庫 | 3ペイン（168px フィルタ ＋ リスト ＋ 300px 詳細） |
+| `camera` | カメラ登録 | ドロップゾーン → 解析中 → 二ペイン候補確認 |
+| `meals` | 献立提案 | 二ペイン（360px リスト ＋ 詳細） |
+| `shopping` | 買い物リスト | 二ペイン（チェックリスト ＋ 340px 連携パネル） |
+| `settings` | 設定 | 二ペイン（200px セクションナビ ＋ フォーム） |
+| `help` | ヘルプ | スクロール読み物 |
+| `onboarding` | 設定アシスタント | 二ペイン（220px ステップレール ＋ ステップ内容） |
+
+**macOS UX ポイント（iOS/Androidとの差分）**
+- ナビゲーション: 下部タブバー → **左サイドバー（⌘1–4）**
+- アクション: FAB → **ツールバーボタン ＋ キーボードショートカット**
+- ホバー: 行ホバーで編集・削除アイコン出現
+- 選択: クリック → 右ペインに即時反映（ページ遷移なし）
+- 在庫は **3ペイン**（カテゴリフィルタ ＋ 一覧 ＋ 詳細）
+- 設定アシスタント: macOS Setup Assistant スタイル（緑グラデーションレール）
+- 連携: **リマインダー（macOS）**、**iCloud**（iOS と同じ）
+
+**macOS スクリーン実装推奨スタック**
+```
+SwiftUI + AppKit補完
+├── NavigationSplitView (3カラム) — 在庫画面
+├── NavigationSplitView (2カラム) — その他画面
+├── NSToolbar — ツールバー ＋ キーボードショートカット
+├── EventKit — リマインダー連携
+└── CloudKit — iCloud 同期
+```
 
 ---
 
