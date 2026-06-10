@@ -28,5 +28,7 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>献立に必要な買い物リストをリマインダーに追加するために使用します。</string>
 </dict>
 </plist>

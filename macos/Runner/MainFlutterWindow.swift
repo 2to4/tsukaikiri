@@ -9,6 +9,7 @@ class MainFlutterWindow: NSWindow {
     self.setFrame(windowFrame, display: true)
 
     RegisterGeneratedPlugins(registry: flutterViewController)
+    RemindersPlugin.register(with: flutterViewController.registrar(forPlugin: "RemindersPlugin"))
 
     super.awakeFromNib()
   }

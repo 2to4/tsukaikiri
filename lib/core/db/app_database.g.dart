@@ -239,7 +239,7 @@ class Ingredient extends DataClass implements Insertable<Ingredient> {
   /// 定義済み単位は [UnitOption] の列挙子名、カスタムは自由文字列。
   final String unit;
 
-  /// 賞味期限は任意（カテゴリ目安で初期値、手動修正可、空のままも可）。
+  /// 賞味期限は任意。
   final DateTime? expiryDate;
   final DateTime updatedAt;
   const Ingredient({
@@ -564,8 +564,89 @@ class $SettingsTableTable extends SettingsTable
     requiredDuringInsert: false,
     defaultValue: const Constant('system'),
   );
+  static const VerificationMeta _shoppingListIdMeta = const VerificationMeta(
+    'shoppingListId',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, localePref];
+  late final GeneratedColumn<String> shoppingListId = GeneratedColumn<String>(
+    'shopping_list_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _shoppingListNameMeta = const VerificationMeta(
+    'shoppingListName',
+  );
+  @override
+  late final GeneratedColumn<String> shoppingListName = GeneratedColumn<String>(
+    'shopping_list_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _selectedProviderMeta = const VerificationMeta(
+    'selectedProvider',
+  );
+  @override
+  late final GeneratedColumn<String> selectedProvider = GeneratedColumn<String>(
+    'selected_provider',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('gemini'),
+  );
+  static const VerificationMeta _syncEnabledMeta = const VerificationMeta(
+    'syncEnabled',
+  );
+  @override
+  late final GeneratedColumn<bool> syncEnabled = GeneratedColumn<bool>(
+    'sync_enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("sync_enabled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _lastSyncedAtMeta = const VerificationMeta(
+    'lastSyncedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastSyncedAt = GeneratedColumn<DateTime>(
+    'last_synced_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _appliancesJsonMeta = const VerificationMeta(
+    'appliancesJson',
+  );
+  @override
+  late final GeneratedColumn<String> appliancesJson = GeneratedColumn<String>(
+    'appliances_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('[]'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    localePref,
+    shoppingListId,
+    shoppingListName,
+    selectedProvider,
+    syncEnabled,
+    lastSyncedAt,
+    appliancesJson,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -587,6 +668,60 @@ class $SettingsTableTable extends SettingsTable
         localePref.isAcceptableOrUnknown(data['locale_pref']!, _localePrefMeta),
       );
     }
+    if (data.containsKey('shopping_list_id')) {
+      context.handle(
+        _shoppingListIdMeta,
+        shoppingListId.isAcceptableOrUnknown(
+          data['shopping_list_id']!,
+          _shoppingListIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('shopping_list_name')) {
+      context.handle(
+        _shoppingListNameMeta,
+        shoppingListName.isAcceptableOrUnknown(
+          data['shopping_list_name']!,
+          _shoppingListNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('selected_provider')) {
+      context.handle(
+        _selectedProviderMeta,
+        selectedProvider.isAcceptableOrUnknown(
+          data['selected_provider']!,
+          _selectedProviderMeta,
+        ),
+      );
+    }
+    if (data.containsKey('sync_enabled')) {
+      context.handle(
+        _syncEnabledMeta,
+        syncEnabled.isAcceptableOrUnknown(
+          data['sync_enabled']!,
+          _syncEnabledMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_synced_at')) {
+      context.handle(
+        _lastSyncedAtMeta,
+        lastSyncedAt.isAcceptableOrUnknown(
+          data['last_synced_at']!,
+          _lastSyncedAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('appliances_json')) {
+      context.handle(
+        _appliancesJsonMeta,
+        appliancesJson.isAcceptableOrUnknown(
+          data['appliances_json']!,
+          _appliancesJsonMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -604,6 +739,30 @@ class $SettingsTableTable extends SettingsTable
         DriftSqlType.string,
         data['${effectivePrefix}locale_pref'],
       )!,
+      shoppingListId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}shopping_list_id'],
+      ),
+      shoppingListName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}shopping_list_name'],
+      ),
+      selectedProvider: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}selected_provider'],
+      )!,
+      syncEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}sync_enabled'],
+      )!,
+      lastSyncedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_synced_at'],
+      ),
+      appliancesJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}appliances_json'],
+      )!,
     );
   }
 
@@ -618,17 +777,67 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
 
   /// 'ja' / 'en' / 'system'
   final String localePref;
-  const AppSettings({required this.id, required this.localePref});
+
+  /// macOS/iOS=calendarIdentifier / Android=tasklist id
+  final String? shoppingListId;
+
+  /// UI 表示用リスト名（識別子で引き当てた現在名）
+  final String? shoppingListName;
+
+  /// 'gemini' / 'claude' / 'openai' / 'grok'
+  final String selectedProvider;
+  final bool syncEnabled;
+  final DateTime? lastSyncedAt;
+
+  /// [{"type":"hotcook","capacity":"2.4L"}, ...] の形式で保存。
+  final String appliancesJson;
+  const AppSettings({
+    required this.id,
+    required this.localePref,
+    this.shoppingListId,
+    this.shoppingListName,
+    required this.selectedProvider,
+    required this.syncEnabled,
+    this.lastSyncedAt,
+    required this.appliancesJson,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['locale_pref'] = Variable<String>(localePref);
+    if (!nullToAbsent || shoppingListId != null) {
+      map['shopping_list_id'] = Variable<String>(shoppingListId);
+    }
+    if (!nullToAbsent || shoppingListName != null) {
+      map['shopping_list_name'] = Variable<String>(shoppingListName);
+    }
+    map['selected_provider'] = Variable<String>(selectedProvider);
+    map['sync_enabled'] = Variable<bool>(syncEnabled);
+    if (!nullToAbsent || lastSyncedAt != null) {
+      map['last_synced_at'] = Variable<DateTime>(lastSyncedAt);
+    }
+    map['appliances_json'] = Variable<String>(appliancesJson);
     return map;
   }
 
   SettingsTableCompanion toCompanion(bool nullToAbsent) {
-    return SettingsTableCompanion(id: Value(id), localePref: Value(localePref));
+    return SettingsTableCompanion(
+      id: Value(id),
+      localePref: Value(localePref),
+      shoppingListId: shoppingListId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(shoppingListId),
+      shoppingListName: shoppingListName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(shoppingListName),
+      selectedProvider: Value(selectedProvider),
+      syncEnabled: Value(syncEnabled),
+      lastSyncedAt: lastSyncedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastSyncedAt),
+      appliancesJson: Value(appliancesJson),
+    );
   }
 
   factory AppSettings.fromJson(
@@ -639,6 +848,12 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
     return AppSettings(
       id: serializer.fromJson<int>(json['id']),
       localePref: serializer.fromJson<String>(json['localePref']),
+      shoppingListId: serializer.fromJson<String?>(json['shoppingListId']),
+      shoppingListName: serializer.fromJson<String?>(json['shoppingListName']),
+      selectedProvider: serializer.fromJson<String>(json['selectedProvider']),
+      syncEnabled: serializer.fromJson<bool>(json['syncEnabled']),
+      lastSyncedAt: serializer.fromJson<DateTime?>(json['lastSyncedAt']),
+      appliancesJson: serializer.fromJson<String>(json['appliancesJson']),
     );
   }
   @override
@@ -647,17 +862,62 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'localePref': serializer.toJson<String>(localePref),
+      'shoppingListId': serializer.toJson<String?>(shoppingListId),
+      'shoppingListName': serializer.toJson<String?>(shoppingListName),
+      'selectedProvider': serializer.toJson<String>(selectedProvider),
+      'syncEnabled': serializer.toJson<bool>(syncEnabled),
+      'lastSyncedAt': serializer.toJson<DateTime?>(lastSyncedAt),
+      'appliancesJson': serializer.toJson<String>(appliancesJson),
     };
   }
 
-  AppSettings copyWith({int? id, String? localePref}) =>
-      AppSettings(id: id ?? this.id, localePref: localePref ?? this.localePref);
+  AppSettings copyWith({
+    int? id,
+    String? localePref,
+    Value<String?> shoppingListId = const Value.absent(),
+    Value<String?> shoppingListName = const Value.absent(),
+    String? selectedProvider,
+    bool? syncEnabled,
+    Value<DateTime?> lastSyncedAt = const Value.absent(),
+    String? appliancesJson,
+  }) => AppSettings(
+    id: id ?? this.id,
+    localePref: localePref ?? this.localePref,
+    shoppingListId: shoppingListId.present
+        ? shoppingListId.value
+        : this.shoppingListId,
+    shoppingListName: shoppingListName.present
+        ? shoppingListName.value
+        : this.shoppingListName,
+    selectedProvider: selectedProvider ?? this.selectedProvider,
+    syncEnabled: syncEnabled ?? this.syncEnabled,
+    lastSyncedAt: lastSyncedAt.present ? lastSyncedAt.value : this.lastSyncedAt,
+    appliancesJson: appliancesJson ?? this.appliancesJson,
+  );
   AppSettings copyWithCompanion(SettingsTableCompanion data) {
     return AppSettings(
       id: data.id.present ? data.id.value : this.id,
       localePref: data.localePref.present
           ? data.localePref.value
           : this.localePref,
+      shoppingListId: data.shoppingListId.present
+          ? data.shoppingListId.value
+          : this.shoppingListId,
+      shoppingListName: data.shoppingListName.present
+          ? data.shoppingListName.value
+          : this.shoppingListName,
+      selectedProvider: data.selectedProvider.present
+          ? data.selectedProvider.value
+          : this.selectedProvider,
+      syncEnabled: data.syncEnabled.present
+          ? data.syncEnabled.value
+          : this.syncEnabled,
+      lastSyncedAt: data.lastSyncedAt.present
+          ? data.lastSyncedAt.value
+          : this.lastSyncedAt,
+      appliancesJson: data.appliancesJson.present
+          ? data.appliancesJson.value
+          : this.appliancesJson,
     );
   }
 
@@ -665,46 +925,112 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
   String toString() {
     return (StringBuffer('AppSettings(')
           ..write('id: $id, ')
-          ..write('localePref: $localePref')
+          ..write('localePref: $localePref, ')
+          ..write('shoppingListId: $shoppingListId, ')
+          ..write('shoppingListName: $shoppingListName, ')
+          ..write('selectedProvider: $selectedProvider, ')
+          ..write('syncEnabled: $syncEnabled, ')
+          ..write('lastSyncedAt: $lastSyncedAt, ')
+          ..write('appliancesJson: $appliancesJson')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, localePref);
+  int get hashCode => Object.hash(
+    id,
+    localePref,
+    shoppingListId,
+    shoppingListName,
+    selectedProvider,
+    syncEnabled,
+    lastSyncedAt,
+    appliancesJson,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AppSettings &&
           other.id == this.id &&
-          other.localePref == this.localePref);
+          other.localePref == this.localePref &&
+          other.shoppingListId == this.shoppingListId &&
+          other.shoppingListName == this.shoppingListName &&
+          other.selectedProvider == this.selectedProvider &&
+          other.syncEnabled == this.syncEnabled &&
+          other.lastSyncedAt == this.lastSyncedAt &&
+          other.appliancesJson == this.appliancesJson);
 }
 
 class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
   final Value<int> id;
   final Value<String> localePref;
+  final Value<String?> shoppingListId;
+  final Value<String?> shoppingListName;
+  final Value<String> selectedProvider;
+  final Value<bool> syncEnabled;
+  final Value<DateTime?> lastSyncedAt;
+  final Value<String> appliancesJson;
   const SettingsTableCompanion({
     this.id = const Value.absent(),
     this.localePref = const Value.absent(),
+    this.shoppingListId = const Value.absent(),
+    this.shoppingListName = const Value.absent(),
+    this.selectedProvider = const Value.absent(),
+    this.syncEnabled = const Value.absent(),
+    this.lastSyncedAt = const Value.absent(),
+    this.appliancesJson = const Value.absent(),
   });
   SettingsTableCompanion.insert({
     this.id = const Value.absent(),
     this.localePref = const Value.absent(),
+    this.shoppingListId = const Value.absent(),
+    this.shoppingListName = const Value.absent(),
+    this.selectedProvider = const Value.absent(),
+    this.syncEnabled = const Value.absent(),
+    this.lastSyncedAt = const Value.absent(),
+    this.appliancesJson = const Value.absent(),
   });
   static Insertable<AppSettings> custom({
     Expression<int>? id,
     Expression<String>? localePref,
+    Expression<String>? shoppingListId,
+    Expression<String>? shoppingListName,
+    Expression<String>? selectedProvider,
+    Expression<bool>? syncEnabled,
+    Expression<DateTime>? lastSyncedAt,
+    Expression<String>? appliancesJson,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (localePref != null) 'locale_pref': localePref,
+      if (shoppingListId != null) 'shopping_list_id': shoppingListId,
+      if (shoppingListName != null) 'shopping_list_name': shoppingListName,
+      if (selectedProvider != null) 'selected_provider': selectedProvider,
+      if (syncEnabled != null) 'sync_enabled': syncEnabled,
+      if (lastSyncedAt != null) 'last_synced_at': lastSyncedAt,
+      if (appliancesJson != null) 'appliances_json': appliancesJson,
     });
   }
 
-  SettingsTableCompanion copyWith({Value<int>? id, Value<String>? localePref}) {
+  SettingsTableCompanion copyWith({
+    Value<int>? id,
+    Value<String>? localePref,
+    Value<String?>? shoppingListId,
+    Value<String?>? shoppingListName,
+    Value<String>? selectedProvider,
+    Value<bool>? syncEnabled,
+    Value<DateTime?>? lastSyncedAt,
+    Value<String>? appliancesJson,
+  }) {
     return SettingsTableCompanion(
       id: id ?? this.id,
       localePref: localePref ?? this.localePref,
+      shoppingListId: shoppingListId ?? this.shoppingListId,
+      shoppingListName: shoppingListName ?? this.shoppingListName,
+      selectedProvider: selectedProvider ?? this.selectedProvider,
+      syncEnabled: syncEnabled ?? this.syncEnabled,
+      lastSyncedAt: lastSyncedAt ?? this.lastSyncedAt,
+      appliancesJson: appliancesJson ?? this.appliancesJson,
     );
   }
 
@@ -717,6 +1043,24 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
     if (localePref.present) {
       map['locale_pref'] = Variable<String>(localePref.value);
     }
+    if (shoppingListId.present) {
+      map['shopping_list_id'] = Variable<String>(shoppingListId.value);
+    }
+    if (shoppingListName.present) {
+      map['shopping_list_name'] = Variable<String>(shoppingListName.value);
+    }
+    if (selectedProvider.present) {
+      map['selected_provider'] = Variable<String>(selectedProvider.value);
+    }
+    if (syncEnabled.present) {
+      map['sync_enabled'] = Variable<bool>(syncEnabled.value);
+    }
+    if (lastSyncedAt.present) {
+      map['last_synced_at'] = Variable<DateTime>(lastSyncedAt.value);
+    }
+    if (appliancesJson.present) {
+      map['appliances_json'] = Variable<String>(appliancesJson.value);
+    }
     return map;
   }
 
@@ -724,7 +1068,13 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
   String toString() {
     return (StringBuffer('SettingsTableCompanion(')
           ..write('id: $id, ')
-          ..write('localePref: $localePref')
+          ..write('localePref: $localePref, ')
+          ..write('shoppingListId: $shoppingListId, ')
+          ..write('shoppingListName: $shoppingListName, ')
+          ..write('selectedProvider: $selectedProvider, ')
+          ..write('syncEnabled: $syncEnabled, ')
+          ..write('lastSyncedAt: $lastSyncedAt, ')
+          ..write('appliancesJson: $appliancesJson')
           ..write(')'))
         .toString();
   }
@@ -1008,9 +1358,27 @@ typedef $$IngredientsTableProcessedTableManager =
       PrefetchHooks Function()
     >;
 typedef $$SettingsTableTableCreateCompanionBuilder =
-    SettingsTableCompanion Function({Value<int> id, Value<String> localePref});
+    SettingsTableCompanion Function({
+      Value<int> id,
+      Value<String> localePref,
+      Value<String?> shoppingListId,
+      Value<String?> shoppingListName,
+      Value<String> selectedProvider,
+      Value<bool> syncEnabled,
+      Value<DateTime?> lastSyncedAt,
+      Value<String> appliancesJson,
+    });
 typedef $$SettingsTableTableUpdateCompanionBuilder =
-    SettingsTableCompanion Function({Value<int> id, Value<String> localePref});
+    SettingsTableCompanion Function({
+      Value<int> id,
+      Value<String> localePref,
+      Value<String?> shoppingListId,
+      Value<String?> shoppingListName,
+      Value<String> selectedProvider,
+      Value<bool> syncEnabled,
+      Value<DateTime?> lastSyncedAt,
+      Value<String> appliancesJson,
+    });
 
 class $$SettingsTableTableFilterComposer
     extends Composer<_$AppDatabase, $SettingsTableTable> {
@@ -1028,6 +1396,36 @@ class $$SettingsTableTableFilterComposer
 
   ColumnFilters<String> get localePref => $composableBuilder(
     column: $table.localePref,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get shoppingListId => $composableBuilder(
+    column: $table.shoppingListId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get shoppingListName => $composableBuilder(
+    column: $table.shoppingListName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get selectedProvider => $composableBuilder(
+    column: $table.selectedProvider,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get syncEnabled => $composableBuilder(
+    column: $table.syncEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastSyncedAt => $composableBuilder(
+    column: $table.lastSyncedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get appliancesJson => $composableBuilder(
+    column: $table.appliancesJson,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -1050,6 +1448,36 @@ class $$SettingsTableTableOrderingComposer
     column: $table.localePref,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get shoppingListId => $composableBuilder(
+    column: $table.shoppingListId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get shoppingListName => $composableBuilder(
+    column: $table.shoppingListName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get selectedProvider => $composableBuilder(
+    column: $table.selectedProvider,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get syncEnabled => $composableBuilder(
+    column: $table.syncEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastSyncedAt => $composableBuilder(
+    column: $table.lastSyncedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get appliancesJson => $composableBuilder(
+    column: $table.appliancesJson,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$SettingsTableTableAnnotationComposer
@@ -1066,6 +1494,36 @@ class $$SettingsTableTableAnnotationComposer
 
   GeneratedColumn<String> get localePref => $composableBuilder(
     column: $table.localePref,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get shoppingListId => $composableBuilder(
+    column: $table.shoppingListId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get shoppingListName => $composableBuilder(
+    column: $table.shoppingListName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get selectedProvider => $composableBuilder(
+    column: $table.selectedProvider,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get syncEnabled => $composableBuilder(
+    column: $table.syncEnabled,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get lastSyncedAt => $composableBuilder(
+    column: $table.lastSyncedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get appliancesJson => $composableBuilder(
+    column: $table.appliancesJson,
     builder: (column) => column,
   );
 }
@@ -1103,13 +1561,42 @@ class $$SettingsTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> localePref = const Value.absent(),
-              }) => SettingsTableCompanion(id: id, localePref: localePref),
+                Value<String?> shoppingListId = const Value.absent(),
+                Value<String?> shoppingListName = const Value.absent(),
+                Value<String> selectedProvider = const Value.absent(),
+                Value<bool> syncEnabled = const Value.absent(),
+                Value<DateTime?> lastSyncedAt = const Value.absent(),
+                Value<String> appliancesJson = const Value.absent(),
+              }) => SettingsTableCompanion(
+                id: id,
+                localePref: localePref,
+                shoppingListId: shoppingListId,
+                shoppingListName: shoppingListName,
+                selectedProvider: selectedProvider,
+                syncEnabled: syncEnabled,
+                lastSyncedAt: lastSyncedAt,
+                appliancesJson: appliancesJson,
+              ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> localePref = const Value.absent(),
-              }) =>
-                  SettingsTableCompanion.insert(id: id, localePref: localePref),
+                Value<String?> shoppingListId = const Value.absent(),
+                Value<String?> shoppingListName = const Value.absent(),
+                Value<String> selectedProvider = const Value.absent(),
+                Value<bool> syncEnabled = const Value.absent(),
+                Value<DateTime?> lastSyncedAt = const Value.absent(),
+                Value<String> appliancesJson = const Value.absent(),
+              }) => SettingsTableCompanion.insert(
+                id: id,
+                localePref: localePref,
+                shoppingListId: shoppingListId,
+                shoppingListName: shoppingListName,
+                selectedProvider: selectedProvider,
+                syncEnabled: syncEnabled,
+                lastSyncedAt: lastSyncedAt,
+                appliancesJson: appliancesJson,
+              ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
               .toList(),

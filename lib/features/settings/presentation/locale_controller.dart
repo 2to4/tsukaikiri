@@ -13,8 +13,8 @@ class LocaleController extends Notifier<Locale?> {
   }
 
   Future<void> _load() async {
-    final pref = await ref.read(settingsRepositoryProvider).getLocalePref();
-    state = _toLocale(pref);
+    final settings = await ref.read(settingsRepositoryProvider).get();
+    state = _toLocale(settings.localePref);
   }
 
   Future<void> setPref(String pref) async {

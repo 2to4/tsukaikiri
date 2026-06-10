@@ -5,7 +5,7 @@ import '../../features/inventory/domain/ingredient_category.dart';
 
 part 'app_database.g.dart';
 
-/// 在庫食材テーブル。生成されるデータクラスは [Ingredient]。
+/// 在庫食材テーブル。
 /// 主キーは将来のクラウド同期での競合回避のため UUID（String）。
 class Ingredients extends Table {
   TextColumn get id => text()();
@@ -23,7 +23,7 @@ class Ingredients extends Table {
   /// 定義済み単位は [UnitOption] の列挙子名、カスタムは自由文字列。
   TextColumn get unit => text()();
 
-  /// 賞味期限は任意（カテゴリ目安で初期値、手動修正可、空のままも可）。
+  /// 賞味期限は任意。
   DateTimeColumn get expiryDate => dateTime().nullable()();
 
   DateTimeColumn get updatedAt => dateTime()();
@@ -32,13 +32,40 @@ class Ingredients extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-/// アプリ設定（単一レコード, id=0 固定）。最小版は locale のみ。
+/// アプリ設定（単一レコード, id=0 固定）。
 @DataClassName('AppSettings')
 class SettingsTable extends Table {
   IntColumn get id => integer().withDefault(const Constant(0))();
 
   /// 'ja' / 'en' / 'system'
   TextColumn get localePref => text().withDefault(const Constant('system'))();
+
+  // ---- 買い物リスト連携 ----
+
+  /// macOS/iOS=calendarIdentifier / Android=tasklist id
+  TextColumn get shoppingListId => text().nullable()();
+
+  /// UI 表示用リスト名（識別子で引き当てた現在名）
+  TextColumn get shoppingListName => text().nullable()();
+
+  // ---- AI プロバイダ ----
+
+  /// 'gemini' / 'claude' / 'openai' / 'grok'
+  TextColumn get selectedProvider =>
+      text().withDefault(const Constant('gemini'))();
+
+  // ---- 同期 ----
+
+  BoolColumn get syncEnabled =>
+      boolean().withDefault(const Constant(false))();
+
+  DateTimeColumn get lastSyncedAt => dateTime().nullable()();
+
+  // ---- 所有家電 (JSON 配列) ----
+
+  /// [{"type":"hotcook","capacity":"2.4L"}, ...] の形式で保存。
+  TextColumn get appliancesJson =>
+      text().withDefault(const Constant('[]'))();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -50,5 +77,19 @@ class AppDatabase extends _$AppDatabase {
       : super(executor ?? driftDatabase(name: 'tsukaikiri'));
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onUpgrade: (m, from, to) async {
+          if (from < 2) {
+            await m.addColumn(settingsTable, settingsTable.shoppingListId);
+            await m.addColumn(settingsTable, settingsTable.shoppingListName);
+            await m.addColumn(settingsTable, settingsTable.selectedProvider);
+            await m.addColumn(settingsTable, settingsTable.syncEnabled);
+            await m.addColumn(settingsTable, settingsTable.lastSyncedAt);
+            await m.addColumn(settingsTable, settingsTable.appliancesJson);
+          }
+        },
+      );
 }
