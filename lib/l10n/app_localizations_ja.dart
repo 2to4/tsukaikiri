@@ -882,6 +882,40 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String get shoppingMobileTitle => '買い物リスト';
+
+  @override
+  String get shoppingMobileSubtitle => '献立に足りない食材です';
+
+  @override
+  String shoppingMobileSummary(int total, int chosen) {
+    return '不足 $total品 ・ $chosen品を追加';
+  }
+
+  @override
+  String get shoppingDest => '追加先';
+
+  @override
+  String get shoppingChange => '変更';
+
+  @override
+  String get shoppingAdding => 'リマインダーに追加中…';
+
+  @override
+  String shoppingAddingDetail(String list, int count) {
+    return '「$list」に $count件 を送信しています';
+  }
+
+  @override
+  String get shoppingErrorRetainNotice => '選択した内容は保持されています';
+
+  @override
+  String get shoppingTryAgain => 'もう一度試す';
+
+  @override
+  String get shoppingBack => 'もどる';
+
+  @override
   String get cameraTitle => 'カメラ登録';
 
   @override

@@ -1706,6 +1706,66 @@ abstract class AppLocalizations {
   /// **'{qty} pcs'**
   String shoppingQtyUnit(int qty);
 
+  /// No description provided for @shoppingMobileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping list'**
+  String get shoppingMobileTitle;
+
+  /// No description provided for @shoppingMobileSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ingredients missing for your meals'**
+  String get shoppingMobileSubtitle;
+
+  /// No description provided for @shoppingMobileSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{total} missing · adding {chosen}'**
+  String shoppingMobileSummary(int total, int chosen);
+
+  /// No description provided for @shoppingDest.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to'**
+  String get shoppingDest;
+
+  /// No description provided for @shoppingChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get shoppingChange;
+
+  /// No description provided for @shoppingAdding.
+  ///
+  /// In en, this message translates to:
+  /// **'Adding to Reminders…'**
+  String get shoppingAdding;
+
+  /// No description provided for @shoppingAddingDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending {count} items to \"{list}\"'**
+  String shoppingAddingDetail(String list, int count);
+
+  /// No description provided for @shoppingErrorRetainNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Your selection has been kept'**
+  String get shoppingErrorRetainNotice;
+
+  /// No description provided for @shoppingTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get shoppingTryAgain;
+
+  /// No description provided for @shoppingBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get shoppingBack;
+
   /// No description provided for @cameraTitle.
   ///
   /// In en, this message translates to:

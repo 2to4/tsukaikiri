@@ -385,6 +385,28 @@
   "@shoppingQtyUnit": {
     "placeholders": { "qty": { "type": "int" } }
   },
+  "shoppingMobileTitle": "買い物リスト",
+  "shoppingMobileSubtitle": "献立に足りない食材です",
+  "shoppingMobileSummary": "不足 {total}品 ・ {chosen}品を追加",
+  "@shoppingMobileSummary": {
+    "placeholders": {
+      "total": { "type": "int" },
+      "chosen": { "type": "int" }
+    }
+  },
+  "shoppingDest": "追加先",
+  "shoppingChange": "変更",
+  "shoppingAdding": "リマインダーに追加中…",
+  "shoppingAddingDetail": "「{list}」に {count}件 を送信しています",
+  "@shoppingAddingDetail": {
+    "placeholders": {
+      "list": { "type": "String" },
+      "count": { "type": "int" }
+    }
+  },
+  "shoppingErrorRetainNotice": "選択した内容は保持されています",
+  "shoppingTryAgain": "もう一度試す",
+  "shoppingBack": "もどる",
 
   "cameraTitle": "カメラ登録",
   "cameraDropZoneTitle": "写真をドロップ、または クリックして選択",

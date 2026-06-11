@@ -7,6 +7,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../inventory/presentation/inventory_providers.dart';
 import '../../settings/presentation/settings_screen.dart';
+import '../../shopping/presentation/shopping_mobile_view.dart';
 import '../../shopping/service/missing_ingredients_service.dart';
 import '../domain/recipe_constraints.dart';
 import '../domain/suggested_recipe.dart';
@@ -496,13 +497,12 @@ class _ResultsView extends ConsumerWidget {
     WidgetRef ref,
     List<SuggestedRecipe> decided,
   ) {
-    final l10n = AppLocalizations.of(context);
-    // 決定済み献立を M5（買い物リスト）に引き渡す。
+    // 決定済み献立を M5（買い物リスト）に引き渡してから遷移する。
+    // ShoppingMobileScreen は initState で initialize() を呼び不足食材を計算する。
     ref.read(mealsForShoppingProvider.notifier).set(decided);
-    // TODO(次タスク): ShoppingMobileScreen へ遷移する。実装まではプレースホルダ。
-    ScaffoldMessenger.of(context)
-      ..clearSnackBars()
-      ..showSnackBar(SnackBar(content: Text(l10n.comingSoon)));
+    Navigator.of(context).push(MaterialPageRoute<void>(
+      builder: (_) => const ShoppingMobileScreen(),
+    ));
   }
 }
 

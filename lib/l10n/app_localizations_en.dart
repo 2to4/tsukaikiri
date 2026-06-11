@@ -894,6 +894,40 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get shoppingMobileTitle => 'Shopping list';
+
+  @override
+  String get shoppingMobileSubtitle => 'Ingredients missing for your meals';
+
+  @override
+  String shoppingMobileSummary(int total, int chosen) {
+    return '$total missing · adding $chosen';
+  }
+
+  @override
+  String get shoppingDest => 'Add to';
+
+  @override
+  String get shoppingChange => 'Change';
+
+  @override
+  String get shoppingAdding => 'Adding to Reminders…';
+
+  @override
+  String shoppingAddingDetail(String list, int count) {
+    return 'Sending $count items to \"$list\"';
+  }
+
+  @override
+  String get shoppingErrorRetainNotice => 'Your selection has been kept';
+
+  @override
+  String get shoppingTryAgain => 'Try again';
+
+  @override
+  String get shoppingBack => 'Back';
+
+  @override
   String get cameraTitle => 'Camera Registration';
 
   @override

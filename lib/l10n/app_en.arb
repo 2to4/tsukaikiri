@@ -395,6 +395,28 @@
   "@shoppingQtyUnit": {
     "placeholders": { "qty": { "type": "int" } }
   },
+  "shoppingMobileTitle": "Shopping list",
+  "shoppingMobileSubtitle": "Ingredients missing for your meals",
+  "shoppingMobileSummary": "{total} missing · adding {chosen}",
+  "@shoppingMobileSummary": {
+    "placeholders": {
+      "total": { "type": "int" },
+      "chosen": { "type": "int" }
+    }
+  },
+  "shoppingDest": "Add to",
+  "shoppingChange": "Change",
+  "shoppingAdding": "Adding to Reminders…",
+  "shoppingAddingDetail": "Sending {count} items to \"{list}\"",
+  "@shoppingAddingDetail": {
+    "placeholders": {
+      "list": { "type": "String" },
+      "count": { "type": "int" }
+    }
+  },
+  "shoppingErrorRetainNotice": "Your selection has been kept",
+  "shoppingTryAgain": "Try again",
+  "shoppingBack": "Back",
 
   "cameraTitle": "Camera Registration",
   "cameraDropZoneTitle": "Drop photos, or click to select",
