@@ -51,7 +51,13 @@ flutter build apk --release           # Android リリースビルド
 
 `lib/core/db/app_database.dart` のテーブル定義を変更したら `dart run build_runner build` を必ず実行する。
 
-**macOS の署名制約（フェーズ8以降）**: iCloud entitlement により macOS ビルドは Team 署名（LT37BHQT62・Xcode 設定済み）が必須。Claude Code のシェルはキーチェーン UI が使えず `codesign` が `errSecInternalComponent` で失敗するため、`flutter run -d macos` / `flutter build macos` は**ユーザーのターミナルか Xcode から実行してもらう**。開発側でのコンパイル確認は `cd macos && xcodebuild -workspace Runner.xcworkspace -scheme Runner -configuration Debug CODE_SIGNING_ALLOWED=NO build` を使う。
+**macOS の署名（フェーズ8以降）**: iCloud entitlement により macOS ビルドは Team 署名（LT37BHQT62）が必須。Claude Code のシェルは Background セッションで login キーチェーンが使えないため、**専用署名キーチェーン `tsukaikiri-ci`**（2026-06-12 セットアップ済み・パスワードは `~/.config/tsukaikiri/ci-keychain-pass`）を使う。ビルド前に必ず解錠する:
+
+```bash
+security unlock-keychain -p "$(cat ~/.config/tsukaikiri/ci-keychain-pass)" ~/Library/Keychains/tsukaikiri-ci.keychain-db
+```
+
+解錠後の `flutter run -d macos` / `flutter build macos` は**サンドボックス無効で実行する**（codesign の信頼チェーン評価がサンドボックス内では trustd に届かず `errSecInternalComponent` / `CSSMERR_TP_NOT_TRUSTED` になる。`codesign --verify` 等の検証コマンドも同様）。`flutter run` はアプリを前面に出せない警告（`Failed to foreground app`）が出るが起動・ホットリロードとも正常。キーチェーンが壊れた・証明書を更新した場合は、ユーザーのターミナルで `tool/macos_signing/setup_signing_keychain.sh` を再実行してもらう（冪等）。
 
 ## コード構成
 
