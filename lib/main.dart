@@ -2,14 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/layout/breakpoints.dart';
+import 'core/providers.dart';
+import 'core/shelf_life/shelf_life_table.dart';
 import 'core/theme/app_theme.dart';
 import 'features/inventory/presentation/inventory_list_screen.dart';
 import 'features/settings/presentation/locale_controller.dart';
 import 'features/shell/presentation/app_shell.dart';
 import 'l10n/app_localizations.dart';
 
-void main() {
-  runApp(const ProviderScope(child: TsukaikiriApp()));
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // 日持ち目安テーブルを起動時に読み込む。失敗しても空テーブルで起動を続ける。
+  ShelfLifeTable shelfLifeTable;
+  try {
+    shelfLifeTable = await ShelfLifeTable.load();
+  } catch (_) {
+    shelfLifeTable = ShelfLifeTable.empty();
+  }
+
+  runApp(
+    ProviderScope(
+      overrides: [
+        shelfLifeTableProvider.overrideWithValue(shelfLifeTable),
+      ],
+      child: const TsukaikiriApp(),
+    ),
+  );
 }
 
 class TsukaikiriApp extends ConsumerWidget {

@@ -64,8 +64,23 @@ class _IngredientFormScreenState extends ConsumerState<IngredientFormScreen> {
       _category = IngredientCategory.vegetable;
       _unitOption = UnitOption.piece;
       _customUnitCtrl = TextEditingController();
+      // 初期値はカテゴリ目安のみ（名前は空なのでテーブル照合はしない）。
       _expiry = defaultExpiryFrom(_category, DateTime.now());
     }
+  }
+
+  /// 名前・カテゴリから期限を再計算する。ユーザーが手動変更済みなら何もしない。
+  void _recalcExpiry() {
+    if (_expiryManuallySet) return;
+    final table = ref.read(shelfLifeTableProvider);
+    setState(() {
+      _expiry = expiryFromName(
+        table,
+        _nameCtrl.text.trim(),
+        _category,
+        DateTime.now(),
+      );
+    });
   }
 
   @override
@@ -77,13 +92,13 @@ class _IngredientFormScreenState extends ConsumerState<IngredientFormScreen> {
   }
 
   void _onCategoryChanged(IngredientCategory value) {
-    setState(() {
-      _category = value;
-      // ユーザーが期限を触っていなければカテゴリ目安で更新する。
-      if (!_expiryManuallySet) {
-        _expiry = defaultExpiryFrom(value, DateTime.now());
-      }
-    });
+    _category = value;
+    // ユーザーが期限を触っていなければ名前＋カテゴリ目安で更新する。
+    if (_expiryManuallySet) {
+      setState(() {});
+    } else {
+      _recalcExpiry();
+    }
   }
 
   Future<void> _pickExpiry() async {
@@ -156,6 +171,8 @@ class _IngredientFormScreenState extends ConsumerState<IngredientFormScreen> {
               controller: _nameCtrl,
               decoration: InputDecoration(labelText: l10n.fieldName),
               textInputAction: TextInputAction.next,
+              // 編集モードでは既存値維持のため再計算しない（_expiryManuallySet）。
+              onChanged: (_) => _recalcExpiry(),
               validator: (v) => (v == null || v.trim().isEmpty)
                   ? l10n.validationNameRequired
                   : null,

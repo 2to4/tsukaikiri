@@ -371,11 +371,12 @@ class CameraCaptureController extends Notifier<CameraCaptureState> {
     }
 
     final repo = ref.read(inventoryRepositoryProvider);
+    final table = ref.read(shelfLifeTableProvider);
     final now = DateTime.now();
 
     for (final c in checked) {
       final category = c.category;
-      final expiry = defaultExpiryFrom(category, now);
+      final expiry = expiryFromName(table, c.name, category, now);
       final ingredient = Ingredient(
         id: _uuid.v4(),
         name: c.name,

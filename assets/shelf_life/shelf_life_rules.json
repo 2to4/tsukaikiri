@@ -1,0 +1,1997 @@
+{
+  "schemaVersion": 1,
+  "source": "USDA FoodKeeper (2019-06 mirror) + Japanese supplement",
+  "generatedBy": "tool/shelf_life/generate.dart",
+  "rules": [
+    {
+      "normalizedKey": "aburaage",
+      "aliases": [
+        "油揚げ",
+        "あぶらあげ",
+        "油あげ"
+      ],
+      "category": "other",
+      "days": 5,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "aji",
+      "aliases": [
+        "あじ",
+        "アジ",
+        "鯵"
+      ],
+      "category": "fish",
+      "days": 2,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "apple",
+      "aliases": [
+        "りんご",
+        "リンゴ",
+        "林檎"
+      ],
+      "category": "fruit",
+      "days": 35,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "apricot",
+      "aliases": [
+        "梨",
+        "なし",
+        "ナシ"
+      ],
+      "category": "fruit",
+      "days": 4,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "asparagus",
+      "aliases": [
+        "アスパラガス",
+        "アスパラ"
+      ],
+      "category": "vegetable",
+      "days": 4,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "atsuage",
+      "aliases": [
+        "厚揚げ",
+        "あつあげ",
+        "生揚げ"
+      ],
+      "category": "other",
+      "days": 4,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "avocado",
+      "aliases": [
+        "アボカド"
+      ],
+      "category": "fruit",
+      "days": 4,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "bacon",
+      "aliases": [
+        "ベーコン"
+      ],
+      "category": "meat",
+      "days": 7,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "banana",
+      "aliases": [
+        "バナナ"
+      ],
+      "category": "fruit",
+      "days": 3,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "bean_sprouts",
+      "aliases": [
+        "もやし",
+        "モヤシ",
+        "豆もやし"
+      ],
+      "category": "vegetable",
+      "days": 3,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "beef_roast",
+      "aliases": [
+        "牛塊肉",
+        "ローストビーフ用",
+        "ブロック肉(牛)"
+      ],
+      "category": "meat",
+      "days": 4,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "beef_steak",
+      "aliases": [
+        "牛肉",
+        "ビーフ",
+        "牛ステーキ",
+        "ステーキ肉"
+      ],
+      "category": "meat",
+      "days": 4,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "beef_stew",
+      "aliases": [
+        "牛角切り",
+        "シチュー用牛肉",
+        "カレー用牛肉"
+      ],
+      "category": "meat",
+      "days": 4,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "beni_shoga",
+      "aliases": [
+        "紅生姜",
+        "べにしょうが",
+        "ガリ"
+      ],
+      "category": "other",
+      "days": 60,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "blueberry",
+      "aliases": [
+        "ブルーベリー",
+        "ベリー"
+      ],
+      "category": "fruit",
+      "days": 11,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "bread",
+      "aliases": [
+        "パン",
+        "食パン",
+        "ロールパン"
+      ],
+      "category": "grain",
+      "days": 16,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "broccoli",
+      "aliases": [
+        "ブロッコリー"
+      ],
+      "category": "vegetable",
+      "days": 4,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "buri",
+      "aliases": [
+        "ぶり",
+        "ブリ",
+        "鰤",
+        "はまち",
+        "ハマチ"
+      ],
+      "category": "fish",
+      "days": 2,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "butter",
+      "aliases": [
+        "バター"
+      ],
+      "category": "dairy",
+      "days": 45,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "cabbage",
+      "aliases": [
+        "キャベツ"
+      ],
+      "category": "vegetable",
+      "days": 11,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "canned_chicken",
+      "aliases": [
+        "鶏肉の缶詰",
+        "やきとり缶"
+      ],
+      "category": "meat",
+      "days": 1825,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "carrot",
+      "aliases": [
+        "にんじん",
+        "ニンジン",
+        "人参"
+      ],
+      "category": "vegetable",
+      "days": 18,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "cauliflower",
+      "aliases": [
+        "カリフラワー"
+      ],
+      "category": "vegetable",
+      "days": 4,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "celery",
+      "aliases": [
+        "セロリ"
+      ],
+      "category": "vegetable",
+      "days": 11,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "cereal",
+      "aliases": [
+        "シリアル",
+        "コーンフレーク",
+        "グラノーラ"
+      ],
+      "category": "grain",
+      "days": 270,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "cheese_hard",
+      "aliases": [
+        "チーズ",
+        "チェダー",
+        "ブロックチーズ"
+      ],
+      "category": "dairy",
+      "days": 180,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "cheese_shredded",
+      "aliases": [
+        "とろけるチーズ",
+        "ピザ用チーズ",
+        "シュレッドチーズ"
+      ],
+      "category": "dairy",
+      "days": 30,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "cherry_tomato",
+      "aliases": [
+        "ミニトマト",
+        "プチトマト"
+      ],
+      "category": "vegetable",
+      "days": 5,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "chicken_breast",
+      "aliases": [
+        "鶏むね肉",
+        "鶏胸肉",
+        "とりむね",
+        "鶏ムネ"
+      ],
+      "category": "meat",
+      "days": 2,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "chicken_thigh",
+      "aliases": [
+        "鶏もも肉",
+        "鶏モモ",
+        "とりもも",
+        "もも肉"
+      ],
+      "category": "meat",
+      "days": 2,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "chicken_whole",
+      "aliases": [
+        "鶏肉",
+        "鶏",
+        "丸鶏",
+        "チキン"
+      ],
+      "category": "meat",
+      "days": 2,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "chigiri_konnyaku",
+      "aliases": [
+        "ちぎりこんにゃく"
+      ],
+      "category": "other",
+      "days": 14,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "chikuwa",
+      "aliases": [
+        "ちくわ",
+        "チクワ",
+        "竹輪"
+      ],
+      "category": "other",
+      "days": 7,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "chikuwabu",
+      "aliases": [
+        "ちくわぶ"
+      ],
+      "category": "other",
+      "days": 7,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "chili_oil",
+      "aliases": [
+        "ラー油",
+        "辣油"
+      ],
+      "category": "seasoning",
+      "days": 365,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "chirimen",
+      "aliases": [
+        "ちりめんじゃこ",
+        "じゃこ",
+        "ちりめん"
+      ],
+      "category": "fish",
+      "days": 14,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "citrus",
+      "aliases": [
+        "オレンジ",
+        "みかん",
+        "ミカン",
+        "柑橘",
+        "レモン",
+        "ライム",
+        "グレープフルーツ"
+      ],
+      "category": "fruit",
+      "days": 16,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "coffee_beans",
+      "aliases": [
+        "コーヒー豆",
+        "コーヒー",
+        "ドリップコーヒー"
+      ],
+      "category": "beverage",
+      "days": 120,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "cooking_oil",
+      "aliases": [
+        "サラダ油",
+        "植物油",
+        "オリーブオイル",
+        "油"
+      ],
+      "category": "seasoning",
+      "days": 270,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "cooking_sake",
+      "aliases": [
+        "料理酒",
+        "日本酒(調理用)"
+      ],
+      "category": "seasoning",
+      "days": 180,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "corn",
+      "aliases": [
+        "とうもろこし",
+        "トウモロコシ",
+        "コーン"
+      ],
+      "category": "vegetable",
+      "days": 2,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "cottage_cheese",
+      "aliases": [
+        "カッテージチーズ"
+      ],
+      "category": "dairy",
+      "days": 14,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "crab",
+      "aliases": [
+        "かに",
+        "カニ",
+        "蟹",
+        "ずわいがに"
+      ],
+      "category": "fish",
+      "days": 2,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "cream",
+      "aliases": [
+        "生クリーム",
+        "ホイップクリーム"
+      ],
+      "category": "dairy",
+      "days": 4,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "cream_cheese",
+      "aliases": [
+        "クリームチーズ"
+      ],
+      "category": "dairy",
+      "days": 14,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "cucumber",
+      "aliases": [
+        "きゅうり",
+        "キュウリ",
+        "胡瓜"
+      ],
+      "category": "vegetable",
+      "days": 5,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "daikon",
+      "aliases": [
+        "大根",
+        "だいこん",
+        "ダイコン"
+      ],
+      "category": "vegetable",
+      "days": 14,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "dashi_liquid",
+      "aliases": [
+        "だし",
+        "出汁",
+        "白だし"
+      ],
+      "category": "seasoning",
+      "days": 60,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "doubanjiang",
+      "aliases": [
+        "豆板醤",
+        "トウバンジャン"
+      ],
+      "category": "seasoning",
+      "days": 180,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "eggplant",
+      "aliases": [
+        "なす",
+        "ナス",
+        "茄子"
+      ],
+      "category": "vegetable",
+      "days": 6,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "eggs",
+      "aliases": [
+        "卵",
+        "たまご",
+        "タマゴ",
+        "鶏卵"
+      ],
+      "category": "egg",
+      "days": 28,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "eggs_boiled",
+      "aliases": [
+        "ゆで卵",
+        "ゆでたまご",
+        "茹で卵"
+      ],
+      "category": "egg",
+      "days": 7,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "enoki",
+      "aliases": [
+        "えのき",
+        "エノキ",
+        "えのきだけ"
+      ],
+      "category": "vegetable",
+      "days": 5,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "eringi",
+      "aliases": [
+        "エリンギ"
+      ],
+      "category": "vegetable",
+      "days": 7,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "fish_fresh",
+      "aliases": [
+        "白身魚",
+        "魚",
+        "鮮魚",
+        "切り身"
+      ],
+      "category": "fish",
+      "days": 4,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "flour",
+      "aliases": [
+        "小麦粉",
+        "薄力粉",
+        "強力粉",
+        "粉"
+      ],
+      "category": "grain",
+      "days": 270,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "fresh_beans",
+      "aliases": [
+        "豆",
+        "さやいんげん",
+        "いんげん",
+        "枝豆",
+        "そら豆"
+      ],
+      "category": "vegetable",
+      "days": 4,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "ganmodoki",
+      "aliases": [
+        "がんもどき",
+        "がんも"
+      ],
+      "category": "other",
+      "days": 4,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "garlic",
+      "aliases": [
+        "にんにく",
+        "ニンニク",
+        "大蒜"
+      ],
+      "category": "vegetable",
+      "days": 9,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "garlic_tube",
+      "aliases": [
+        "にんにく(チューブ)",
+        "おろしにんにく"
+      ],
+      "category": "seasoning",
+      "days": 90,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "ginger_fresh",
+      "aliases": [
+        "生姜",
+        "しょうが",
+        "ショウガ"
+      ],
+      "category": "vegetable",
+      "days": 21,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "ginger_tube",
+      "aliases": [
+        "しょうが(チューブ)",
+        "おろし生姜",
+        "チューブ生姜"
+      ],
+      "category": "seasoning",
+      "days": 90,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "gobo",
+      "aliases": [
+        "ごぼう",
+        "ゴボウ",
+        "牛蒡"
+      ],
+      "category": "vegetable",
+      "days": 14,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "gochujang",
+      "aliases": [
+        "コチュジャン"
+      ],
+      "category": "seasoning",
+      "days": 180,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "goya",
+      "aliases": [
+        "ゴーヤ",
+        "にがうり",
+        "ニガウリ"
+      ],
+      "category": "vegetable",
+      "days": 7,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "grapes",
+      "aliases": [
+        "ぶどう",
+        "ブドウ",
+        "葡萄"
+      ],
+      "category": "fruit",
+      "days": 7,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "green_onion",
+      "aliases": [
+        "長ねぎ",
+        "長葱",
+        "ねぎ",
+        "ネギ",
+        "万能ねぎ",
+        "小ねぎ"
+      ],
+      "category": "vegetable",
+      "days": 7,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "ground_beef",
+      "aliases": [
+        "牛ひき肉",
+        "牛挽き肉",
+        "ひき肉(牛)",
+        "牛ミンチ"
+      ],
+      "category": "meat",
+      "days": 2,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "ground_chicken",
+      "aliases": [
+        "鶏ひき肉",
+        "鶏挽き肉",
+        "ひき肉(鶏)"
+      ],
+      "category": "meat",
+      "days": 2,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "ground_pork",
+      "aliases": [
+        "豚ひき肉",
+        "豚挽き肉",
+        "ひき肉(豚)",
+        "豚ミンチ"
+      ],
+      "category": "meat",
+      "days": 2,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "gyoza_wrapper",
+      "aliases": [
+        "ぎょうざの皮",
+        "餃子の皮"
+      ],
+      "category": "other",
+      "days": 7,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "ham_lunchmeat",
+      "aliases": [
+        "ハム",
+        "ロースハム",
+        "スライスハム"
+      ],
+      "category": "meat",
+      "days": 14,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "hanpen",
+      "aliases": [
+        "はんぺん",
+        "ハンペン"
+      ],
+      "category": "other",
+      "days": 5,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "harumaki_wrapper",
+      "aliases": [
+        "春巻きの皮"
+      ],
+      "category": "other",
+      "days": 14,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "honey",
+      "aliases": [
+        "はちみつ",
+        "ハチミツ",
+        "蜂蜜"
+      ],
+      "category": "seasoning",
+      "days": 730,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "hotdog",
+      "aliases": [
+        "ホットドッグ",
+        "フランクフルト"
+      ],
+      "category": "meat",
+      "days": 14,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "ikura",
+      "aliases": [
+        "いくら",
+        "イクラ",
+        "筋子"
+      ],
+      "category": "fish",
+      "days": 5,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "jam",
+      "aliases": [
+        "ジャム",
+        "マーマレード"
+      ],
+      "category": "seasoning",
+      "days": 360,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "japanese_dressing",
+      "aliases": [
+        "和風ドレッシング",
+        "ごまドレッシング"
+      ],
+      "category": "seasoning",
+      "days": 60,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "kabu",
+      "aliases": [
+        "かぶ",
+        "カブ",
+        "蕪"
+      ],
+      "category": "vegetable",
+      "days": 7,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "kaiware",
+      "aliases": [
+        "かいわれ",
+        "かいわれ大根",
+        "スプラウト"
+      ],
+      "category": "vegetable",
+      "days": 4,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "kamaboko",
+      "aliases": [
+        "かまぼこ",
+        "カマボコ",
+        "蒲鉾"
+      ],
+      "category": "other",
+      "days": 7,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "karashi_tube",
+      "aliases": [
+        "からし(チューブ)",
+        "練りからし"
+      ],
+      "category": "seasoning",
+      "days": 90,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "katsuobushi",
+      "aliases": [
+        "かつお節",
+        "鰹節",
+        "かつおぶし",
+        "削り節"
+      ],
+      "category": "other",
+      "days": 60,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "ketchup",
+      "aliases": [
+        "ケチャップ",
+        "トマトケチャップ"
+      ],
+      "category": "seasoning",
+      "days": 365,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "kimchi",
+      "aliases": [
+        "キムチ",
+        "白菜キムチ"
+      ],
+      "category": "other",
+      "days": 21,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "kiwi",
+      "aliases": [
+        "キウイ"
+      ],
+      "category": "fruit",
+      "days": 5,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "kobumaki",
+      "aliases": [
+        "こんぶ巻き",
+        "昆布巻き"
+      ],
+      "category": "other",
+      "days": 5,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "komatsuna",
+      "aliases": [
+        "小松菜",
+        "こまつな"
+      ],
+      "category": "vegetable",
+      "days": 5,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "kombu_processed",
+      "aliases": [
+        "とろろ昆布",
+        "塩昆布"
+      ],
+      "category": "other",
+      "days": 90,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "konnyaku",
+      "aliases": [
+        "こんにゃく",
+        "コンニャク",
+        "蒟蒻"
+      ],
+      "category": "other",
+      "days": 30,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "konnyaku_jelly",
+      "aliases": [
+        "こんにゃくゼリー"
+      ],
+      "category": "other",
+      "days": 90,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "lamb_chops",
+      "aliases": [
+        "ラム肉",
+        "ラムチョップ",
+        "羊肉"
+      ],
+      "category": "meat",
+      "days": 4,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "leafy_greens",
+      "aliases": [
+        "ほうれん草",
+        "ホウレンソウ",
+        "ほうれんそう",
+        "葉物野菜"
+      ],
+      "category": "vegetable",
+      "days": 5,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "lettuce",
+      "aliases": [
+        "レタス",
+        "サニーレタス"
+      ],
+      "category": "vegetable",
+      "days": 11,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "lobster",
+      "aliases": [
+        "ロブスター",
+        "オマール",
+        "ロブスターの尾"
+      ],
+      "category": "fish",
+      "days": 4,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "maitake",
+      "aliases": [
+        "まいたけ",
+        "マイタケ",
+        "舞茸"
+      ],
+      "category": "vegetable",
+      "days": 5,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "margarine",
+      "aliases": [
+        "マーガリン"
+      ],
+      "category": "dairy",
+      "days": 180,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "mayonnaise",
+      "aliases": [
+        "マヨネーズ",
+        "マヨ"
+      ],
+      "category": "seasoning",
+      "days": 135,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "melon",
+      "aliases": [
+        "メロン"
+      ],
+      "category": "fruit",
+      "days": 14,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "mentaiko",
+      "aliases": [
+        "明太子",
+        "めんたいこ",
+        "たらこ",
+        "タラコ"
+      ],
+      "category": "fish",
+      "days": 7,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "mentsuyu",
+      "aliases": [
+        "めんつゆ",
+        "ストレートつゆ"
+      ],
+      "category": "seasoning",
+      "days": 21,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "mirin",
+      "aliases": [
+        "みりん",
+        "本みりん",
+        "味醂"
+      ],
+      "category": "seasoning",
+      "days": 180,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "miso",
+      "aliases": [
+        "味噌",
+        "みそ",
+        "ミソ",
+        "赤味噌",
+        "白味噌",
+        "合わせ味噌"
+      ],
+      "category": "seasoning",
+      "days": 180,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "mizuna",
+      "aliases": [
+        "水菜",
+        "みずな"
+      ],
+      "category": "vegetable",
+      "days": 5,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "mochi",
+      "aliases": [
+        "餅",
+        "もち",
+        "切り餅"
+      ],
+      "category": "grain",
+      "days": 60,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "mushroom",
+      "aliases": [
+        "マッシュルーム",
+        "きのこ",
+        "キノコ"
+      ],
+      "category": "vegetable",
+      "days": 5,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "mustard",
+      "aliases": [
+        "マスタード",
+        "粒マスタード"
+      ],
+      "category": "seasoning",
+      "days": 548,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "myoga",
+      "aliases": [
+        "みょうが",
+        "ミョウガ",
+        "茗荷"
+      ],
+      "category": "vegetable",
+      "days": 7,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "nameko",
+      "aliases": [
+        "なめこ",
+        "ナメコ"
+      ],
+      "category": "vegetable",
+      "days": 4,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "napa_cabbage",
+      "aliases": [
+        "白菜",
+        "はくさい",
+        "ハクサイ"
+      ],
+      "category": "vegetable",
+      "days": 10,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "natto",
+      "aliases": [
+        "納豆",
+        "なっとう"
+      ],
+      "category": "other",
+      "days": 7,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "nira",
+      "aliases": [
+        "ニラ",
+        "にら",
+        "韮"
+      ],
+      "category": "vegetable",
+      "days": 4,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "nukazuke",
+      "aliases": [
+        "ぬか漬け"
+      ],
+      "category": "other",
+      "days": 5,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "oats",
+      "aliases": [
+        "オートミール",
+        "オーツ"
+      ],
+      "category": "grain",
+      "days": 360,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "okara",
+      "aliases": [
+        "おから"
+      ],
+      "category": "other",
+      "days": 2,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "okra",
+      "aliases": [
+        "オクラ"
+      ],
+      "category": "vegetable",
+      "days": 5,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "olives",
+      "aliases": [
+        "オリーブ"
+      ],
+      "category": "seasoning",
+      "days": 450,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "onion",
+      "aliases": [
+        "玉ねぎ",
+        "玉葱",
+        "タマネギ",
+        "たまねぎ"
+      ],
+      "category": "vegetable",
+      "days": 60,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "oyster_sauce",
+      "aliases": [
+        "オイスターソース",
+        "牡蠣油"
+      ],
+      "category": "seasoning",
+      "days": 180,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "pasta_dry",
+      "aliases": [
+        "パスタ",
+        "スパゲッティ",
+        "マカロニ"
+      ],
+      "category": "grain",
+      "days": 730,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "pasta_fresh",
+      "aliases": [
+        "生パスタ"
+      ],
+      "category": "grain",
+      "days": 2,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "peanut_butter",
+      "aliases": [
+        "ピーナッツバター"
+      ],
+      "category": "seasoning",
+      "days": 360,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "pepper",
+      "aliases": [
+        "ピーマン",
+        "パプリカ",
+        "唐辛子"
+      ],
+      "category": "vegetable",
+      "days": 9,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "pickles",
+      "aliases": [
+        "ピクルス"
+      ],
+      "category": "seasoning",
+      "days": 365,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "pineapple",
+      "aliases": [
+        "パイナップル"
+      ],
+      "category": "fruit",
+      "days": 6,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "ponzu",
+      "aliases": [
+        "ポン酢",
+        "ぽん酢",
+        "ポンズ"
+      ],
+      "category": "seasoning",
+      "days": 90,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "pork_chops",
+      "aliases": [
+        "豚肉",
+        "ポーク",
+        "豚ロース",
+        "豚ステーキ"
+      ],
+      "category": "meat",
+      "days": 4,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "pork_roast",
+      "aliases": [
+        "豚塊肉",
+        "豚ロースブロック",
+        "豚肩ロース"
+      ],
+      "category": "meat",
+      "days": 4,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "potato",
+      "aliases": [
+        "じゃがいも",
+        "ジャガイモ",
+        "馬鈴薯",
+        "ポテト"
+      ],
+      "category": "vegetable",
+      "days": 11,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "ramen_fresh",
+      "aliases": [
+        "中華麺",
+        "焼きそば麺",
+        "ラーメン(生麺)"
+      ],
+      "category": "other",
+      "days": 7,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "renkon",
+      "aliases": [
+        "れんこん",
+        "レンコン",
+        "蓮根"
+      ],
+      "category": "vegetable",
+      "days": 7,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "rice_brown",
+      "aliases": [
+        "玄米"
+      ],
+      "category": "grain",
+      "days": 365,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "rice_vinegar",
+      "aliases": [
+        "米酢",
+        "酢",
+        "穀物酢",
+        "すし酢"
+      ],
+      "category": "seasoning",
+      "days": 365,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "rice_white",
+      "aliases": [
+        "米",
+        "白米",
+        "お米",
+        "ご飯"
+      ],
+      "category": "grain",
+      "days": 730,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "saba",
+      "aliases": [
+        "さば",
+        "サバ",
+        "鯖"
+      ],
+      "category": "fish",
+      "days": 2,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "salad_dressing",
+      "aliases": [
+        "ドレッシング",
+        "サラダドレッシング"
+      ],
+      "category": "seasoning",
+      "days": 330,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "salmon_fresh",
+      "aliases": [
+        "サーモン",
+        "刺身用サーモン",
+        "生鮭"
+      ],
+      "category": "fish",
+      "days": 2,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "salmon_salted",
+      "aliases": [
+        "鮭",
+        "さけ",
+        "シャケ",
+        "塩鮭",
+        "甘塩鮭"
+      ],
+      "category": "fish",
+      "days": 4,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "salsa",
+      "aliases": [
+        "サルサ",
+        "サルサソース"
+      ],
+      "category": "seasoning",
+      "days": 365,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "sashimi",
+      "aliases": [
+        "刺身",
+        "さしみ",
+        "お刺身",
+        "刺身盛り合わせ"
+      ],
+      "category": "fish",
+      "days": 1,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "satoimo",
+      "aliases": [
+        "里芋",
+        "さといも",
+        "サトイモ"
+      ],
+      "category": "vegetable",
+      "days": 14,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "satsumaage",
+      "aliases": [
+        "さつま揚げ",
+        "さつまあげ"
+      ],
+      "category": "other",
+      "days": 5,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "sausage_raw",
+      "aliases": [
+        "ソーセージ",
+        "ウインナー",
+        "ウィンナー"
+      ],
+      "category": "meat",
+      "days": 2,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "scallops",
+      "aliases": [
+        "ほたて",
+        "ホタテ",
+        "帆立"
+      ],
+      "category": "fish",
+      "days": 2,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "sesame_oil",
+      "aliases": [
+        "ごま油",
+        "ゴマ油",
+        "胡麻油"
+      ],
+      "category": "seasoning",
+      "days": 365,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "sesame_sauce",
+      "aliases": [
+        "みそだれ",
+        "ごまだれ",
+        "ゴマだれ"
+      ],
+      "category": "seasoning",
+      "days": 60,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "shellfish_live",
+      "aliases": [
+        "かき",
+        "カキ",
+        "牡蠣",
+        "あさり",
+        "アサリ",
+        "はまぐり",
+        "ハマグリ",
+        "活貝"
+      ],
+      "category": "fish",
+      "days": 2,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "shellfish_shucked",
+      "aliases": [
+        "むき身の貝",
+        "むき身"
+      ],
+      "category": "fish",
+      "days": 7,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "shiitake",
+      "aliases": [
+        "しいたけ",
+        "シイタケ",
+        "椎茸",
+        "生しいたけ"
+      ],
+      "category": "vegetable",
+      "days": 5,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "shimeji",
+      "aliases": [
+        "しめじ",
+        "シメジ"
+      ],
+      "category": "vegetable",
+      "days": 5,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "shirasu",
+      "aliases": [
+        "しらす",
+        "シラス",
+        "釜揚げしらす"
+      ],
+      "category": "fish",
+      "days": 3,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "shirataki",
+      "aliases": [
+        "しらたき",
+        "白滝",
+        "糸こんにゃく"
+      ],
+      "category": "other",
+      "days": 14,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "shishamo",
+      "aliases": [
+        "ししゃも",
+        "シシャモ"
+      ],
+      "category": "fish",
+      "days": 3,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "shishito",
+      "aliases": [
+        "ししとう",
+        "シシトウ",
+        "ピーマン(小)"
+      ],
+      "category": "vegetable",
+      "days": 7,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "shiso",
+      "aliases": [
+        "大葉",
+        "おおば",
+        "青じそ",
+        "しそ",
+        "シソ"
+      ],
+      "category": "vegetable",
+      "days": 5,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "shrimp",
+      "aliases": [
+        "えび",
+        "エビ",
+        "海老",
+        "ブラックタイガー"
+      ],
+      "category": "fish",
+      "days": 2,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "shumai_wrapper",
+      "aliases": [
+        "しゅうまいの皮",
+        "焼売の皮"
+      ],
+      "category": "other",
+      "days": 7,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "shungiku",
+      "aliases": [
+        "春菊",
+        "しゅんぎく"
+      ],
+      "category": "vegetable",
+      "days": 4,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "soba_fresh",
+      "aliases": [
+        "そば",
+        "蕎麦",
+        "生そば"
+      ],
+      "category": "other",
+      "days": 5,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "soy_sauce",
+      "aliases": [
+        "醤油",
+        "しょうゆ",
+        "ショウユ",
+        "濃口醤油",
+        "薄口醤油"
+      ],
+      "category": "seasoning",
+      "days": 180,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "squash_summer",
+      "aliases": [
+        "ズッキーニ"
+      ],
+      "category": "vegetable",
+      "days": 5,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "squash_winter",
+      "aliases": [
+        "かぼちゃ",
+        "カボチャ",
+        "南瓜"
+      ],
+      "category": "vegetable",
+      "days": 60,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "squid",
+      "aliases": [
+        "いか",
+        "イカ",
+        "するめいか"
+      ],
+      "category": "fish",
+      "days": 2,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "stone_fruit",
+      "aliases": [
+        "桃",
+        "もも",
+        "モモ",
+        "ネクタリン",
+        "すもも",
+        "プラム"
+      ],
+      "category": "fruit",
+      "days": 4,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "strawberry",
+      "aliases": [
+        "いちご",
+        "イチゴ",
+        "苺"
+      ],
+      "category": "fruit",
+      "days": 3,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "sweet_potato",
+      "aliases": [
+        "さつまいも",
+        "サツマイモ",
+        "薩摩芋"
+      ],
+      "category": "vegetable",
+      "days": 18,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "takuan",
+      "aliases": [
+        "たくあん",
+        "沢庵"
+      ],
+      "category": "other",
+      "days": 30,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "tara",
+      "aliases": [
+        "たら",
+        "タラ",
+        "鱈",
+        "生たら"
+      ],
+      "category": "fish",
+      "days": 2,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "tianmianjiang",
+      "aliases": [
+        "甜麺醤",
+        "テンメンジャン"
+      ],
+      "category": "seasoning",
+      "days": 180,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "tofu",
+      "aliases": [
+        "豆腐",
+        "とうふ",
+        "木綿豆腐",
+        "絹ごし豆腐",
+        "絹豆腐"
+      ],
+      "category": "other",
+      "days": 4,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "tomyo",
+      "aliases": [
+        "豆苗",
+        "とうみょう"
+      ],
+      "category": "vegetable",
+      "days": 4,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "tsukemono",
+      "aliases": [
+        "白菜漬け",
+        "浅漬け",
+        "漬物",
+        "つけもの"
+      ],
+      "category": "other",
+      "days": 7,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "tuna_canned",
+      "aliases": [
+        "ツナ缶",
+        "シーチキン",
+        "まぐろ缶"
+      ],
+      "category": "fish",
+      "days": 1095,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "tuna_sashimi",
+      "aliases": [
+        "まぐろ",
+        "マグロ",
+        "鮪",
+        "刺身用まぐろ"
+      ],
+      "category": "fish",
+      "days": 2,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "udon_cooked",
+      "aliases": [
+        "うどん",
+        "ゆでうどん",
+        "茹でうどん"
+      ],
+      "category": "other",
+      "days": 7,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "umeboshi",
+      "aliases": [
+        "梅干し",
+        "うめぼし"
+      ],
+      "category": "other",
+      "days": 180,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "uni",
+      "aliases": [
+        "うに",
+        "ウニ",
+        "雲丹"
+      ],
+      "category": "fish",
+      "days": 2,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "wasabi_tube",
+      "aliases": [
+        "わさび",
+        "ワサビ",
+        "山葵",
+        "チューブわさび"
+      ],
+      "category": "seasoning",
+      "days": 90,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "watermelon",
+      "aliases": [
+        "すいか",
+        "スイカ",
+        "西瓜"
+      ],
+      "category": "fruit",
+      "days": 4,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "worcester_sauce",
+      "aliases": [
+        "ソース",
+        "ウスターソース",
+        "中濃ソース",
+        "とんかつソース"
+      ],
+      "category": "seasoning",
+      "days": 180,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "yakiniku_sauce",
+      "aliases": [
+        "焼肉のたれ",
+        "焼肉のタレ"
+      ],
+      "category": "seasoning",
+      "days": 90,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "yamaimo",
+      "aliases": [
+        "長芋",
+        "ながいも",
+        "山芋",
+        "やまいも"
+      ],
+      "category": "vegetable",
+      "days": 14,
+      "source": "supplement"
+    },
+    {
+      "normalizedKey": "yogurt",
+      "aliases": [
+        "ヨーグルト"
+      ],
+      "category": "dairy",
+      "days": 11,
+      "source": "foodkeeper"
+    },
+    {
+      "normalizedKey": "yuba",
+      "aliases": [
+        "生湯葉",
+        "ゆば",
+        "湯葉"
+      ],
+      "category": "other",
+      "days": 3,
+      "source": "supplement"
+    }
+  ]
+}

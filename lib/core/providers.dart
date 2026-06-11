@@ -9,6 +9,7 @@ import '../features/shopping/service/reminders_shopping_list_service.dart';
 import '../features/shopping/service/shopping_list_service.dart';
 import 'db/app_database.dart';
 import 'secure_storage/secure_storage_service.dart';
+import 'shelf_life/shelf_life_table.dart';
 
 /// アプリ全体で 1 つの DB インスタンスを共有する。
 final databaseProvider = Provider<AppDatabase>((ref) {
@@ -33,6 +34,14 @@ final userSettingsProvider = StreamProvider<UserSettings>(
 /// API キー管理サービス。
 final secureStorageProvider = Provider<SecureStorageService>(
   (_) => const SecureStorageService(),
+);
+
+/// 日持ち目安テーブル（食材名 → 冷蔵保存の目安日数）。
+///
+/// 既定は空テーブル。起動時に [ShelfLifeTable.load] したものを
+/// [main] の ProviderScope overrides で注入する（読み込み失敗時は空のまま）。
+final shelfLifeTableProvider = Provider<ShelfLifeTable>(
+  (_) => ShelfLifeTable.empty(),
 );
 
 /// 買い物リストサービス（macOS / iOS は EventKit リマインダー）。

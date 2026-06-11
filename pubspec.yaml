@@ -78,6 +78,10 @@ flutter:
   # ARB ベースのローカライズコードを生成する（l10n.yaml の設定に従う）
   generate: true
 
+  assets:
+    # 日持ち目安データ（tool/shelf_life/generate.dart が生成・同梱）
+    - assets/shelf_life/shelf_life_rules.json
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
