@@ -12,8 +12,12 @@ import 'package:tsukaikiri/core/secure_storage/secure_storage_service.dart';
 import 'package:tsukaikiri/features/settings/data/settings_repository.dart';
 import 'package:tsukaikiri/features/settings/presentation/locale_controller.dart';
 import 'package:tsukaikiri/features/settings/presentation/settings_desktop_view.dart';
+import 'package:tsukaikiri/features/inventory/data/inventory_repository.dart';
+import 'package:tsukaikiri/features/inventory/domain/ingredient_category.dart';
 import 'package:tsukaikiri/features/shopping/domain/shopping_list.dart';
 import 'package:tsukaikiri/features/shopping/service/shopping_list_service.dart';
+import 'package:tsukaikiri/features/sync/domain/backup_codec.dart';
+import 'package:tsukaikiri/features/sync/service/sync_service.dart';
 import 'package:tsukaikiri/l10n/app_localizations.dart';
 
 // ──────────────────────────────────────────────────────────────
@@ -56,6 +60,29 @@ class _FailingShoppingService implements ShoppingListService {
   Future<int> addItems(String listId, List<ShoppingListItem> items) async => 0;
 }
 
+// ──────────────────────────────────────────────────────────────
+// フェイク: SyncService（インメモリ・可用性切替可能）
+// ──────────────────────────────────────────────────────────────
+class _FakeSyncService implements SyncService {
+  _FakeSyncService({this.available = true, this.storedBackup});
+
+  bool available;
+  String? storedBackup;
+  int writeCount = 0;
+
+  @override
+  Future<bool> isAvailable() async => available;
+
+  @override
+  Future<void> writeBackup(String payload) async {
+    writeCount++;
+    storedBackup = payload;
+  }
+
+  @override
+  Future<String?> readBackup() async => storedBackup;
+}
+
 void main() {
   late AppDatabase db;
   late SettingsRepository repo;
@@ -72,6 +99,7 @@ void main() {
   Future<void> pumpView(
     WidgetTester tester, {
     bool failShopping = false,
+    SyncService? syncService,
   }) async {
     tester.view.physicalSize = const Size(1280, 800);
     tester.view.devicePixelRatio = 1.0;
@@ -86,6 +114,8 @@ void main() {
           if (failShopping)
             shoppingListServiceProvider
                 .overrideWithValue(_FailingShoppingService()),
+          if (syncService != null)
+            syncServiceProvider.overrideWithValue(syncService),
         ],
         child: Consumer(builder: (context, ref, _) {
           final locale = ref.watch(localeControllerProvider);
@@ -204,15 +234,16 @@ void main() {
   // ═══════════════════════════════════════════════════════
   // ⑤ データセクションが準備中表示
   // ═══════════════════════════════════════════════════════
-  testWidgets('データセクションは同期準備中の注記を表示する', (tester) async {
+  testWidgets('データセクションは iCloud 自動バックアップと操作ボタンを表示する', (tester) async {
     await repo.setLocalePref('ja');
     await pumpView(tester);
 
     await tester.tap(find.text('データ'));
     await tester.pumpAndSettle();
 
-    expect(find.text('iCloud 同期'), findsOneWidget);
-    expect(find.text('同期機能は準備中です。'), findsOneWidget);
+    expect(find.text('iCloud 自動バックアップ'), findsOneWidget);
+    expect(find.text('今すぐバックアップ'), findsOneWidget);
+    expect(find.text('バックアップから復元'), findsOneWidget);
 
     await unmountApp(tester);
   });
@@ -235,6 +266,157 @@ void main() {
       find.textContaining('リストを取得できませんでした'),
       findsOneWidget,
     );
+
+    await unmountApp(tester);
+  });
+
+  // ═══════════════════════════════════════════════════════
+  // ⑦ 今すぐバックアップ（成功）
+  // ═══════════════════════════════════════════════════════
+  testWidgets('今すぐバックアップが成功すると完了表示と日時が更新される', (tester) async {
+    await repo.setLocalePref('ja');
+    final sync = _FakeSyncService();
+    await pumpView(tester, syncService: sync);
+
+    await tester.tap(find.text('データ'));
+    await tester.pumpAndSettle();
+    expect(find.text('バックアップ未実施'), findsOneWidget);
+
+    await tester.tap(find.text('今すぐバックアップ'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('バックアップしました。'), findsOneWidget);
+    expect(sync.writeCount, 1);
+    // API キーがバックアップに含まれないこと（i18n 規約と並ぶ重要要件）
+    expect(sync.storedBackup, isNot(contains('apiKey')));
+    expect(find.text('バックアップ未実施'), findsNothing);
+    expect(find.textContaining('最終バックアップ:'), findsOneWidget);
+
+    // SnackBar の自動クローズタイマーを消化してから後始末
+    await tester.pump(const Duration(seconds: 5));
+    await unmountApp(tester);
+  });
+
+  // ═══════════════════════════════════════════════════════
+  // ⑧ 今すぐバックアップ（iCloud 不可）
+  // ═══════════════════════════════════════════════════════
+  testWidgets('iCloud が利用できないとエラーメッセージを表示する', (tester) async {
+    await repo.setLocalePref('ja');
+    final sync = _FakeSyncService(available: false);
+    await pumpView(tester, syncService: sync);
+
+    await tester.tap(find.text('データ'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('今すぐバックアップ'));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.textContaining('iCloud が利用できません'),
+      findsOneWidget,
+    );
+    expect(sync.writeCount, 0);
+
+    await tester.pump(const Duration(seconds: 5));
+    await unmountApp(tester);
+  });
+
+  // ═══════════════════════════════════════════════════════
+  // ⑨ 復元（確認ダイアログ → 在庫置換）
+  // ═══════════════════════════════════════════════════════
+  testWidgets('復元は確認ダイアログを経て在庫を置き換える', (tester) async {
+    await repo.setLocalePref('ja');
+    final invRepo = InventoryRepository(db);
+    await invRepo.save(Ingredient(
+      id: 'before-1',
+      name: '牛乳',
+      normalizedName: 'milk',
+      category: IngredientCategory.dairy,
+      quantity: 1,
+      unit: '本',
+      expiryDate: null,
+      updatedAt: DateTime.now(),
+    ));
+
+    // バックアップ側は豆腐1件
+    final row = await repo.getRow();
+    final payload = BackupCodec.encodeBackup(
+      ingredients: [
+        Ingredient(
+          id: 'backup-1',
+          name: '豆腐',
+          normalizedName: 'tofu',
+          category: IngredientCategory.other,
+          quantity: 1,
+          unit: '個',
+          expiryDate: null,
+          updatedAt: DateTime.now(),
+        ),
+      ],
+      settings: row!,
+    );
+    final sync = _FakeSyncService(storedBackup: payload);
+    await pumpView(tester, syncService: sync);
+
+    await tester.tap(find.text('データ'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('バックアップから復元'));
+    await tester.pumpAndSettle();
+
+    // 確認ダイアログ（件数つき）
+    expect(find.text('バックアップを復元しますか？'), findsOneWidget);
+    expect(find.text('バックアップの在庫: 1件'), findsOneWidget);
+
+    await tester.tap(find.text('復元する'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('復元しました。'), findsOneWidget);
+    final inv = await invRepo.getInventory();
+    expect(inv, hasLength(1));
+    expect(inv.single.name, '豆腐');
+
+    await tester.pump(const Duration(seconds: 5));
+    await unmountApp(tester);
+  });
+
+  // ═══════════════════════════════════════════════════════
+  // ⑩ 復元キャンセルでは何も変わらない
+  // ═══════════════════════════════════════════════════════
+  testWidgets('復元の確認ダイアログをキャンセルすると在庫は変わらない', (tester) async {
+    await repo.setLocalePref('ja');
+    final invRepo = InventoryRepository(db);
+    await invRepo.save(Ingredient(
+      id: 'before-1',
+      name: '牛乳',
+      normalizedName: 'milk',
+      category: IngredientCategory.dairy,
+      quantity: 1,
+      unit: '本',
+      expiryDate: null,
+      updatedAt: DateTime.now(),
+    ));
+
+    final row = await repo.getRow();
+    final payload = BackupCodec.encodeBackup(
+      ingredients: const [],
+      settings: row!,
+    );
+    final sync = _FakeSyncService(storedBackup: payload);
+    await pumpView(tester, syncService: sync);
+
+    await tester.tap(find.text('データ'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('バックアップから復元'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('キャンセル'));
+    await tester.pumpAndSettle();
+
+    final inv = await invRepo.getInventory();
+    expect(inv, hasLength(1));
+    expect(inv.single.name, '牛乳');
 
     await unmountApp(tester);
   });

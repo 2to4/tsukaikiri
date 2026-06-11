@@ -1166,6 +1166,120 @@ abstract class AppLocalizations {
   /// **'Sync is coming soon.'**
   String get settingsDataComingSoon;
 
+  /// No description provided for @settingsDataLastBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Last backup: {date}'**
+  String settingsDataLastBackup(String date);
+
+  /// No description provided for @settingsDataNeverBackedUp.
+  ///
+  /// In en, this message translates to:
+  /// **'No backup yet'**
+  String get settingsDataNeverBackedUp;
+
+  /// No description provided for @settingsDataBackupButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup Now'**
+  String get settingsDataBackupButton;
+
+  /// No description provided for @settingsDataRestoreButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore from Backup'**
+  String get settingsDataRestoreButton;
+
+  /// No description provided for @settingsDataBackupSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup saved.'**
+  String get settingsDataBackupSuccess;
+
+  /// No description provided for @settingsDataRestoreConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore backup?'**
+  String get settingsDataRestoreConfirmTitle;
+
+  /// No description provided for @settingsDataRestoreConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Current inventory ({count} items) and settings will be replaced with the backup file contents. This cannot be undone.'**
+  String settingsDataRestoreConfirmBody(int count);
+
+  /// No description provided for @settingsDataRestoreConfirmOk.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore'**
+  String get settingsDataRestoreConfirmOk;
+
+  /// No description provided for @settingsDataSyncEnabledLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'iCloud Auto Backup'**
+  String get settingsDataSyncEnabledLabel;
+
+  /// No description provided for @settingsDataSyncEnabledDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically backs up when inventory or settings change'**
+  String get settingsDataSyncEnabledDesc;
+
+  /// No description provided for @settingsDataRestoreConfirmDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup date: {date}'**
+  String settingsDataRestoreConfirmDate(String date);
+
+  /// No description provided for @settingsDataRestoreConfirmCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Items in backup: {count}'**
+  String settingsDataRestoreConfirmCount(int count);
+
+  /// No description provided for @settingsDataRestoreConfirmWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'This will replace your current data. This cannot be undone.'**
+  String get settingsDataRestoreConfirmWarning;
+
+  /// No description provided for @settingsDataICloudNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'iCloud is not available. Please sign in to iCloud in System Settings.'**
+  String get settingsDataICloudNotAvailable;
+
+  /// No description provided for @settingsDataRestoreSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Data restored.'**
+  String get settingsDataRestoreSuccess;
+
+  /// No description provided for @settingsDataRestoreFormatError.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid backup file. Please use a backup created by Tsukaikiri.'**
+  String get settingsDataRestoreFormatError;
+
+  /// No description provided for @settingsDataRestoreNewerVersionError.
+  ///
+  /// In en, this message translates to:
+  /// **'This backup was created by a newer version of Tsukaikiri. Please update the app first.'**
+  String get settingsDataRestoreNewerVersionError;
+
+  /// No description provided for @settingsDataNoBackupFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No backup was found in iCloud.'**
+  String get settingsDataNoBackupFound;
+
+  /// No description provided for @settingsDataSyncFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong: {detail}'**
+  String settingsDataSyncFailed(String detail);
+
   /// No description provided for @settingsSupportHeading.
   ///
   /// In en, this message translates to:

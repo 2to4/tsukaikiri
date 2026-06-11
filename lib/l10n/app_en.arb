@@ -247,6 +247,41 @@
   "settingsDataICloud": "iCloud Sync",
   "settingsDataComingSoon": "Sync is coming soon.",
 
+  "settingsDataLastBackup": "Last backup: {date}",
+  "@settingsDataLastBackup": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "settingsDataNeverBackedUp": "No backup yet",
+  "settingsDataBackupButton": "Backup Now",
+  "settingsDataRestoreButton": "Restore from Backup",
+  "settingsDataBackupSuccess": "Backup saved.",
+  "settingsDataRestoreConfirmTitle": "Restore backup?",
+  "settingsDataRestoreConfirmBody": "Current inventory ({count} items) and settings will be replaced with the backup file contents. This cannot be undone.",
+  "@settingsDataRestoreConfirmBody": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "settingsDataRestoreConfirmOk": "Restore",
+  "settingsDataSyncEnabledLabel": "iCloud Auto Backup",
+  "settingsDataSyncEnabledDesc": "Automatically backs up when inventory or settings change",
+  "settingsDataRestoreConfirmDate": "Backup date: {date}",
+  "@settingsDataRestoreConfirmDate": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "settingsDataRestoreConfirmCount": "Items in backup: {count}",
+  "@settingsDataRestoreConfirmCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "settingsDataRestoreConfirmWarning": "This will replace your current data. This cannot be undone.",
+  "settingsDataICloudNotAvailable": "iCloud is not available. Please sign in to iCloud in System Settings.",
+  "settingsDataRestoreSuccess": "Data restored.",
+  "settingsDataRestoreFormatError": "Invalid backup file. Please use a backup created by Tsukaikiri.",
+  "settingsDataRestoreNewerVersionError": "This backup was created by a newer version of Tsukaikiri. Please update the app first.",
+  "settingsDataNoBackupFound": "No backup was found in iCloud.",
+  "settingsDataSyncFailed": "Something went wrong: {detail}",
+  "@settingsDataSyncFailed": {
+    "placeholders": { "detail": { "type": "String" } }
+  },
+
   "settingsSupportHeading": "Support",
   "settingsSupportAuthor": "Support the author",
   "settingsSupportComingSoon": "(coming soon)",

@@ -56,6 +56,18 @@ class InventoryRepository {
     await save(row.copyWith(quantity: next, updatedAt: DateTime.now()));
   }
 
+  // ---- バックアップ / 復元 ----
+
+  /// 全在庫を削除して [ingredients] で置き換える（1トランザクション）。
+  Future<void> replaceAll(List<Ingredient> ingredients) async {
+    await _db.transaction(() async {
+      await _db.delete(_db.ingredients).go();
+      for (final ing in ingredients) {
+        await _db.into(_db.ingredients).insert(ing);
+      }
+    });
+  }
+
   // ---- normalizedName バックフィル ----
 
   /// 名寄せキー未付与（normalizedName が name の流用のまま）の食材を返す。

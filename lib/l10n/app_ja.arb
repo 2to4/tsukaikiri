@@ -240,6 +240,38 @@
   "settingsDataICloud": "iCloud 同期",
   "settingsDataComingSoon": "同期機能は準備中です。",
 
+  "settingsDataLastBackup": "最終バックアップ: {date}",
+  "@settingsDataLastBackup": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "settingsDataNeverBackedUp": "バックアップ未実施",
+  "settingsDataBackupButton": "今すぐバックアップ",
+  "settingsDataRestoreButton": "バックアップから復元",
+  "settingsDataBackupSuccess": "バックアップしました。",
+  "settingsDataRestoreConfirmTitle": "バックアップを復元しますか？",
+  "settingsDataRestoreConfirmBody": "現在の在庫（{count}件）と設定がバックアップファイルの内容で置き換わります。この操作は元に戻せません。",
+  "@settingsDataRestoreConfirmBody": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "settingsDataRestoreConfirmOk": "復元する",
+  "settingsDataSyncEnabledLabel": "iCloud 自動バックアップ",
+  "settingsDataSyncEnabledDesc": "在庫・設定の変更時に自動でバックアップ",
+  "settingsDataRestoreConfirmDate": "バックアップ日時: {date}",
+  "@settingsDataRestoreConfirmDate": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "settingsDataRestoreConfirmCount": "バックアップの在庫: {count}件",
+  "@settingsDataRestoreConfirmCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "settingsDataRestoreConfirmWarning": "現在のデータが置き換わります。この操作は元に戻せません。",
+  "settingsDataICloudNotAvailable": "iCloud が利用できません。システム設定で iCloud にサインインしてください。",
+  "settingsDataRestoreSuccess": "復元しました。",
+  "settingsDataRestoreFormatError": "バックアップファイルの形式が不正です。つかいきりで作成したバックアップファイルを使用してください。",
+  "settingsDataRestoreNewerVersionError": "このバックアップは新しいバージョンのつかいきりで作成されたものです。アプリをアップデートしてください。",
+  "settingsDataNoBackupFound": "iCloud にバックアップが見つかりませんでした。",
+  "settingsDataSyncFailed": "処理に失敗しました: {detail}",
+
   "settingsSupportHeading": "サポート",
   "settingsSupportAuthor": "作者をサポート",
   "settingsSupportComingSoon": "（準備中）",

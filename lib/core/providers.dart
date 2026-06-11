@@ -7,6 +7,9 @@ import '../features/settings/data/settings_repository.dart';
 import '../features/settings/domain/user_settings.dart';
 import '../features/shopping/service/reminders_shopping_list_service.dart';
 import '../features/shopping/service/shopping_list_service.dart';
+import '../features/sync/presentation/sync_controller.dart';
+import '../features/sync/service/icloud_sync_service.dart';
+import '../features/sync/service/sync_service.dart';
 import 'db/app_database.dart';
 import 'secure_storage/secure_storage_service.dart';
 import 'shelf_life/shelf_life_table.dart';
@@ -49,6 +52,75 @@ final shelfLifeTableProvider = Provider<ShelfLifeTable>(
 final shoppingListServiceProvider = Provider<ShoppingListService>(
   (_) => RemindersShoppingListService(),
 );
+
+/// データ同期サービス（iCloud ubiquity コンテナ実装）。
+final syncServiceProvider = Provider<SyncService>(
+  (_) => const ICloudSyncService(),
+);
+
+/// バックアップ / 復元操作のコントローラ（Riverpod v3 Notifier）。
+final syncControllerProvider = NotifierProvider<SyncController, SyncState>(
+  SyncController.new,
+);
+
+/// 自動バックアップ用デバウンスタイマー（アプリ生存期間と同期）。
+final backupSchedulerProvider = Provider<BackupScheduler>((ref) {
+  final scheduler = BackupScheduler();
+  ref.onDispose(scheduler.dispose);
+  return scheduler;
+});
+
+/// 自動バックアップ購読（在庫・設定の変化を検知してデバウンスバックアップ）。
+///
+/// アプリ起動時に ref.watch させて常駐させる。
+/// syncEnabled が false の場合はバックアップをスキップする。
+///
+/// **ループ防止**: バックアップ自身が lastSyncedAt を更新して設定ストリームを
+/// 発火させるため、設定側はバックアップ対象フィールドの指紋（lastSyncedAt を
+/// 除く）が前回から変わったときだけスケジュールする。そうしないと
+/// バックアップ → lastSyncedAt 更新 → 発火 → 再バックアップ…が永遠に続く。
+final autoBackupWatcherProvider = Provider<void>((ref) {
+  final scheduler = ref.watch(backupSchedulerProvider);
+  final syncCtrl = ref.read(syncControllerProvider.notifier);
+  final settingsRepo = ref.watch(settingsRepositoryProvider);
+  final inventoryRepo = ref.watch(inventoryRepositoryProvider);
+
+  // 在庫ストリーム（バックアップは在庫を変更しないのでループしない）
+  final invSub = inventoryRepo.watchInventory().listen((_) async {
+    final settings = await settingsRepo.get();
+    if (!settings.syncEnabled) return;
+    scheduler.schedule(() => syncCtrl.silentBackup());
+  });
+
+  // 設定ストリーム（lastSyncedAt 以外のフィールドの変化のみ反応）
+  String fingerprint(UserSettings s) => [
+        s.localePref,
+        s.shoppingListId,
+        s.shoppingListName,
+        s.selectedProvider,
+        (s.modelOverrides.entries.map((e) => '${e.key}=${e.value}').toList()
+              ..sort())
+            .join(','),
+        s.syncEnabled,
+        s.appliances.map((a) => a.toJson()).toList(),
+      ].join('|');
+
+  String? lastFingerprint;
+  final settingsSub = settingsRepo.watch().listen((settings) {
+    final fp = fingerprint(settings);
+    final changed = lastFingerprint != null && fp != lastFingerprint;
+    lastFingerprint = fp;
+    if (!changed) return; // 初回発行 or lastSyncedAt だけの更新はスキップ
+    if (!settings.syncEnabled) return;
+    scheduler.schedule(() => syncCtrl.silentBackup());
+  });
+
+  ref.onDispose(() {
+    invSub.cancel();
+    settingsSub.cancel();
+    scheduler.cancel();
+  });
+});
 
 /// 選択中プロバイダの RecipeProvider を解決する。
 /// API キー未登録なら null（UI はキー登録を促す）。

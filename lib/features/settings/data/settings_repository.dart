@@ -15,6 +15,19 @@ class SettingsRepository {
 
   // ---- 読み出し ----
 
+  /// settings テーブルの生の [AppSettings] 行を返す（バックアップ用）。
+  /// 行が存在しない場合は null を返す。
+  Future<AppSettings?> getRow() async {
+    return (_db.select(_db.settingsTable)..where((t) => t.id.equals(_rowId)))
+        .getSingleOrNull();
+  }
+
+  /// settings テーブルを [companion] の内容で完全置換（復元用）。
+  /// API キー関連の列は含まないため、既存値はそのまま維持される。
+  Future<void> replaceSettings(SettingsTableCompanion companion) async {
+    await _db.into(_db.settingsTable).insertOnConflictUpdate(companion);
+  }
+
   Future<UserSettings> get() async {
     final row = await (_db.select(_db.settingsTable)
           ..where((t) => t.id.equals(_rowId)))

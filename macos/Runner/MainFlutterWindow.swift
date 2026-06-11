@@ -10,6 +10,7 @@ class MainFlutterWindow: NSWindow {
 
     RegisterGeneratedPlugins(registry: flutterViewController)
     RemindersPlugin.register(with: flutterViewController.registrar(forPlugin: "RemindersPlugin"))
+    ICloudSyncPlugin.register(with: flutterViewController.registrar(forPlugin: "ICloudSyncPlugin"))
 
     super.awakeFromNib()
   }

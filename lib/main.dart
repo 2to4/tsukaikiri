@@ -36,6 +36,9 @@ class TsukaikiriApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // 自動バックアップウォッチャーをアプリ生存期間中常駐させる。
+    ref.watch(autoBackupWatcherProvider);
+
     final locale = ref.watch(localeControllerProvider);
 
     return MaterialApp(

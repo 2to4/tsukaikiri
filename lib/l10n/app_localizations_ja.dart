@@ -571,6 +571,77 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settingsDataComingSoon => '同期機能は準備中です。';
 
   @override
+  String settingsDataLastBackup(String date) {
+    return '最終バックアップ: $date';
+  }
+
+  @override
+  String get settingsDataNeverBackedUp => 'バックアップ未実施';
+
+  @override
+  String get settingsDataBackupButton => '今すぐバックアップ';
+
+  @override
+  String get settingsDataRestoreButton => 'バックアップから復元';
+
+  @override
+  String get settingsDataBackupSuccess => 'バックアップしました。';
+
+  @override
+  String get settingsDataRestoreConfirmTitle => 'バックアップを復元しますか？';
+
+  @override
+  String settingsDataRestoreConfirmBody(int count) {
+    return '現在の在庫（$count件）と設定がバックアップファイルの内容で置き換わります。この操作は元に戻せません。';
+  }
+
+  @override
+  String get settingsDataRestoreConfirmOk => '復元する';
+
+  @override
+  String get settingsDataSyncEnabledLabel => 'iCloud 自動バックアップ';
+
+  @override
+  String get settingsDataSyncEnabledDesc => '在庫・設定の変更時に自動でバックアップ';
+
+  @override
+  String settingsDataRestoreConfirmDate(String date) {
+    return 'バックアップ日時: $date';
+  }
+
+  @override
+  String settingsDataRestoreConfirmCount(int count) {
+    return 'バックアップの在庫: $count件';
+  }
+
+  @override
+  String get settingsDataRestoreConfirmWarning =>
+      '現在のデータが置き換わります。この操作は元に戻せません。';
+
+  @override
+  String get settingsDataICloudNotAvailable =>
+      'iCloud が利用できません。システム設定で iCloud にサインインしてください。';
+
+  @override
+  String get settingsDataRestoreSuccess => '復元しました。';
+
+  @override
+  String get settingsDataRestoreFormatError =>
+      'バックアップファイルの形式が不正です。つかいきりで作成したバックアップファイルを使用してください。';
+
+  @override
+  String get settingsDataRestoreNewerVersionError =>
+      'このバックアップは新しいバージョンのつかいきりで作成されたものです。アプリをアップデートしてください。';
+
+  @override
+  String get settingsDataNoBackupFound => 'iCloud にバックアップが見つかりませんでした。';
+
+  @override
+  String settingsDataSyncFailed(String detail) {
+    return '処理に失敗しました: $detail';
+  }
+
+  @override
   String get settingsSupportHeading => 'サポート';
 
   @override

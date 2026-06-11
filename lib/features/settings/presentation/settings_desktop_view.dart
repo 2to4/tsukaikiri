@@ -12,6 +12,7 @@ import '../../recipe/service/recipe_provider.dart';
 import '../../recipe/service/recipe_provider_factory.dart';
 import '../../shell/presentation/shell_providers.dart';
 import '../../shopping/domain/shopping_list.dart';
+import '../../sync/presentation/sync_controller.dart';
 import '../domain/appliance.dart';
 import 'locale_controller.dart';
 
@@ -1469,18 +1470,154 @@ class _PillPicker extends StatelessWidget {
 }
 
 // ══════════════════════════════════════════════════════════════
-// データセクション（SyncService 未実装のプレースホルダ）
+// データセクション（iCloud バックアップ / 復元）
 // ══════════════════════════════════════════════════════════════
-class _DataSection extends StatelessWidget {
+class _DataSection extends ConsumerStatefulWidget {
   const _DataSection();
+
+  @override
+  ConsumerState<_DataSection> createState() => _DataSectionState();
+}
+
+class _DataSectionState extends ConsumerState<_DataSection> {
+  String? _lastSyncedAt; // null = 未実施
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLastSyncedAt();
+  }
+
+  Future<void> _loadLastSyncedAt() async {
+    final settings = await ref.read(settingsRepositoryProvider).get();
+    if (!mounted) return;
+    setState(() {
+      _lastSyncedAt = settings.lastSyncedAt != null
+          ? _formatDate(settings.lastSyncedAt!)
+          : null;
+    });
+  }
+
+  String _formatDate(DateTime dt) {
+    return '${dt.year}-'
+        '${dt.month.toString().padLeft(2, '0')}-'
+        '${dt.day.toString().padLeft(2, '0')} '
+        '${dt.hour.toString().padLeft(2, '0')}:'
+        '${dt.minute.toString().padLeft(2, '0')}';
+  }
+
+  Future<void> _onToggleSyncEnabled(bool value) async {
+    await ref.read(settingsRepositoryProvider).setSyncEnabled(value);
+    if (value) {
+      // 有効にした直後に 1 回バックアップ
+      await ref.read(syncControllerProvider.notifier).backup();
+    }
+  }
+
+  Future<void> _onBackupTap() async {
+    await ref.read(syncControllerProvider.notifier).backup();
+  }
+
+  Future<void> _onRestoreTap() async {
+    final data = await ref.read(syncControllerProvider.notifier).restore();
+    if (data == null) return; // エラーは ref.listen で捕捉
+    if (!mounted) return;
+
+    final l10n = AppLocalizations.of(context);
+
+    // バックアップ内の日時と在庫件数を確認ダイアログで表示
+    final backupDate = data.settingsCompanion.lastSyncedAt.value;
+    final backupDateStr = backupDate != null ? _formatDate(backupDate) : '--';
+    final itemCount = data.ingredients.length;
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.settingsDataRestoreConfirmTitle),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(l10n.settingsDataRestoreConfirmDate(backupDateStr)),
+            const SizedBox(height: 4),
+            Text(l10n.settingsDataRestoreConfirmCount(itemCount)),
+            const SizedBox(height: 8),
+            Text(
+              l10n.settingsDataRestoreConfirmWarning,
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppColors.over,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: Text(l10n.actionCancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: Text(l10n.settingsDataRestoreConfirmOk),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+    if (!mounted) return;
+
+    await ref.read(syncControllerProvider.notifier).applyRestore(data);
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final syncState = ref.watch(syncControllerProvider);
+    final isLoading = syncState is SyncLoading;
+    final settingsAsync = ref.watch(userSettingsProvider);
+    final syncEnabled = settingsAsync.maybeWhen(
+      data: (s) => s.syncEnabled,
+      orElse: () => false,
+    );
+
+    // SyncSuccess / SyncError を SnackBar で通知（文言は種別→l10n で解決）
+    ref.listen<SyncState>(syncControllerProvider, (previous, next) {
+      if (next is SyncSuccess) {
+        final message = switch (next.kind) {
+          SyncSuccessKind.backup => l10n.settingsDataBackupSuccess,
+          SyncSuccessKind.restore => l10n.settingsDataRestoreSuccess,
+        };
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(message)),
+        );
+        _loadLastSyncedAt();
+      } else if (next is SyncError) {
+        final message = switch (next.kind) {
+          SyncErrorKind.unavailable => l10n.settingsDataICloudNotAvailable,
+          SyncErrorKind.backupNotFound => l10n.settingsDataNoBackupFound,
+          SyncErrorKind.formatInvalid => l10n.settingsDataRestoreFormatError,
+          SyncErrorKind.newerVersion =>
+            l10n.settingsDataRestoreNewerVersionError,
+          SyncErrorKind.failure => l10n.settingsDataSyncFailed(
+              next.detail ?? '',
+            ),
+        };
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(message),
+            backgroundColor: AppColors.over,
+          ),
+        );
+      }
+    });
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _SectionHeading(l10n.settingsDataHeading),
+
+        // iCloud 自動バックアップ トグル
         _Card(
           child: Row(
             children: [
@@ -1489,35 +1626,82 @@ class _DataSection extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      l10n.settingsDataICloud,
+                      l10n.settingsDataSyncEnabledLabel,
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                         color: AppColors.ink,
                       ),
                     ),
-                    const SizedBox(height: 3),
+                    const SizedBox(height: 2),
                     Text(
-                      l10n.settingsDataComingSoon,
+                      l10n.settingsDataSyncEnabledDesc,
                       style: const TextStyle(
-                        fontSize: 12,
+                        fontSize: 11.5,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.sub,
+                        color: AppColors.faint,
                       ),
                     ),
                   ],
                 ),
               ),
-              // 無効状態のトグル（SyncService 未実装）
-              Opacity(
-                opacity: 0.5,
-                child: IgnorePointer(
-                  child: _PillToggle(on: false, onTap: () {}),
+              _PillToggle(
+                on: syncEnabled,
+                onTap: () => _onToggleSyncEnabled(!syncEnabled),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
+
+        // 最終バックアップ日時
+        _Card(
+          child: Row(
+            children: [
+              const Icon(Icons.cloud_done_outlined,
+                  size: 16, color: AppColors.sub),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  _lastSyncedAt != null
+                      ? l10n.settingsDataLastBackup(_lastSyncedAt!)
+                      : l10n.settingsDataNeverBackedUp,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.sub,
+                  ),
                 ),
               ),
             ],
           ),
         ),
+        const SizedBox(height: 12),
+
+        // バックアップ・復元ボタン
+        Row(
+          children: [
+            _SmallButton(
+              label: l10n.settingsDataBackupButton,
+              primary: true,
+              onTap: isLoading ? null : _onBackupTap,
+            ),
+            const SizedBox(width: 10),
+            _SmallButton(
+              label: l10n.settingsDataRestoreButton,
+              onTap: isLoading ? null : _onRestoreTap,
+            ),
+          ],
+        ),
+        if (isLoading)
+          const Padding(
+            padding: EdgeInsets.only(top: 12),
+            child: SizedBox(
+              width: 18,
+              height: 18,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            ),
+          ),
       ],
     );
   }

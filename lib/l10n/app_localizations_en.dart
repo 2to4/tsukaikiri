@@ -578,6 +578,78 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsDataComingSoon => 'Sync is coming soon.';
 
   @override
+  String settingsDataLastBackup(String date) {
+    return 'Last backup: $date';
+  }
+
+  @override
+  String get settingsDataNeverBackedUp => 'No backup yet';
+
+  @override
+  String get settingsDataBackupButton => 'Backup Now';
+
+  @override
+  String get settingsDataRestoreButton => 'Restore from Backup';
+
+  @override
+  String get settingsDataBackupSuccess => 'Backup saved.';
+
+  @override
+  String get settingsDataRestoreConfirmTitle => 'Restore backup?';
+
+  @override
+  String settingsDataRestoreConfirmBody(int count) {
+    return 'Current inventory ($count items) and settings will be replaced with the backup file contents. This cannot be undone.';
+  }
+
+  @override
+  String get settingsDataRestoreConfirmOk => 'Restore';
+
+  @override
+  String get settingsDataSyncEnabledLabel => 'iCloud Auto Backup';
+
+  @override
+  String get settingsDataSyncEnabledDesc =>
+      'Automatically backs up when inventory or settings change';
+
+  @override
+  String settingsDataRestoreConfirmDate(String date) {
+    return 'Backup date: $date';
+  }
+
+  @override
+  String settingsDataRestoreConfirmCount(int count) {
+    return 'Items in backup: $count';
+  }
+
+  @override
+  String get settingsDataRestoreConfirmWarning =>
+      'This will replace your current data. This cannot be undone.';
+
+  @override
+  String get settingsDataICloudNotAvailable =>
+      'iCloud is not available. Please sign in to iCloud in System Settings.';
+
+  @override
+  String get settingsDataRestoreSuccess => 'Data restored.';
+
+  @override
+  String get settingsDataRestoreFormatError =>
+      'Invalid backup file. Please use a backup created by Tsukaikiri.';
+
+  @override
+  String get settingsDataRestoreNewerVersionError =>
+      'This backup was created by a newer version of Tsukaikiri. Please update the app first.';
+
+  @override
+  String get settingsDataNoBackupFound => 'No backup was found in iCloud.';
+
+  @override
+  String settingsDataSyncFailed(String detail) {
+    return 'Something went wrong: $detail';
+  }
+
+  @override
   String get settingsSupportHeading => 'Support';
 
   @override
