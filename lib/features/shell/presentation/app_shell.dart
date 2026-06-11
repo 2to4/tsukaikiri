@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../features/camera/presentation/camera_capture_controller.dart';
+import '../../../features/camera/presentation/camera_desktop_view.dart';
 import '../../../features/inventory/presentation/inventory_desktop_view.dart';
 import '../../../features/inventory/presentation/inventory_providers.dart';
 import '../../../features/recipe/presentation/meal_suggestion_controller.dart';
@@ -71,6 +73,13 @@ class AppShell extends ConsumerWidget {
         } else if (current == ShellSection.meals) {
           // 献立セクション表示中は提案を実行する。
           ref.read(mealSuggestionControllerProvider.notifier).suggest();
+        } else if (current == ShellSection.camera) {
+          // カメラセクション表示中かつ画像が1枚以上あれば解析を実行する。
+          final camState = ref.read(cameraCaptureControllerProvider);
+          if (camState.phase == CameraCapturePhase.capture &&
+              camState.images.isNotEmpty) {
+            ref.read(cameraCaptureControllerProvider.notifier).analyze();
+          }
         }
       },
     };
@@ -499,6 +508,7 @@ class _ContentArea extends StatelessWidget {
   Widget build(BuildContext context) {
     return switch (section) {
       ShellSection.inventory => const InventoryDesktopView(),
+      ShellSection.camera => const CameraDesktopView(),
       ShellSection.meals => const MealsDesktopView(),
       ShellSection.shopping => const ShoppingDesktopView(),
       ShellSection.settings => const SettingsDesktopView(),

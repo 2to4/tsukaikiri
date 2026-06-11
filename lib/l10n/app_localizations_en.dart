@@ -771,4 +771,93 @@ class AppLocalizationsEn extends AppLocalizations {
   String shoppingQtyUnit(int qty) {
     return '$qty pcs';
   }
+
+  @override
+  String get cameraTitle => 'Camera Registration';
+
+  @override
+  String get cameraDropZoneTitle => 'Drop photos, or click to select';
+
+  @override
+  String get cameraDropZoneBody => 'Add up to 10 photos of your fridge';
+
+  @override
+  String cameraAnalyzeButton(int n) {
+    return 'Analyze $n photo(s) ⌘R';
+  }
+
+  @override
+  String get cameraMaxPhotosHint =>
+      'You can add up to 10 photos. Extra photos were skipped.';
+
+  @override
+  String get cameraAnalyzingTitle => 'AI is analyzing your photos…';
+
+  @override
+  String get cameraAnalyzingBody =>
+      'Recognizing ingredients. Please wait a moment.';
+
+  @override
+  String cameraReviewHeader(int n) {
+    return 'Detected ingredients ($n items)';
+  }
+
+  @override
+  String get cameraConfHighLabel => 'High';
+
+  @override
+  String get cameraConfMidLabel => 'Mid';
+
+  @override
+  String get cameraConfLowLabel => 'Low';
+
+  @override
+  String cameraConfirmButton(int n) {
+    return 'Add selected ($n items)';
+  }
+
+  @override
+  String get cameraEditNameLabel => 'Name';
+
+  @override
+  String get cameraEditQtyLabel => 'Quantity';
+
+  @override
+  String get cameraEditUnitLabel => 'Unit';
+
+  @override
+  String get cameraEditCategoryLabel => 'Category';
+
+  @override
+  String get cameraErrorNetworkTitle => 'Could not analyze photos';
+
+  @override
+  String get cameraErrorNetworkBody =>
+      'Please move to an area with better signal or connect to Wi-Fi.';
+
+  @override
+  String get cameraErrorNoApiKeyTitle => 'No API key registered';
+
+  @override
+  String get cameraErrorNoApiKeyBody =>
+      'Go to Settings and add an API key to enable AI recognition.';
+
+  @override
+  String get cameraErrorNoVisionTitle =>
+      'This provider does not support image recognition';
+
+  @override
+  String get cameraErrorNoVisionBody =>
+      'Switch to a provider with image recognition in Settings.';
+
+  @override
+  String get cameraErrorRetry => 'Try again';
+
+  @override
+  String get cameraErrorOpenSettings => 'Open Settings';
+
+  @override
+  String cameraAddedToast(int n) {
+    return 'Added $n items to inventory';
+  }
 }

@@ -1507,6 +1507,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{qty} pcs'**
   String shoppingQtyUnit(int qty);
+
+  /// No description provided for @cameraTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera Registration'**
+  String get cameraTitle;
+
+  /// No description provided for @cameraDropZoneTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Drop photos, or click to select'**
+  String get cameraDropZoneTitle;
+
+  /// No description provided for @cameraDropZoneBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add up to 10 photos of your fridge'**
+  String get cameraDropZoneBody;
+
+  /// No description provided for @cameraAnalyzeButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze {n} photo(s) ⌘R'**
+  String cameraAnalyzeButton(int n);
+
+  /// No description provided for @cameraMaxPhotosHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You can add up to 10 photos. Extra photos were skipped.'**
+  String get cameraMaxPhotosHint;
+
+  /// No description provided for @cameraAnalyzingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AI is analyzing your photos…'**
+  String get cameraAnalyzingTitle;
+
+  /// No description provided for @cameraAnalyzingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Recognizing ingredients. Please wait a moment.'**
+  String get cameraAnalyzingBody;
+
+  /// No description provided for @cameraReviewHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Detected ingredients ({n} items)'**
+  String cameraReviewHeader(int n);
+
+  /// No description provided for @cameraConfHighLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get cameraConfHighLabel;
+
+  /// No description provided for @cameraConfMidLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Mid'**
+  String get cameraConfMidLabel;
+
+  /// No description provided for @cameraConfLowLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get cameraConfLowLabel;
+
+  /// No description provided for @cameraConfirmButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Add selected ({n} items)'**
+  String cameraConfirmButton(int n);
+
+  /// No description provided for @cameraEditNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get cameraEditNameLabel;
+
+  /// No description provided for @cameraEditQtyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get cameraEditQtyLabel;
+
+  /// No description provided for @cameraEditUnitLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get cameraEditUnitLabel;
+
+  /// No description provided for @cameraEditCategoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get cameraEditCategoryLabel;
+
+  /// No description provided for @cameraErrorNetworkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not analyze photos'**
+  String get cameraErrorNetworkTitle;
+
+  /// No description provided for @cameraErrorNetworkBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Please move to an area with better signal or connect to Wi-Fi.'**
+  String get cameraErrorNetworkBody;
+
+  /// No description provided for @cameraErrorNoApiKeyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No API key registered'**
+  String get cameraErrorNoApiKeyTitle;
+
+  /// No description provided for @cameraErrorNoApiKeyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Settings and add an API key to enable AI recognition.'**
+  String get cameraErrorNoApiKeyBody;
+
+  /// No description provided for @cameraErrorNoVisionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This provider does not support image recognition'**
+  String get cameraErrorNoVisionTitle;
+
+  /// No description provided for @cameraErrorNoVisionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to a provider with image recognition in Settings.'**
+  String get cameraErrorNoVisionBody;
+
+  /// No description provided for @cameraErrorRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get cameraErrorRetry;
+
+  /// No description provided for @cameraErrorOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get cameraErrorOpenSettings;
+
+  /// No description provided for @cameraAddedToast.
+  ///
+  /// In en, this message translates to:
+  /// **'Added {n} items to inventory'**
+  String cameraAddedToast(int n);
 }
 
 class _AppLocalizationsDelegate

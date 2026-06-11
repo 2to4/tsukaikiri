@@ -761,4 +761,87 @@ class AppLocalizationsJa extends AppLocalizations {
   String shoppingQtyUnit(int qty) {
     return '$qty個';
   }
+
+  @override
+  String get cameraTitle => 'カメラ登録';
+
+  @override
+  String get cameraDropZoneTitle => '写真をドロップ、または クリックして選択';
+
+  @override
+  String get cameraDropZoneBody => '冷蔵庫の写真を最大10枚追加できます';
+
+  @override
+  String cameraAnalyzeButton(int n) {
+    return '$n枚を解析する ⌘R';
+  }
+
+  @override
+  String get cameraMaxPhotosHint => '写真は最大10枚まで追加できます。超えた分は無視されました。';
+
+  @override
+  String get cameraAnalyzingTitle => 'AIが写真を解析中…';
+
+  @override
+  String get cameraAnalyzingBody => '食材を認識しています。しばらくお待ちください';
+
+  @override
+  String cameraReviewHeader(int n) {
+    return '認識された食材（$n件）';
+  }
+
+  @override
+  String get cameraConfHighLabel => '確信度 高';
+
+  @override
+  String get cameraConfMidLabel => '確信度 中';
+
+  @override
+  String get cameraConfLowLabel => '確信度 低';
+
+  @override
+  String cameraConfirmButton(int n) {
+    return '確定して追加（$n件）';
+  }
+
+  @override
+  String get cameraEditNameLabel => '名前';
+
+  @override
+  String get cameraEditQtyLabel => '数量';
+
+  @override
+  String get cameraEditUnitLabel => '単位';
+
+  @override
+  String get cameraEditCategoryLabel => 'カテゴリ';
+
+  @override
+  String get cameraErrorNetworkTitle => '写真の解析に失敗しました';
+
+  @override
+  String get cameraErrorNetworkBody => '電波の良い場所か Wi-Fi に接続してください。';
+
+  @override
+  String get cameraErrorNoApiKeyTitle => 'API キーが登録されていません';
+
+  @override
+  String get cameraErrorNoApiKeyBody => '設定でAPIキーを登録すると、AI食材認識を使えます。';
+
+  @override
+  String get cameraErrorNoVisionTitle => 'このプロバイダは画像認識に対応していません';
+
+  @override
+  String get cameraErrorNoVisionBody => '設定から画像認識に対応したプロバイダ・モデルに変更してください。';
+
+  @override
+  String get cameraErrorRetry => 'もう一度試す';
+
+  @override
+  String get cameraErrorOpenSettings => '設定を開く';
+
+  @override
+  String cameraAddedToast(int n) {
+    return '$n件を在庫に追加しました';
+  }
 }

@@ -7,13 +7,16 @@ import 'package:tsukaikiri/features/recipe/domain/recipe_constraints.dart';
 import 'package:tsukaikiri/features/recipe/domain/suggested_recipe.dart';
 import 'package:tsukaikiri/features/recipe/service/recipe_provider.dart';
 
-/// normalize / suggestRecipes を差し替えられるテスト用 RecipeProvider。
+/// normalize / suggestRecipes / recognizeIngredients を差し替えられるテスト用 RecipeProvider。
 class FakeRecipeProvider implements RecipeProvider {
   FakeRecipeProvider({
     this.normalizedKeys = const {},
     this.suggestResult = const [],
     this.suggestError,
-  });
+    this.recognizeResult,
+    this.recognizeError,
+    bool? supportsVisionOverride,
+  }) : _supportsVision = supportsVisionOverride ?? (recognizeResult != null);
 
   /// normalize が返すマップ（渡された名前に含まれるものだけ返す）。
   final Map<String, String> normalizedKeys;
@@ -23,6 +26,15 @@ class FakeRecipeProvider implements RecipeProvider {
 
   /// 非 null のとき suggestRecipes はこの例外を投げる。
   final RecipeProviderException? suggestError;
+
+  /// recognizeIngredients が返す候補リスト。
+  /// null のとき（デフォルト）は UnimplementedError を投げる（従来動作）。
+  final List<DetectedIngredient>? recognizeResult;
+
+  /// 非 null のとき recognizeIngredients はこの例外を投げる。
+  final RecipeProviderException? recognizeError;
+
+  final bool _supportsVision;
 
   /// normalize が呼ばれた際の引数履歴。
   final List<List<String>> normalizeCalls = [];
@@ -37,7 +49,7 @@ class FakeRecipeProvider implements RecipeProvider {
   String get modelId => 'fake-model';
 
   @override
-  bool get supportsVision => false;
+  bool get supportsVision => _supportsVision;
 
   @override
   Future<Map<String, String>> normalize(List<String> names) async {
@@ -61,6 +73,9 @@ class FakeRecipeProvider implements RecipeProvider {
 
   @override
   Future<List<DetectedIngredient>> recognizeIngredients(
-          List<Uint8List> images) =>
-      throw UnimplementedError();
+      List<Uint8List> images) async {
+    if (recognizeError != null) throw recognizeError!;
+    if (recognizeResult != null) return recognizeResult!;
+    throw UnimplementedError();
+  }
 }

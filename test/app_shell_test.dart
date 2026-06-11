@@ -77,7 +77,7 @@ void main() {
 
   // ─── テスト 2: ナビ項目クリックでコンテンツが切り替わる ───
 
-  testWidgets('カメラ登録をタップするとプレースホルダが表示される', (tester) async {
+  testWidgets('カメラ登録をタップするとドロップゾーンが表示される', (tester) async {
     await pumpShell(tester);
 
     // M2 以降、「カメラ登録」はサイドバーとツールバーボタンで2件ある。
@@ -85,10 +85,8 @@ void main() {
     await tester.tap(find.text('カメラ登録').first);
     await tester.pumpAndSettle();
 
-    // ツールバータイトルが「カメラ登録」に切り替わり
-    // プレースホルダの「準備中」テキストが表示される
-    expect(find.text('準備中'), findsOneWidget);
-    expect(find.text('この画面は準備中です。'), findsOneWidget);
+    // M6 で実装済み: ドロップゾーンのキャッチコピーが表示される。
+    expect(find.text('写真をドロップ、または クリックして選択'), findsOneWidget);
 
     await unmountApp(tester);
   });

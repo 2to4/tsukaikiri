@@ -329,5 +329,43 @@
   "shoppingQtyUnit": "{qty}個",
   "@shoppingQtyUnit": {
     "placeholders": { "qty": { "type": "int" } }
+  },
+
+  "cameraTitle": "カメラ登録",
+  "cameraDropZoneTitle": "写真をドロップ、または クリックして選択",
+  "cameraDropZoneBody": "冷蔵庫の写真を最大10枚追加できます",
+  "cameraAnalyzeButton": "{n}枚を解析する ⌘R",
+  "@cameraAnalyzeButton": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "cameraMaxPhotosHint": "写真は最大10枚まで追加できます。超えた分は無視されました。",
+  "cameraAnalyzingTitle": "AIが写真を解析中…",
+  "cameraAnalyzingBody": "食材を認識しています。しばらくお待ちください",
+  "cameraReviewHeader": "認識された食材（{n}件）",
+  "@cameraReviewHeader": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "cameraConfHighLabel": "確信度 高",
+  "cameraConfMidLabel": "確信度 中",
+  "cameraConfLowLabel": "確信度 低",
+  "cameraConfirmButton": "確定して追加（{n}件）",
+  "@cameraConfirmButton": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "cameraEditNameLabel": "名前",
+  "cameraEditQtyLabel": "数量",
+  "cameraEditUnitLabel": "単位",
+  "cameraEditCategoryLabel": "カテゴリ",
+  "cameraErrorNetworkTitle": "写真の解析に失敗しました",
+  "cameraErrorNetworkBody": "電波の良い場所か Wi-Fi に接続してください。",
+  "cameraErrorNoApiKeyTitle": "API キーが登録されていません",
+  "cameraErrorNoApiKeyBody": "設定でAPIキーを登録すると、AI食材認識を使えます。",
+  "cameraErrorNoVisionTitle": "このプロバイダは画像認識に対応していません",
+  "cameraErrorNoVisionBody": "設定から画像認識に対応したプロバイダ・モデルに変更してください。",
+  "cameraErrorRetry": "もう一度試す",
+  "cameraErrorOpenSettings": "設定を開く",
+  "cameraAddedToast": "{n}件を在庫に追加しました",
+  "@cameraAddedToast": {
+    "placeholders": { "n": { "type": "int" } }
   }
 }
