@@ -51,6 +51,8 @@ flutter build apk --release           # Android リリースビルド
 
 `lib/core/db/app_database.dart` のテーブル定義を変更したら `dart run build_runner build` を必ず実行する。
 
+**macOS の署名制約（フェーズ8以降）**: iCloud entitlement により macOS ビルドは Team 署名（LT37BHQT62・Xcode 設定済み）が必須。Claude Code のシェルはキーチェーン UI が使えず `codesign` が `errSecInternalComponent` で失敗するため、`flutter run -d macos` / `flutter build macos` は**ユーザーのターミナルか Xcode から実行してもらう**。開発側でのコンパイル確認は `cd macos && xcodebuild -workspace Runner.xcworkspace -scheme Runner -configuration Debug CODE_SIGNING_ALLOWED=NO build` を使う。
+
 ## コード構成
 
 feature-first 構成。状態管理・DI は Riverpod（`flutter_riverpod`）。
