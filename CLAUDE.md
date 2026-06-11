@@ -47,7 +47,7 @@ curl -X POST https://api.getmoshi.app/api/webhook \
 3. ✅ `ShoppingListService` 抽象 + macOS リマインダー実装（`macos/Runner/RemindersPlugin.swift`）
 4. ✅ `RecipeProvider` 抽象 + Gemini 実装（`GeminiProvider`、REST 直叩き）
 5. ✅ 追加プロバイダ — 優先順位は **Gemini → Grok → OpenAI → Claude**。Grok/OpenAI は `OpenAiCompatibleProvider` を共有、Claude は Messages API。モデル名はハードコードせず `listModels()` で各社 API から取得し、ユーザー選択を `UserSettings.modelOverrides` に保存
-6. 所有家電に応じた調理手順（Hotcook / Healsio）
+6. ✅ 所有家電に応じた調理手順（Hotcook / Healsio）
 7. カメラ登録（半自動）— AI レイヤー完成後
 8. データ同期（`SyncService`: iOS=iCloud、Android=Google Drive App Data）
 9. ヘルプ/このアプリについて（USDA FoodKeeper 出典表記）+ ドネーションリンク（Buy Me a Coffee）

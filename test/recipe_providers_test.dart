@@ -64,6 +64,61 @@ void main() {
       expect(prompt, contains('English'));
     });
 
+    test('buildSuggestPrompt: 家電あり（capacity 付き）→ 容量と家電向け指示を含む', () {
+      final now = DateTime(2026, 6, 11);
+      final prompt = buildSuggestPrompt(
+        [ingredient(name: '豚肉')],
+        const RecipeConstraints(
+          appliances: [
+            Appliance(type: ApplianceType.hotcook, capacity: '2.4L'),
+            Appliance(type: ApplianceType.healsio, capacity: '30L'),
+          ],
+          outputLocale: 'ja',
+        ),
+        now: now,
+      );
+      // 種別+容量が所有家電セクションに含まれる
+      expect(prompt, contains('- hotcook（容量 2.4L）'));
+      expect(prompt, contains('- healsio（容量 30L）'));
+      // 家電向け調理手順指示（汎用モード名・メニュー番号禁止）が条件セクションに含まれる
+      expect(prompt, contains('汎用的な調理モード名'));
+      expect(prompt, contains('メニュー番号は出力しないこと'));
+    });
+
+    test('buildSuggestPrompt: 家電あり（capacity なし）→ 種別のみで容量表記が出ない', () {
+      final now = DateTime(2026, 6, 11);
+      final prompt = buildSuggestPrompt(
+        [ingredient(name: '鶏肉')],
+        const RecipeConstraints(
+          appliances: [Appliance(type: ApplianceType.hotcook)],
+          outputLocale: 'ja',
+        ),
+        now: now,
+      );
+      // 種別のみ（容量なし）で表示される
+      expect(prompt, contains('- hotcook'));
+      expect(prompt, isNot(contains('容量')));
+      // 家電向け指示は含まれる
+      expect(prompt, contains('汎用的な調理モード名'));
+    });
+
+    test('buildSuggestPrompt: 家電なし → 「（なし）」で家電向け指示行を含まない', () {
+      final now = DateTime(2026, 6, 11);
+      final prompt = buildSuggestPrompt(
+        [ingredient(name: '豆腐')],
+        const RecipeConstraints(
+          appliances: [],
+          outputLocale: 'ja',
+        ),
+        now: now,
+      );
+      // 所有家電セクションは「（なし）」
+      expect(prompt, contains('（なし）'));
+      // 家電向け調理手順指示は含まれない
+      expect(prompt, isNot(contains('汎用的な調理モード名')));
+      expect(prompt, isNot(contains('メニュー番号は出力しないこと')));
+    });
+
     test('extractJson はコードフェンスや前置きを除去する', () {
       expect(extractJson('```json\n{"a":1}\n```'), '{"a":1}');
       expect(extractJson('以下が結果です。{"a":{"b":2}}'), '{"a":{"b":2}}');

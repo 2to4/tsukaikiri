@@ -29,7 +29,16 @@ String buildSuggestPrompt(
 
   final applianceLines = constraints.appliances.isEmpty
       ? '（なし）'
-      : constraints.appliances.map((a) => a.type.name).join(', ');
+      : constraints.appliances
+            .map((a) => a.capacity != null
+                ? '- ${a.type.name}（容量 ${a.capacity}）'
+                : '- ${a.type.name}')
+            .join('\n');
+
+  // 家電あり時の調理手順指示（ハルシネーション対策）。
+  final applianceInstructions = constraints.appliances.isEmpty
+      ? ''
+      : '\n・所有家電での調理が向く料理には、その家電を使う手順を steps に含めること（汎用的な調理モード名と加熱時間を明記する）。向かない料理は通常の鍋・フライパン手順でよい（無理に家電を使わない）。機種固有の自動メニュー名・メニュー番号は出力しないこと。';
 
   // 条件チップ → プロンプトの自然文表現（言語非依存の指示文。出力言語とは独立）。
   final kindLine = switch (constraints.mealKind) {
@@ -54,7 +63,7 @@ String buildSuggestPrompt(
 
 【条件】
 $kindLine
-$stockLine$extra
+$stockLine$applianceInstructions$extra
 
 【在庫】
 $inventoryLines
