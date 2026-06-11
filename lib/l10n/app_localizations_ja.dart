@@ -844,4 +844,170 @@ class AppLocalizationsJa extends AppLocalizations {
   String cameraAddedToast(int n) {
     return '$n件を在庫に追加しました';
   }
+
+  @override
+  String get onboardingRailTitle => '設定アシスタント';
+
+  @override
+  String get onboardingStep0 => 'ようこそ';
+
+  @override
+  String get onboardingStep1 => 'AIを選ぶ';
+
+  @override
+  String get onboardingStep2 => 'リマインダー連携';
+
+  @override
+  String get onboardingStep3 => 'リストを選ぶ';
+
+  @override
+  String get onboardingStep4 => '調理家電';
+
+  @override
+  String get onboardingStep5 => '完了';
+
+  @override
+  String get onboardingWelcomeTitle => 'つかいきりへようこそ';
+
+  @override
+  String get onboardingWelcomeSub =>
+      '冷蔵庫の食材を登録して、食材を無駄なく使い切る献立を提案します。\nまず簡単な設定をしましょう。';
+
+  @override
+  String get onboardingWelcomeFeature1Title => '撮るだけ登録';
+
+  @override
+  String get onboardingWelcomeFeature1Body => 'カメラで食材を一括追加';
+
+  @override
+  String get onboardingWelcomeFeature2Title => '使い切り献立';
+
+  @override
+  String get onboardingWelcomeFeature2Body => '期限間近の食材を優先';
+
+  @override
+  String get onboardingWelcomeFeature3Title => '買い物リスト';
+
+  @override
+  String get onboardingWelcomeFeature3Body => '足りない食材を自動追加';
+
+  @override
+  String get onboardingWelcomeStart => 'はじめる';
+
+  @override
+  String get onboardingAiTitle => 'AIプロバイダを選択';
+
+  @override
+  String get onboardingAiSub =>
+      '食材の認識と献立提案に使うAIを選んでください。APIキーはこのMac内に安全に保存されます。';
+
+  @override
+  String get onboardingAiSkip => 'あとで設定';
+
+  @override
+  String get onboardingAiKeyLabel => 'APIキー';
+
+  @override
+  String onboardingAiGetKeyLink(String provider) {
+    return '$provider のAPIキーを取得する';
+  }
+
+  @override
+  String get onboardingAiSelected => '選択中';
+
+  @override
+  String get onboardingLinkTitle => 'リマインダーと連携';
+
+  @override
+  String get onboardingLinkSub => '足りない食材を、macOSのリマインダーに自動で追加します。';
+
+  @override
+  String get onboardingLinkSkip => 'あとで';
+
+  @override
+  String get onboardingLinkApp => 'アプリ';
+
+  @override
+  String get onboardingLinkAppValue => 'リマインダー（macOS）';
+
+  @override
+  String get onboardingLinkAction => 'できること';
+
+  @override
+  String get onboardingLinkActionValue => '買い物リストへの項目追加';
+
+  @override
+  String get onboardingLinkPrivacy => 'プライバシー';
+
+  @override
+  String get onboardingLinkPrivacyValue => '写真はこのMac内で処理';
+
+  @override
+  String get onboardingLinkButton => 'リマインダーへのアクセスを許可';
+
+  @override
+  String get onboardingLinkDone => 'リマインダーと連携しました';
+
+  @override
+  String get onboardingLinkError => 'リマインダーにアクセスできませんでした。設定画面で後から設定できます。';
+
+  @override
+  String get onboardingListTitle => '追加先リストを選ぶ';
+
+  @override
+  String get onboardingListSub => '買い物リストを追加するリマインダーのリストを選んでください。';
+
+  @override
+  String get onboardingListSkip => 'あとで';
+
+  @override
+  String get onboardingListNewName => '新しいリスト名…';
+
+  @override
+  String get onboardingListCreate => '作成';
+
+  @override
+  String get onboardingListLoading => '読み込み中…';
+
+  @override
+  String get onboardingApplianceTitle => '調理家電の登録';
+
+  @override
+  String get onboardingApplianceSub => 'お持ちの調理家電を選ぶと、それに合わせた献立を提案します。';
+
+  @override
+  String get onboardingApplianceSkip => '持っていない';
+
+  @override
+  String get onboardingApplianceSeries => 'シリーズ';
+
+  @override
+  String get onboardingFinishTitle => '準備ができました';
+
+  @override
+  String get onboardingFinishSub => 'さっそく冷蔵庫の食材を登録して、使い切り献立をはじめましょう。';
+
+  @override
+  String get onboardingFinishAiLabel => 'AI';
+
+  @override
+  String get onboardingFinishListLabel => 'リマインダー連携';
+
+  @override
+  String get onboardingFinishApplianceLabel => '調理家電';
+
+  @override
+  String get onboardingFinishNotSet => '未設定';
+
+  @override
+  String get onboardingFinishSettingsNote => 'これらの設定はいつでも設定画面から変更できます。';
+
+  @override
+  String get onboardingFinishStart => '食材を登録してはじめる';
+
+  @override
+  String get onboardingBack => '戻る';
+
+  @override
+  String get onboardingNext => '次へ';
 }

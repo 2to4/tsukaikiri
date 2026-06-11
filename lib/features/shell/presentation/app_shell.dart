@@ -8,6 +8,7 @@ import '../../../features/camera/presentation/camera_capture_controller.dart';
 import '../../../features/camera/presentation/camera_desktop_view.dart';
 import '../../../features/inventory/presentation/inventory_desktop_view.dart';
 import '../../../features/inventory/presentation/inventory_providers.dart';
+import '../../../features/onboarding/presentation/onboarding_desktop_view.dart';
 import '../../../features/recipe/presentation/meal_suggestion_controller.dart';
 import '../../../features/recipe/presentation/meals_desktop_view.dart';
 import '../../../features/settings/presentation/settings_desktop_view.dart';
@@ -512,6 +513,7 @@ class _ContentArea extends StatelessWidget {
       ShellSection.meals => const MealsDesktopView(),
       ShellSection.shopping => const ShoppingDesktopView(),
       ShellSection.settings => const SettingsDesktopView(),
+      ShellSection.onboarding => const OnboardingDesktopView(),
       _ => _Placeholder(section: section),
     };
   }

@@ -374,5 +374,70 @@
   "cameraAddedToast": "Added {n} items to inventory",
   "@cameraAddedToast": {
     "placeholders": { "n": { "type": "int" } }
-  }
+  },
+
+  "onboardingRailTitle": "Setup Assistant",
+  "onboardingStep0": "Welcome",
+  "onboardingStep1": "Choose AI",
+  "onboardingStep2": "Reminders",
+  "onboardingStep3": "Pick a List",
+  "onboardingStep4": "Appliances",
+  "onboardingStep5": "Done",
+
+  "onboardingWelcomeTitle": "Welcome to Tsukaikiri",
+  "onboardingWelcomeSub": "Register the ingredients in your fridge and get use-it-up meal suggestions.\nLet's start with a quick setup.",
+  "onboardingWelcomeFeature1Title": "Snap to register",
+  "onboardingWelcomeFeature1Body": "Add ingredients in bulk with your camera",
+  "onboardingWelcomeFeature2Title": "Use-it-up meals",
+  "onboardingWelcomeFeature2Body": "Prioritizes ingredients expiring soonest",
+  "onboardingWelcomeFeature3Title": "Shopping list",
+  "onboardingWelcomeFeature3Body": "Auto-adds missing items to Reminders",
+  "onboardingWelcomeStart": "Get Started",
+
+  "onboardingAiTitle": "Choose an AI Provider",
+  "onboardingAiSub": "Select the AI to use for recognizing ingredients and suggesting meals.\nYour API key is stored securely on this Mac.",
+  "onboardingAiSkip": "Set up later",
+  "onboardingAiKeyLabel": "API Key",
+  "onboardingAiGetKeyLink": "Get {provider} API key",
+  "@onboardingAiGetKeyLink": {
+    "placeholders": { "provider": { "type": "String" } }
+  },
+  "onboardingAiSelected": "Selected",
+
+  "onboardingLinkTitle": "Connect Reminders",
+  "onboardingLinkSub": "Missing ingredients will be automatically added to macOS Reminders.",
+  "onboardingLinkSkip": "Later",
+  "onboardingLinkApp": "App",
+  "onboardingLinkAppValue": "Reminders (macOS)",
+  "onboardingLinkAction": "Can do",
+  "onboardingLinkActionValue": "Add items to a shopping list",
+  "onboardingLinkPrivacy": "Privacy",
+  "onboardingLinkPrivacyValue": "Photos are processed on this Mac only",
+  "onboardingLinkButton": "Allow Access to Reminders",
+  "onboardingLinkDone": "Connected to Reminders",
+  "onboardingLinkError": "Could not access Reminders. You can set this up later in Settings.",
+
+  "onboardingListTitle": "Choose a Destination List",
+  "onboardingListSub": "Select the Reminders list where shopping items will be added.",
+  "onboardingListSkip": "Later",
+  "onboardingListNewName": "New list name…",
+  "onboardingListCreate": "Create",
+  "onboardingListLoading": "Loading…",
+
+  "onboardingApplianceTitle": "Register Appliances",
+  "onboardingApplianceSub": "Select the appliances you own for customized recipes.",
+  "onboardingApplianceSkip": "I don't own any",
+  "onboardingApplianceSeries": "Series",
+
+  "onboardingFinishTitle": "All set!",
+  "onboardingFinishSub": "Register your fridge ingredients and start getting use-it-up meal suggestions.",
+  "onboardingFinishAiLabel": "AI",
+  "onboardingFinishListLabel": "Reminders list",
+  "onboardingFinishApplianceLabel": "Appliances",
+  "onboardingFinishNotSet": "Not configured",
+  "onboardingFinishSettingsNote": "You can change these settings anytime in the Settings screen.",
+  "onboardingFinishStart": "Register ingredients and start",
+
+  "onboardingBack": "Back",
+  "onboardingNext": "Next"
 }

@@ -1657,6 +1657,330 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Added {n} items to inventory'**
   String cameraAddedToast(int n);
+
+  /// No description provided for @onboardingRailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Setup Assistant'**
+  String get onboardingRailTitle;
+
+  /// No description provided for @onboardingStep0.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome'**
+  String get onboardingStep0;
+
+  /// No description provided for @onboardingStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose AI'**
+  String get onboardingStep1;
+
+  /// No description provided for @onboardingStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get onboardingStep2;
+
+  /// No description provided for @onboardingStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a List'**
+  String get onboardingStep3;
+
+  /// No description provided for @onboardingStep4.
+  ///
+  /// In en, this message translates to:
+  /// **'Appliances'**
+  String get onboardingStep4;
+
+  /// No description provided for @onboardingStep5.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get onboardingStep5;
+
+  /// No description provided for @onboardingWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Tsukaikiri'**
+  String get onboardingWelcomeTitle;
+
+  /// No description provided for @onboardingWelcomeSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Register the ingredients in your fridge and get use-it-up meal suggestions.\nLet\'s start with a quick setup.'**
+  String get onboardingWelcomeSub;
+
+  /// No description provided for @onboardingWelcomeFeature1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Snap to register'**
+  String get onboardingWelcomeFeature1Title;
+
+  /// No description provided for @onboardingWelcomeFeature1Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Add ingredients in bulk with your camera'**
+  String get onboardingWelcomeFeature1Body;
+
+  /// No description provided for @onboardingWelcomeFeature2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Use-it-up meals'**
+  String get onboardingWelcomeFeature2Title;
+
+  /// No description provided for @onboardingWelcomeFeature2Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Prioritizes ingredients expiring soonest'**
+  String get onboardingWelcomeFeature2Body;
+
+  /// No description provided for @onboardingWelcomeFeature3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping list'**
+  String get onboardingWelcomeFeature3Title;
+
+  /// No description provided for @onboardingWelcomeFeature3Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-adds missing items to Reminders'**
+  String get onboardingWelcomeFeature3Body;
+
+  /// No description provided for @onboardingWelcomeStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get onboardingWelcomeStart;
+
+  /// No description provided for @onboardingAiTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an AI Provider'**
+  String get onboardingAiTitle;
+
+  /// No description provided for @onboardingAiSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the AI to use for recognizing ingredients and suggesting meals.\nYour API key is stored securely on this Mac.'**
+  String get onboardingAiSub;
+
+  /// No description provided for @onboardingAiSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up later'**
+  String get onboardingAiSkip;
+
+  /// No description provided for @onboardingAiKeyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'API Key'**
+  String get onboardingAiKeyLabel;
+
+  /// No description provided for @onboardingAiGetKeyLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Get {provider} API key'**
+  String onboardingAiGetKeyLink(String provider);
+
+  /// No description provided for @onboardingAiSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected'**
+  String get onboardingAiSelected;
+
+  /// No description provided for @onboardingLinkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect Reminders'**
+  String get onboardingLinkTitle;
+
+  /// No description provided for @onboardingLinkSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing ingredients will be automatically added to macOS Reminders.'**
+  String get onboardingLinkSub;
+
+  /// No description provided for @onboardingLinkSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get onboardingLinkSkip;
+
+  /// No description provided for @onboardingLinkApp.
+  ///
+  /// In en, this message translates to:
+  /// **'App'**
+  String get onboardingLinkApp;
+
+  /// No description provided for @onboardingLinkAppValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders (macOS)'**
+  String get onboardingLinkAppValue;
+
+  /// No description provided for @onboardingLinkAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Can do'**
+  String get onboardingLinkAction;
+
+  /// No description provided for @onboardingLinkActionValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Add items to a shopping list'**
+  String get onboardingLinkActionValue;
+
+  /// No description provided for @onboardingLinkPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get onboardingLinkPrivacy;
+
+  /// No description provided for @onboardingLinkPrivacyValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos are processed on this Mac only'**
+  String get onboardingLinkPrivacyValue;
+
+  /// No description provided for @onboardingLinkButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow Access to Reminders'**
+  String get onboardingLinkButton;
+
+  /// No description provided for @onboardingLinkDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to Reminders'**
+  String get onboardingLinkDone;
+
+  /// No description provided for @onboardingLinkError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not access Reminders. You can set this up later in Settings.'**
+  String get onboardingLinkError;
+
+  /// No description provided for @onboardingListTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a Destination List'**
+  String get onboardingListTitle;
+
+  /// No description provided for @onboardingListSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the Reminders list where shopping items will be added.'**
+  String get onboardingListSub;
+
+  /// No description provided for @onboardingListSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get onboardingListSkip;
+
+  /// No description provided for @onboardingListNewName.
+  ///
+  /// In en, this message translates to:
+  /// **'New list name…'**
+  String get onboardingListNewName;
+
+  /// No description provided for @onboardingListCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get onboardingListCreate;
+
+  /// No description provided for @onboardingListLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading…'**
+  String get onboardingListLoading;
+
+  /// No description provided for @onboardingApplianceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Register Appliances'**
+  String get onboardingApplianceTitle;
+
+  /// No description provided for @onboardingApplianceSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the appliances you own for customized recipes.'**
+  String get onboardingApplianceSub;
+
+  /// No description provided for @onboardingApplianceSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'I don\'t own any'**
+  String get onboardingApplianceSkip;
+
+  /// No description provided for @onboardingApplianceSeries.
+  ///
+  /// In en, this message translates to:
+  /// **'Series'**
+  String get onboardingApplianceSeries;
+
+  /// No description provided for @onboardingFinishTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'All set!'**
+  String get onboardingFinishTitle;
+
+  /// No description provided for @onboardingFinishSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Register your fridge ingredients and start getting use-it-up meal suggestions.'**
+  String get onboardingFinishSub;
+
+  /// No description provided for @onboardingFinishAiLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'AI'**
+  String get onboardingFinishAiLabel;
+
+  /// No description provided for @onboardingFinishListLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders list'**
+  String get onboardingFinishListLabel;
+
+  /// No description provided for @onboardingFinishApplianceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Appliances'**
+  String get onboardingFinishApplianceLabel;
+
+  /// No description provided for @onboardingFinishNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not configured'**
+  String get onboardingFinishNotSet;
+
+  /// No description provided for @onboardingFinishSettingsNote.
+  ///
+  /// In en, this message translates to:
+  /// **'You can change these settings anytime in the Settings screen.'**
+  String get onboardingFinishSettingsNote;
+
+  /// No description provided for @onboardingFinishStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Register ingredients and start'**
+  String get onboardingFinishStart;
+
+  /// No description provided for @onboardingBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get onboardingBack;
+
+  /// No description provided for @onboardingNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNext;
 }
 
 class _AppLocalizationsDelegate

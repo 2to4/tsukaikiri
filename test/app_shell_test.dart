@@ -118,13 +118,14 @@ void main() {
     await unmountApp(tester);
   });
 
-  testWidgets('設定アシスタントをタップするとプレースホルダが表示される', (tester) async {
+  testWidgets('設定アシスタントをタップするとオンボーディングが表示される', (tester) async {
     await pumpShell(tester);
 
     await tester.tap(find.text('設定アシスタント'));
     await tester.pumpAndSettle();
 
-    expect(find.text('準備中'), findsOneWidget);
+    // M7 実装済み: ようこそステップが表示される。
+    expect(find.text('つかいきりへようこそ'), findsOneWidget);
 
     await unmountApp(tester);
   });

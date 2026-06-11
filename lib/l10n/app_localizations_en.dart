@@ -860,4 +860,180 @@ class AppLocalizationsEn extends AppLocalizations {
   String cameraAddedToast(int n) {
     return 'Added $n items to inventory';
   }
+
+  @override
+  String get onboardingRailTitle => 'Setup Assistant';
+
+  @override
+  String get onboardingStep0 => 'Welcome';
+
+  @override
+  String get onboardingStep1 => 'Choose AI';
+
+  @override
+  String get onboardingStep2 => 'Reminders';
+
+  @override
+  String get onboardingStep3 => 'Pick a List';
+
+  @override
+  String get onboardingStep4 => 'Appliances';
+
+  @override
+  String get onboardingStep5 => 'Done';
+
+  @override
+  String get onboardingWelcomeTitle => 'Welcome to Tsukaikiri';
+
+  @override
+  String get onboardingWelcomeSub =>
+      'Register the ingredients in your fridge and get use-it-up meal suggestions.\nLet\'s start with a quick setup.';
+
+  @override
+  String get onboardingWelcomeFeature1Title => 'Snap to register';
+
+  @override
+  String get onboardingWelcomeFeature1Body =>
+      'Add ingredients in bulk with your camera';
+
+  @override
+  String get onboardingWelcomeFeature2Title => 'Use-it-up meals';
+
+  @override
+  String get onboardingWelcomeFeature2Body =>
+      'Prioritizes ingredients expiring soonest';
+
+  @override
+  String get onboardingWelcomeFeature3Title => 'Shopping list';
+
+  @override
+  String get onboardingWelcomeFeature3Body =>
+      'Auto-adds missing items to Reminders';
+
+  @override
+  String get onboardingWelcomeStart => 'Get Started';
+
+  @override
+  String get onboardingAiTitle => 'Choose an AI Provider';
+
+  @override
+  String get onboardingAiSub =>
+      'Select the AI to use for recognizing ingredients and suggesting meals.\nYour API key is stored securely on this Mac.';
+
+  @override
+  String get onboardingAiSkip => 'Set up later';
+
+  @override
+  String get onboardingAiKeyLabel => 'API Key';
+
+  @override
+  String onboardingAiGetKeyLink(String provider) {
+    return 'Get $provider API key';
+  }
+
+  @override
+  String get onboardingAiSelected => 'Selected';
+
+  @override
+  String get onboardingLinkTitle => 'Connect Reminders';
+
+  @override
+  String get onboardingLinkSub =>
+      'Missing ingredients will be automatically added to macOS Reminders.';
+
+  @override
+  String get onboardingLinkSkip => 'Later';
+
+  @override
+  String get onboardingLinkApp => 'App';
+
+  @override
+  String get onboardingLinkAppValue => 'Reminders (macOS)';
+
+  @override
+  String get onboardingLinkAction => 'Can do';
+
+  @override
+  String get onboardingLinkActionValue => 'Add items to a shopping list';
+
+  @override
+  String get onboardingLinkPrivacy => 'Privacy';
+
+  @override
+  String get onboardingLinkPrivacyValue =>
+      'Photos are processed on this Mac only';
+
+  @override
+  String get onboardingLinkButton => 'Allow Access to Reminders';
+
+  @override
+  String get onboardingLinkDone => 'Connected to Reminders';
+
+  @override
+  String get onboardingLinkError =>
+      'Could not access Reminders. You can set this up later in Settings.';
+
+  @override
+  String get onboardingListTitle => 'Choose a Destination List';
+
+  @override
+  String get onboardingListSub =>
+      'Select the Reminders list where shopping items will be added.';
+
+  @override
+  String get onboardingListSkip => 'Later';
+
+  @override
+  String get onboardingListNewName => 'New list name…';
+
+  @override
+  String get onboardingListCreate => 'Create';
+
+  @override
+  String get onboardingListLoading => 'Loading…';
+
+  @override
+  String get onboardingApplianceTitle => 'Register Appliances';
+
+  @override
+  String get onboardingApplianceSub =>
+      'Select the appliances you own for customized recipes.';
+
+  @override
+  String get onboardingApplianceSkip => 'I don\'t own any';
+
+  @override
+  String get onboardingApplianceSeries => 'Series';
+
+  @override
+  String get onboardingFinishTitle => 'All set!';
+
+  @override
+  String get onboardingFinishSub =>
+      'Register your fridge ingredients and start getting use-it-up meal suggestions.';
+
+  @override
+  String get onboardingFinishAiLabel => 'AI';
+
+  @override
+  String get onboardingFinishListLabel => 'Reminders list';
+
+  @override
+  String get onboardingFinishApplianceLabel => 'Appliances';
+
+  @override
+  String get onboardingFinishNotSet => 'Not configured';
+
+  @override
+  String get onboardingFinishSettingsNote =>
+      'You can change these settings anytime in the Settings screen.';
+
+  @override
+  String get onboardingFinishStart => 'Register ingredients and start';
+
+  @override
+  String get onboardingBack => 'Back';
+
+  @override
+  String get onboardingNext => 'Next';
 }

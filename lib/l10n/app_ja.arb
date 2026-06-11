@@ -367,5 +367,70 @@
   "cameraAddedToast": "{n}件を在庫に追加しました",
   "@cameraAddedToast": {
     "placeholders": { "n": { "type": "int" } }
-  }
+  },
+
+  "onboardingRailTitle": "設定アシスタント",
+  "onboardingStep0": "ようこそ",
+  "onboardingStep1": "AIを選ぶ",
+  "onboardingStep2": "リマインダー連携",
+  "onboardingStep3": "リストを選ぶ",
+  "onboardingStep4": "調理家電",
+  "onboardingStep5": "完了",
+
+  "onboardingWelcomeTitle": "つかいきりへようこそ",
+  "onboardingWelcomeSub": "冷蔵庫の食材を登録して、食材を無駄なく使い切る献立を提案します。\nまず簡単な設定をしましょう。",
+  "onboardingWelcomeFeature1Title": "撮るだけ登録",
+  "onboardingWelcomeFeature1Body": "カメラで食材を一括追加",
+  "onboardingWelcomeFeature2Title": "使い切り献立",
+  "onboardingWelcomeFeature2Body": "期限間近の食材を優先",
+  "onboardingWelcomeFeature3Title": "買い物リスト",
+  "onboardingWelcomeFeature3Body": "足りない食材を自動追加",
+  "onboardingWelcomeStart": "はじめる",
+
+  "onboardingAiTitle": "AIプロバイダを選択",
+  "onboardingAiSub": "食材の認識と献立提案に使うAIを選んでください。APIキーはこのMac内に安全に保存されます。",
+  "onboardingAiSkip": "あとで設定",
+  "onboardingAiKeyLabel": "APIキー",
+  "onboardingAiGetKeyLink": "{provider} のAPIキーを取得する",
+  "@onboardingAiGetKeyLink": {
+    "placeholders": { "provider": { "type": "String" } }
+  },
+  "onboardingAiSelected": "選択中",
+
+  "onboardingLinkTitle": "リマインダーと連携",
+  "onboardingLinkSub": "足りない食材を、macOSのリマインダーに自動で追加します。",
+  "onboardingLinkSkip": "あとで",
+  "onboardingLinkApp": "アプリ",
+  "onboardingLinkAppValue": "リマインダー（macOS）",
+  "onboardingLinkAction": "できること",
+  "onboardingLinkActionValue": "買い物リストへの項目追加",
+  "onboardingLinkPrivacy": "プライバシー",
+  "onboardingLinkPrivacyValue": "写真はこのMac内で処理",
+  "onboardingLinkButton": "リマインダーへのアクセスを許可",
+  "onboardingLinkDone": "リマインダーと連携しました",
+  "onboardingLinkError": "リマインダーにアクセスできませんでした。設定画面で後から設定できます。",
+
+  "onboardingListTitle": "追加先リストを選ぶ",
+  "onboardingListSub": "買い物リストを追加するリマインダーのリストを選んでください。",
+  "onboardingListSkip": "あとで",
+  "onboardingListNewName": "新しいリスト名…",
+  "onboardingListCreate": "作成",
+  "onboardingListLoading": "読み込み中…",
+
+  "onboardingApplianceTitle": "調理家電の登録",
+  "onboardingApplianceSub": "お持ちの調理家電を選ぶと、それに合わせた献立を提案します。",
+  "onboardingApplianceSkip": "持っていない",
+  "onboardingApplianceSeries": "シリーズ",
+
+  "onboardingFinishTitle": "準備ができました",
+  "onboardingFinishSub": "さっそく冷蔵庫の食材を登録して、使い切り献立をはじめましょう。",
+  "onboardingFinishAiLabel": "AI",
+  "onboardingFinishListLabel": "リマインダー連携",
+  "onboardingFinishApplianceLabel": "調理家電",
+  "onboardingFinishNotSet": "未設定",
+  "onboardingFinishSettingsNote": "これらの設定はいつでも設定画面から変更できます。",
+  "onboardingFinishStart": "食材を登録してはじめる",
+
+  "onboardingBack": "戻る",
+  "onboardingNext": "次へ"
 }
