@@ -1981,6 +1981,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Next'**
   String get onboardingNext;
+
+  /// No description provided for @helpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help / About'**
+  String get helpTitle;
+
+  /// No description provided for @helpAppTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'An app to help you use up fridge ingredients by suggesting use-it-up meals.'**
+  String get helpAppTagline;
+
+  /// No description provided for @helpGuideEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'GUIDE'**
+  String get helpGuideEyebrow;
+
+  /// No description provided for @helpGuideTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How to Use'**
+  String get helpGuideTitle;
+
+  /// No description provided for @helpStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Register ingredients'**
+  String get helpStep1Title;
+
+  /// No description provided for @helpStep1Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo of your fridge and AI will recognize ingredients to add to your inventory. You can also add them manually.'**
+  String get helpStep1Body;
+
+  /// No description provided for @helpStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Check inventory and expiry'**
+  String get helpStep2Title;
+
+  /// No description provided for @helpStep2Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Ingredients are sorted by expiry date. Those expiring soon are shown in orange; overdue ones in red.'**
+  String get helpStep2Body;
+
+  /// No description provided for @helpStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Get meal suggestions'**
+  String get helpStep3Title;
+
+  /// No description provided for @helpStep3Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Get use-it-up meal ideas from your current inventory. Recipes tailored to your appliances are included.'**
+  String get helpStep3Body;
+
+  /// No description provided for @helpStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add missing items to shopping list'**
+  String get helpStep4Title;
+
+  /// No description provided for @helpStep4Body.
+  ///
+  /// In en, this message translates to:
+  /// **'Ingredients you need for your chosen meals are added in bulk to your Reminders shopping list.'**
+  String get helpStep4Body;
+
+  /// No description provided for @helpDataEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'DATA'**
+  String get helpDataEyebrow;
+
+  /// No description provided for @helpDataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About Expiry Data'**
+  String get helpDataTitle;
+
+  /// No description provided for @helpDataP1.
+  ///
+  /// In en, this message translates to:
+  /// **'The expiry guidelines in this app are based on the FoodKeeper dataset published by the USDA Food Safety and Inspection Service (FSIS). FoodKeeper is an official dataset summarizing recommended storage periods for various foods.'**
+  String get helpDataP1;
+
+  /// No description provided for @helpDataP2.
+  ///
+  /// In en, this message translates to:
+  /// **'Foods not covered by FoodKeeper — such as Japanese-specific ingredients — are supplemented with independently researched storage guidelines.'**
+  String get helpDataP2;
+
+  /// No description provided for @helpDataCalloutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Dates shown are estimates only'**
+  String get helpDataCalloutTitle;
+
+  /// No description provided for @helpDataCalloutBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Actual shelf life varies depending on storage conditions, whether the package has been opened, and the season. Always check the condition of food yourself.'**
+  String get helpDataCalloutBody;
+
+  /// No description provided for @helpSourceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sources & References'**
+  String get helpSourceTitle;
+
+  /// No description provided for @helpSourceFoodkeeperTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'FoodKeeper'**
+  String get helpSourceFoodkeeperTitle;
+
+  /// No description provided for @helpSourceFoodkeeperDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'USDA / FSIS food storage guidelines'**
+  String get helpSourceFoodkeeperDesc;
+
+  /// No description provided for @helpSourceDatagovTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Data.gov (FoodKeeper Data)'**
+  String get helpSourceDatagovTitle;
+
+  /// No description provided for @helpSourceDatagovDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'US Government open data catalog'**
+  String get helpSourceDatagovDesc;
+
+  /// No description provided for @helpEditCalloutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You can edit expiry dates anytime'**
+  String get helpEditCalloutTitle;
+
+  /// No description provided for @helpEditCalloutBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the detail view for any ingredient to update its expiry date. Override with the date on the package or your own judgment.'**
+  String get helpEditCalloutBody;
+
+  /// No description provided for @helpLegalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal & Privacy'**
+  String get helpLegalTitle;
+
+  /// No description provided for @helpLegalTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Use'**
+  String get helpLegalTerms;
+
+  /// No description provided for @helpLegalPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get helpLegalPrivacy;
+
+  /// No description provided for @helpLegalFaq.
+  ///
+  /// In en, this message translates to:
+  /// **'FAQ & Support'**
+  String get helpLegalFaq;
+
+  /// No description provided for @helpFooter.
+  ///
+  /// In en, this message translates to:
+  /// **'FoodKeeper data © USDA / FSIS (Public Domain)\n© 2026 Tsukaikiri'**
+  String get helpFooter;
 }
 
 class _AppLocalizationsDelegate

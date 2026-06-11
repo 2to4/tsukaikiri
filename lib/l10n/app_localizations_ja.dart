@@ -1010,4 +1010,100 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get onboardingNext => '次へ';
+
+  @override
+  String get helpTitle => 'ヘルプ / このアプリについて';
+
+  @override
+  String get helpAppTagline => '冷蔵庫の在庫から献立を提案し、食材を「使い切る」ための家庭向けアプリです。';
+
+  @override
+  String get helpGuideEyebrow => 'GUIDE';
+
+  @override
+  String get helpGuideTitle => 'かんたんな使い方';
+
+  @override
+  String get helpStep1Title => '食材を登録する';
+
+  @override
+  String get helpStep1Body =>
+      '冷蔵庫の中をカメラで撮影すると、AIが食材を読み取って在庫に追加します。手入力でも登録できます。';
+
+  @override
+  String get helpStep2Title => '在庫と期限を確認する';
+
+  @override
+  String get helpStep2Body => '賞味期限が近い順に並びます。期限が近い食材はオレンジ、超過は赤で示されます。';
+
+  @override
+  String get helpStep3Title => '献立を提案してもらう';
+
+  @override
+  String get helpStep3Body => '在庫から作れる使い切りメニューを提案します。調理家電に合わせたレシピも表示されます。';
+
+  @override
+  String get helpStep4Title => '不足食材を買い物リストへ';
+
+  @override
+  String get helpStep4Body => '献立に足りない食材は、お使いのリマインダーの買い物リストへまとめて追加できます。';
+
+  @override
+  String get helpDataEyebrow => 'DATA';
+
+  @override
+  String get helpDataTitle => '賞味期限データについて';
+
+  @override
+  String get helpDataP1 =>
+      '本アプリの賞味期限のめやすは、米国農務省（USDA）食品安全検査局（FSIS）が公開する FoodKeeper のデータをベースにしています。FoodKeeper は食品ごとの保存期間の指針をまとめた公的データセットです。';
+
+  @override
+  String get helpDataP2 =>
+      '和食材や日本で一般的な食品など、FoodKeeper に含まれないものは、独自に保存期間の目安を補完しています。';
+
+  @override
+  String get helpDataCalloutTitle => '表示される期限はあくまで目安です';
+
+  @override
+  String get helpDataCalloutBody =>
+      '保存状態・開封の有無・季節などにより、実際の日持ちは前後します。食品の状態は必ずご自身でご確認ください。';
+
+  @override
+  String get helpSourceTitle => '出典・参考データ';
+
+  @override
+  String get helpSourceFoodkeeperTitle => 'FoodKeeper';
+
+  @override
+  String get helpSourceFoodkeeperDesc => 'USDA / FSIS による食品保存期間の指針';
+
+  @override
+  String get helpSourceDatagovTitle => 'Data.gov（FoodKeeper Data）';
+
+  @override
+  String get helpSourceDatagovDesc => '米国政府の公開データカタログ';
+
+  @override
+  String get helpEditCalloutTitle => '賞味期限はいつでも手動で修正できます';
+
+  @override
+  String get helpEditCalloutBody =>
+      '各食材の詳細画面から、賞味期限の日付をいつでも編集できます。実際のパッケージの表示や保存状態に合わせて、ご自身の値に上書きしてお使いください。';
+
+  @override
+  String get helpLegalTitle => '規約・プライバシー';
+
+  @override
+  String get helpLegalTerms => '利用規約';
+
+  @override
+  String get helpLegalPrivacy => 'プライバシーポリシー';
+
+  @override
+  String get helpLegalFaq => 'よくある質問・お問い合わせ';
+
+  @override
+  String get helpFooter =>
+      'FoodKeeper data © USDA / FSIS（パブリックドメイン）\n© 2026 つかいきり';
 }

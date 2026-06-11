@@ -2,6 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Push Notification
+
+When you complete a task, send me a push notification:
+
+curl -X POST https://api.getmoshi.app/api/webhook \
+  -H "Content-Type: application/json" \
+  -d '{"token":"Z7UrrChlosrWOo0dGTh5UbqGqRiBfNHa","title":"Done","message":"Brief summary"}'
+
+
 ## 応答言語
 
 **ユーザーとのやり取りは常に日本語で行う。**
@@ -37,7 +46,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 8. データ同期（`SyncService`: iOS=iCloud、Android=Google Drive App Data）
 9. ヘルプ/このアプリについて（USDA FoodKeeper 出典表記）+ ドネーションリンク（Buy Me a Coffee）
 
-UI 面では在庫画面・設定画面が実装済み。献立提案・カメラ登録・買い物リスト確認・オンボーディングの画面は未実装（デザインは design_handoff にあり）。
+UI 面では macOS デスクトップシェル（サイドバー+ツールバー）配下の全7画面（在庫3ペイン・カメラ登録・献立提案・買い物リスト・設定・オンボーディング・ヘルプ）が実装済み（M1〜M8、2026-06-11）。モバイル（狭い幅）は在庫・設定のみで、他画面のモバイル版と実 API/実機での動作確認が未了。
 
 ## コマンド
 

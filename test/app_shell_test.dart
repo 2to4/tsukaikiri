@@ -130,13 +130,14 @@ void main() {
     await unmountApp(tester);
   });
 
-  testWidgets('ヘルプをタップするとプレースホルダが表示される', (tester) async {
+  testWidgets('ヘルプをタップするとヘルプビューが表示される', (tester) async {
     await pumpShell(tester);
 
     await tester.tap(find.text('ヘルプ'));
     await tester.pumpAndSettle();
 
-    expect(find.text('準備中'), findsOneWidget);
+    // M8 実装済み: ヘルプビューの主要セクション見出しが表示される。
+    expect(find.text('かんたんな使い方'), findsOneWidget);
 
     await unmountApp(tester);
   });

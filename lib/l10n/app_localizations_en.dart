@@ -1036,4 +1036,104 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingNext => 'Next';
+
+  @override
+  String get helpTitle => 'Help / About';
+
+  @override
+  String get helpAppTagline =>
+      'An app to help you use up fridge ingredients by suggesting use-it-up meals.';
+
+  @override
+  String get helpGuideEyebrow => 'GUIDE';
+
+  @override
+  String get helpGuideTitle => 'How to Use';
+
+  @override
+  String get helpStep1Title => 'Register ingredients';
+
+  @override
+  String get helpStep1Body =>
+      'Take a photo of your fridge and AI will recognize ingredients to add to your inventory. You can also add them manually.';
+
+  @override
+  String get helpStep2Title => 'Check inventory and expiry';
+
+  @override
+  String get helpStep2Body =>
+      'Ingredients are sorted by expiry date. Those expiring soon are shown in orange; overdue ones in red.';
+
+  @override
+  String get helpStep3Title => 'Get meal suggestions';
+
+  @override
+  String get helpStep3Body =>
+      'Get use-it-up meal ideas from your current inventory. Recipes tailored to your appliances are included.';
+
+  @override
+  String get helpStep4Title => 'Add missing items to shopping list';
+
+  @override
+  String get helpStep4Body =>
+      'Ingredients you need for your chosen meals are added in bulk to your Reminders shopping list.';
+
+  @override
+  String get helpDataEyebrow => 'DATA';
+
+  @override
+  String get helpDataTitle => 'About Expiry Data';
+
+  @override
+  String get helpDataP1 =>
+      'The expiry guidelines in this app are based on the FoodKeeper dataset published by the USDA Food Safety and Inspection Service (FSIS). FoodKeeper is an official dataset summarizing recommended storage periods for various foods.';
+
+  @override
+  String get helpDataP2 =>
+      'Foods not covered by FoodKeeper — such as Japanese-specific ingredients — are supplemented with independently researched storage guidelines.';
+
+  @override
+  String get helpDataCalloutTitle => 'Dates shown are estimates only';
+
+  @override
+  String get helpDataCalloutBody =>
+      'Actual shelf life varies depending on storage conditions, whether the package has been opened, and the season. Always check the condition of food yourself.';
+
+  @override
+  String get helpSourceTitle => 'Sources & References';
+
+  @override
+  String get helpSourceFoodkeeperTitle => 'FoodKeeper';
+
+  @override
+  String get helpSourceFoodkeeperDesc => 'USDA / FSIS food storage guidelines';
+
+  @override
+  String get helpSourceDatagovTitle => 'Data.gov (FoodKeeper Data)';
+
+  @override
+  String get helpSourceDatagovDesc => 'US Government open data catalog';
+
+  @override
+  String get helpEditCalloutTitle => 'You can edit expiry dates anytime';
+
+  @override
+  String get helpEditCalloutBody =>
+      'Open the detail view for any ingredient to update its expiry date. Override with the date on the package or your own judgment.';
+
+  @override
+  String get helpLegalTitle => 'Legal & Privacy';
+
+  @override
+  String get helpLegalTerms => 'Terms of Use';
+
+  @override
+  String get helpLegalPrivacy => 'Privacy Policy';
+
+  @override
+  String get helpLegalFaq => 'FAQ & Support';
+
+  @override
+  String get helpFooter =>
+      'FoodKeeper data © USDA / FSIS (Public Domain)\n© 2026 Tsukaikiri';
 }

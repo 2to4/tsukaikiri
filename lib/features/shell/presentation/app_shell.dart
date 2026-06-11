@@ -8,6 +8,7 @@ import '../../../features/camera/presentation/camera_capture_controller.dart';
 import '../../../features/camera/presentation/camera_desktop_view.dart';
 import '../../../features/inventory/presentation/inventory_desktop_view.dart';
 import '../../../features/inventory/presentation/inventory_providers.dart';
+import '../../../features/help/presentation/help_desktop_view.dart';
 import '../../../features/onboarding/presentation/onboarding_desktop_view.dart';
 import '../../../features/recipe/presentation/meal_suggestion_controller.dart';
 import '../../../features/recipe/presentation/meals_desktop_view.dart';
@@ -514,70 +515,11 @@ class _ContentArea extends StatelessWidget {
       ShellSection.shopping => const ShoppingDesktopView(),
       ShellSection.settings => const SettingsDesktopView(),
       ShellSection.onboarding => const OnboardingDesktopView(),
-      _ => _Placeholder(section: section),
+      ShellSection.help => const HelpDesktopView(),
     };
   }
 }
 
-// ─────────────────────────────────────────────────────────────
-// プレースホルダ
-// ─────────────────────────────────────────────────────────────
-
-/// 未実装画面のプレースホルダ。
-class _Placeholder extends StatelessWidget {
-  const _Placeholder({required this.section});
-
-  final ShellSection section;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              color: AppColors.greenSoft,
-              borderRadius: BorderRadius.circular(24),
-              border: Border.all(color: AppColors.line, width: 1.5),
-            ),
-            alignment: Alignment.center,
-            child: Icon(
-              _iconFor(section),
-              size: 38,
-              color: AppColors.green,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            l10n.shellPlaceholderTitle,
-            style: brandTextStyle(fontSize: 18),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            l10n.shellPlaceholder,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: AppColors.sub,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  IconData _iconFor(ShellSection section) => switch (section) {
-        ShellSection.camera => Icons.photo_camera_outlined,
-        ShellSection.meals => Icons.auto_awesome_outlined,
-        ShellSection.shopping => Icons.checklist_outlined,
-        ShellSection.onboarding => Icons.settings_suggest_outlined,
-        ShellSection.help => Icons.help_outline,
-        // inventory と settings はこのウィジェットには来ない
-        _ => Icons.hourglass_empty_outlined,
-      };
-}
+// _Placeholder は全セクションが実装済みになったため削除。
+// 将来的に未実装セクションを追加する場合は _ContentArea の switch に
+// デフォルト分岐を追加し、このファイルにプレースホルダを再定義すること。
