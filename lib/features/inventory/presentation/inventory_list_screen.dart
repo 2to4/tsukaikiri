@@ -7,6 +7,7 @@ import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../recipe/presentation/meals_mobile_view.dart';
 import '../../settings/presentation/settings_screen.dart';
 import '../domain/ingredient_category.dart';
 import 'expiry_status.dart';
@@ -73,6 +74,12 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
     ScaffoldMessenger.of(context)
       ..clearSnackBars()
       ..showSnackBar(SnackBar(content: Text(l10n.comingSoon)));
+  }
+
+  void _openMeals() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (_) => const MealsMobileScreen()),
+    );
   }
 
   void _openDetailNarrow(Ingredient ingredient) {
@@ -158,7 +165,7 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
           ),
         ),
         _BottomActions(
-          onSuggest: _comingSoon,
+          onSuggest: _openMeals,
           onCamera: _comingSoon,
         ),
       ],
@@ -192,7 +199,7 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
                       .set(ing.id),
                 ),
               ),
-              _BottomActions(onSuggest: _comingSoon, onCamera: _comingSoon),
+              _BottomActions(onSuggest: _openMeals, onCamera: _comingSoon),
             ],
           ),
         ),

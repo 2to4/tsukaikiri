@@ -325,6 +325,29 @@
   "mealsDecided": "Chosen",
   "mealsIngredientsHeading": "Ingredients",
   "mealsStepsHeading": "Steps",
+  "mealsTitle": "Meal ideas",
+  "mealsSubtitle": "We'll plan use-it-up meals from what you have.",
+  "mealsConditionsPrompt": "What kind of meal?",
+  "mealsGeneratingTitle": "Planning your meals",
+  "mealsCancel": "Cancel",
+  "mealsResultCount": "{count} ideas from your inventory",
+  "@mealsResultCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "mealsResultBanner": "Picked recipes that use up ingredients expiring soon.",
+  "mealsToShoppingCount": "Add to shopping list ({count})",
+  "@mealsToShoppingCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "mealsShortageCount": "Buy {count}",
+  "@mealsShortageCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "mealsIngInStock": "In stock",
+  "mealsIngToBuy": "Buy",
+  "mealsErrorTitle": "Couldn't get suggestions",
+  "mealsErrorNoApiKeyTitle": "No API key registered",
+  "mealsBackToInventory": "Back to inventory",
 
   "shoppingMissingCount": "Missing items ({n})",
   "@shoppingMissingCount": {

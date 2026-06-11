@@ -1472,6 +1472,90 @@ abstract class AppLocalizations {
   /// **'Steps'**
   String get mealsStepsHeading;
 
+  /// No description provided for @mealsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Meal ideas'**
+  String get mealsTitle;
+
+  /// No description provided for @mealsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll plan use-it-up meals from what you have.'**
+  String get mealsSubtitle;
+
+  /// No description provided for @mealsConditionsPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'What kind of meal?'**
+  String get mealsConditionsPrompt;
+
+  /// No description provided for @mealsGeneratingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Planning your meals'**
+  String get mealsGeneratingTitle;
+
+  /// No description provided for @mealsCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get mealsCancel;
+
+  /// No description provided for @mealsResultCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} ideas from your inventory'**
+  String mealsResultCount(int count);
+
+  /// No description provided for @mealsResultBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Picked recipes that use up ingredients expiring soon.'**
+  String get mealsResultBanner;
+
+  /// No description provided for @mealsToShoppingCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to shopping list ({count})'**
+  String mealsToShoppingCount(int count);
+
+  /// No description provided for @mealsShortageCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy {count}'**
+  String mealsShortageCount(int count);
+
+  /// No description provided for @mealsIngInStock.
+  ///
+  /// In en, this message translates to:
+  /// **'In stock'**
+  String get mealsIngInStock;
+
+  /// No description provided for @mealsIngToBuy.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy'**
+  String get mealsIngToBuy;
+
+  /// No description provided for @mealsErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t get suggestions'**
+  String get mealsErrorTitle;
+
+  /// No description provided for @mealsErrorNoApiKeyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No API key registered'**
+  String get mealsErrorNoApiKeyTitle;
+
+  /// No description provided for @mealsBackToInventory.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to inventory'**
+  String get mealsBackToInventory;
+
   /// No description provided for @shoppingMissingCount.
   ///
   /// In en, this message translates to:

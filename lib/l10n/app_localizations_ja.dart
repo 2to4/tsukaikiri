@@ -745,6 +745,54 @@ class AppLocalizationsJa extends AppLocalizations {
   String get mealsStepsHeading => '手順';
 
   @override
+  String get mealsTitle => '献立の提案';
+
+  @override
+  String get mealsSubtitle => 'いまの在庫から、使い切りメニューを考えます';
+
+  @override
+  String get mealsConditionsPrompt => 'どんな献立にする？';
+
+  @override
+  String get mealsGeneratingTitle => '献立を考えています';
+
+  @override
+  String get mealsCancel => 'キャンセル';
+
+  @override
+  String mealsResultCount(int count) {
+    return '在庫から$count件';
+  }
+
+  @override
+  String get mealsResultBanner => '期限が近い食材を優先して選びました。';
+
+  @override
+  String mealsToShoppingCount(int count) {
+    return '買い物リストへ（$count件）';
+  }
+
+  @override
+  String mealsShortageCount(int count) {
+    return '買い物 $count品';
+  }
+
+  @override
+  String get mealsIngInStock => '在庫';
+
+  @override
+  String get mealsIngToBuy => '買う';
+
+  @override
+  String get mealsErrorTitle => '提案を取得できませんでした';
+
+  @override
+  String get mealsErrorNoApiKeyTitle => 'API キーが未登録です';
+
+  @override
+  String get mealsBackToInventory => '在庫にもどる';
+
+  @override
   String shoppingMissingCount(int n) {
     return '不足食材 $n品';
   }

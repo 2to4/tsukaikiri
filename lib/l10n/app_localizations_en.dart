@@ -755,6 +755,55 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mealsStepsHeading => 'Steps';
 
   @override
+  String get mealsTitle => 'Meal ideas';
+
+  @override
+  String get mealsSubtitle => 'We\'ll plan use-it-up meals from what you have.';
+
+  @override
+  String get mealsConditionsPrompt => 'What kind of meal?';
+
+  @override
+  String get mealsGeneratingTitle => 'Planning your meals';
+
+  @override
+  String get mealsCancel => 'Cancel';
+
+  @override
+  String mealsResultCount(int count) {
+    return '$count ideas from your inventory';
+  }
+
+  @override
+  String get mealsResultBanner =>
+      'Picked recipes that use up ingredients expiring soon.';
+
+  @override
+  String mealsToShoppingCount(int count) {
+    return 'Add to shopping list ($count)';
+  }
+
+  @override
+  String mealsShortageCount(int count) {
+    return 'Buy $count';
+  }
+
+  @override
+  String get mealsIngInStock => 'In stock';
+
+  @override
+  String get mealsIngToBuy => 'Buy';
+
+  @override
+  String get mealsErrorTitle => 'Couldn\'t get suggestions';
+
+  @override
+  String get mealsErrorNoApiKeyTitle => 'No API key registered';
+
+  @override
+  String get mealsBackToInventory => 'Back to inventory';
+
+  @override
   String shoppingMissingCount(int n) {
     return 'Missing items ($n)';
   }

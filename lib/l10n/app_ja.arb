@@ -315,6 +315,29 @@
   "mealsDecided": "決定済み",
   "mealsIngredientsHeading": "材料",
   "mealsStepsHeading": "手順",
+  "mealsTitle": "献立の提案",
+  "mealsSubtitle": "いまの在庫から、使い切りメニューを考えます",
+  "mealsConditionsPrompt": "どんな献立にする？",
+  "mealsGeneratingTitle": "献立を考えています",
+  "mealsCancel": "キャンセル",
+  "mealsResultCount": "在庫から{count}件",
+  "@mealsResultCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "mealsResultBanner": "期限が近い食材を優先して選びました。",
+  "mealsToShoppingCount": "買い物リストへ（{count}件）",
+  "@mealsToShoppingCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "mealsShortageCount": "買い物 {count}品",
+  "@mealsShortageCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "mealsIngInStock": "在庫",
+  "mealsIngToBuy": "買う",
+  "mealsErrorTitle": "提案を取得できませんでした",
+  "mealsErrorNoApiKeyTitle": "API キーが未登録です",
+  "mealsBackToInventory": "在庫にもどる",
 
   "shoppingMissingCount": "不足食材 {n}品",
   "@shoppingMissingCount": {
