@@ -445,6 +445,25 @@
   "@cameraAddedToast": {
     "placeholders": { "n": { "type": "int" } }
   },
+  "cameraMobileCaptureTitle": "冷蔵庫を撮影",
+  "cameraMobileAddPhotos": "写真を追加",
+  "cameraMobilePhotoCount": "{n} / 10 枚",
+  "@cameraMobilePhotoCount": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "cameraMobileAnalyzeButton": "{n}枚を解析する",
+  "@cameraMobileAnalyzeButton": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "cameraMobileReviewTitle": "認識された食材",
+  "cameraMobileReviewSummary": "{total}件の候補 ・ {chosen}件を採用",
+  "@cameraMobileReviewSummary": {
+    "placeholders": { "total": { "type": "int" }, "chosen": { "type": "int" } }
+  },
+  "cameraMobileReviewHint": "採用するものを選び、名前・数量・カテゴリを必要に応じて修正してください",
+  "cameraMobileReviewFootnote": "AIが自動で読み取った候補です。登録前に確認できます",
+  "cameraMobileErrorLater": "あとで解析する",
+  "cameraMobileBackToInventory": "在庫にもどる",
 
   "onboardingRailTitle": "設定アシスタント",
   "onboardingStep0": "ようこそ",

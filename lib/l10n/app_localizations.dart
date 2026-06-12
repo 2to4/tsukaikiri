@@ -1916,6 +1916,66 @@ abstract class AppLocalizations {
   /// **'Added {n} items to inventory'**
   String cameraAddedToast(int n);
 
+  /// No description provided for @cameraMobileCaptureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Photograph your fridge'**
+  String get cameraMobileCaptureTitle;
+
+  /// No description provided for @cameraMobileAddPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Add photos'**
+  String get cameraMobileAddPhotos;
+
+  /// No description provided for @cameraMobilePhotoCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} / 10'**
+  String cameraMobilePhotoCount(int n);
+
+  /// No description provided for @cameraMobileAnalyzeButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze {n} photo(s)'**
+  String cameraMobileAnalyzeButton(int n);
+
+  /// No description provided for @cameraMobileReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Detected ingredients'**
+  String get cameraMobileReviewTitle;
+
+  /// No description provided for @cameraMobileReviewSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{total} candidates · {chosen} selected'**
+  String cameraMobileReviewSummary(int total, int chosen);
+
+  /// No description provided for @cameraMobileReviewHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the items to keep and adjust the name, quantity, or category as needed'**
+  String get cameraMobileReviewHint;
+
+  /// No description provided for @cameraMobileReviewFootnote.
+  ///
+  /// In en, this message translates to:
+  /// **'These candidates were read automatically by AI. You can review them before adding.'**
+  String get cameraMobileReviewFootnote;
+
+  /// No description provided for @cameraMobileErrorLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyze later'**
+  String get cameraMobileErrorLater;
+
+  /// No description provided for @cameraMobileBackToInventory.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to inventory'**
+  String get cameraMobileBackToInventory;
+
   /// No description provided for @onboardingRailTitle.
   ///
   /// In en, this message translates to:

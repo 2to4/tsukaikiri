@@ -999,6 +999,42 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String get cameraMobileCaptureTitle => '冷蔵庫を撮影';
+
+  @override
+  String get cameraMobileAddPhotos => '写真を追加';
+
+  @override
+  String cameraMobilePhotoCount(int n) {
+    return '$n / 10 枚';
+  }
+
+  @override
+  String cameraMobileAnalyzeButton(int n) {
+    return '$n枚を解析する';
+  }
+
+  @override
+  String get cameraMobileReviewTitle => '認識された食材';
+
+  @override
+  String cameraMobileReviewSummary(int total, int chosen) {
+    return '$total件の候補 ・ $chosen件を採用';
+  }
+
+  @override
+  String get cameraMobileReviewHint => '採用するものを選び、名前・数量・カテゴリを必要に応じて修正してください';
+
+  @override
+  String get cameraMobileReviewFootnote => 'AIが自動で読み取った候補です。登録前に確認できます';
+
+  @override
+  String get cameraMobileErrorLater => 'あとで解析する';
+
+  @override
+  String get cameraMobileBackToInventory => '在庫にもどる';
+
+  @override
   String get onboardingRailTitle => '設定アシスタント';
 
   @override

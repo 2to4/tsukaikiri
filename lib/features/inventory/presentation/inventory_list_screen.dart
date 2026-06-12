@@ -7,6 +7,7 @@ import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../camera/presentation/camera_mobile_view.dart';
 import '../../recipe/presentation/meals_mobile_view.dart';
 import '../../settings/presentation/settings_screen.dart';
 import '../domain/ingredient_category.dart';
@@ -82,6 +83,12 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
     );
   }
 
+  void _openCamera() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (_) => const CameraMobileScreen()),
+    );
+  }
+
   void _openDetailNarrow(Ingredient ingredient) {
     Navigator.of(context).push(MaterialPageRoute<void>(
       builder: (context) => Scaffold(
@@ -128,7 +135,7 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
             if (items.isEmpty &&
                 ref.watch(categoryFilterProvider) == null) {
               return _EmptyState(
-                onCamera: _comingSoon,
+                onCamera: _openCamera,
                 onManual: () => _openForm(),
                 onSettings: _openSettings,
               );
@@ -166,7 +173,7 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
         ),
         _BottomActions(
           onSuggest: _openMeals,
-          onCamera: _comingSoon,
+          onCamera: _openCamera,
         ),
       ],
     );
@@ -199,7 +206,7 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
                       .set(ing.id),
                 ),
               ),
-              _BottomActions(onSuggest: _openMeals, onCamera: _comingSoon),
+              _BottomActions(onSuggest: _openMeals, onCamera: _openCamera),
             ],
           ),
         ),

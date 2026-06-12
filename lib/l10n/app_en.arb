@@ -455,6 +455,25 @@
   "@cameraAddedToast": {
     "placeholders": { "n": { "type": "int" } }
   },
+  "cameraMobileCaptureTitle": "Photograph your fridge",
+  "cameraMobileAddPhotos": "Add photos",
+  "cameraMobilePhotoCount": "{n} / 10",
+  "@cameraMobilePhotoCount": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "cameraMobileAnalyzeButton": "Analyze {n} photo(s)",
+  "@cameraMobileAnalyzeButton": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "cameraMobileReviewTitle": "Detected ingredients",
+  "cameraMobileReviewSummary": "{total} candidates · {chosen} selected",
+  "@cameraMobileReviewSummary": {
+    "placeholders": { "total": { "type": "int" }, "chosen": { "type": "int" } }
+  },
+  "cameraMobileReviewHint": "Select the items to keep and adjust the name, quantity, or category as needed",
+  "cameraMobileReviewFootnote": "These candidates were read automatically by AI. You can review them before adding.",
+  "cameraMobileErrorLater": "Analyze later",
+  "cameraMobileBackToInventory": "Back to inventory",
 
   "onboardingRailTitle": "Setup Assistant",
   "onboardingStep0": "Welcome",

@@ -1017,6 +1017,44 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get cameraMobileCaptureTitle => 'Photograph your fridge';
+
+  @override
+  String get cameraMobileAddPhotos => 'Add photos';
+
+  @override
+  String cameraMobilePhotoCount(int n) {
+    return '$n / 10';
+  }
+
+  @override
+  String cameraMobileAnalyzeButton(int n) {
+    return 'Analyze $n photo(s)';
+  }
+
+  @override
+  String get cameraMobileReviewTitle => 'Detected ingredients';
+
+  @override
+  String cameraMobileReviewSummary(int total, int chosen) {
+    return '$total candidates · $chosen selected';
+  }
+
+  @override
+  String get cameraMobileReviewHint =>
+      'Select the items to keep and adjust the name, quantity, or category as needed';
+
+  @override
+  String get cameraMobileReviewFootnote =>
+      'These candidates were read automatically by AI. You can review them before adding.';
+
+  @override
+  String get cameraMobileErrorLater => 'Analyze later';
+
+  @override
+  String get cameraMobileBackToInventory => 'Back to inventory';
+
+  @override
   String get onboardingRailTitle => 'Setup Assistant';
 
   @override
