@@ -5,7 +5,9 @@ import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
+import '../domain/appliance.dart';
 import 'ai_settings_screen.dart';
+import 'integration_settings_screens.dart';
 import 'locale_controller.dart';
 
 /// 設定画面（Claude Design：リスト形式・カテゴリ別グループ）。
@@ -38,8 +40,6 @@ class SettingsScreen extends ConsumerWidget {
       'en' => l10n.languageEn,
       _ => l10n.languageSystem,
     };
-    final soon = l10n.settingsComingSoonValue;
-
     // 選択中の AI プロバイダ（行の現在値表示用）。
     final settings = ref.watch(userSettingsProvider).value;
     final aiInfo =
@@ -49,6 +49,17 @@ class SettingsScreen extends ConsumerWidget {
         : (aiInfo.supportsVision
             ? l10n.settingsAiVisionYes
             : l10n.settingsAiVisionNo);
+    // 所有家電の現在値（行の表示用）。未所有なら「持っていない」。
+    final applianceLabel = settings == null
+        ? null
+        : settings.appliances.isEmpty
+            ? l10n.settingsApplianceNotOwned
+            : settings.appliances
+                .map((a) => switch (a.type) {
+                      ApplianceType.hotcook => l10n.settingsApplianceHotcook,
+                      ApplianceType.healsio => l10n.settingsApplianceHealsio,
+                    })
+                .join(' ・ ');
 
     return Scaffold(
       body: SafeArea(
@@ -100,14 +111,22 @@ class SettingsScreen extends ConsumerWidget {
                       SettingsRow(
                           icon: Icons.checklist,
                           label: l10n.settingsShoppingList,
-                          value: soon,
-                          onTap: () => _comingSoon(context)),
+                          value: settings?.shoppingListName,
+                          onTap: () => Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                    builder: (_) =>
+                                        const ShoppingSettingsScreen()),
+                              )),
                       SettingsRow(
                           icon: Icons.soup_kitchen_outlined,
                           label: l10n.settingsAppliances,
-                          value: soon,
+                          value: applianceLabel,
                           last: true,
-                          onTap: () => _comingSoon(context)),
+                          onTap: () => Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                    builder: (_) =>
+                                        const ApplianceSettingsScreen()),
+                              )),
                     ],
                   ),
                   SettingsSection(
