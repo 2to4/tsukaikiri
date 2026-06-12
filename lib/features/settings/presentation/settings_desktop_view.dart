@@ -4,6 +4,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/providers.dart';
+import '../../../core/utils/date_time_format.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
@@ -25,13 +26,6 @@ const double _kNavWidth = 200.0;
 enum _SettingsSection { ai, general, shopping, appliance, data, support }
 
 /// 各 AI プロバイダのキー取得ページ URL。
-const _keyUrls = <String, String>{
-  'gemini': 'https://aistudio.google.com/apikey',
-  'grok': 'https://console.x.ai',
-  'openai': 'https://platform.openai.com/api-keys',
-  'claude': 'https://console.anthropic.com/settings/keys',
-};
-
 // ──────────────────────────────────────────────────────────────
 // SettingsDesktopView（メインウィジェット）
 // macosApp.jsx の SettingsScreen を Flutter で再現した 2ペイン設定。
@@ -316,8 +310,8 @@ class _ProviderInfo {
 /// ダミーキーでインスタンスを生成して属性のみ参照する。
 List<_ProviderInfo> _providerInfos() {
   return supportedProviderIds.map((id) {
-    final p = createRecipeProvider(providerId: id, apiKey: '');
-    return _ProviderInfo(id, p.displayName, p.supportsVision);
+    final info = providerDisplayInfo(id);
+    return _ProviderInfo(id, info.displayName, info.supportsVision);
   }).toList();
 }
 
@@ -504,7 +498,7 @@ class _ApiKeyCardState extends ConsumerState<_ApiKeyCard> {
   }
 
   Future<void> _openKeyPage() async {
-    final url = _keyUrls[widget.providerId];
+    final url = providerKeyUrls[widget.providerId];
     if (url == null) return;
     await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   }
@@ -512,9 +506,7 @@ class _ApiKeyCardState extends ConsumerState<_ApiKeyCard> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final providerName =
-        createRecipeProvider(providerId: widget.providerId, apiKey: '')
-            .displayName;
+    final providerName = providerDisplayInfo(widget.providerId).displayName;
 
     return _Card(
       child: Column(
@@ -548,7 +540,7 @@ class _ApiKeyCardState extends ConsumerState<_ApiKeyCard> {
                   ),
                 ),
               ),
-              if (_keyUrls.containsKey(widget.providerId))
+              if (providerKeyUrls.containsKey(widget.providerId))
                 _LinkButton(
                   label: l10n.settingsApiKeyGetLink(providerName),
                   onTap: _openKeyPage,
@@ -1177,12 +1169,6 @@ class _ShoppingListRow extends StatelessWidget {
 class _ApplianceSection extends ConsumerWidget {
   const _ApplianceSection();
 
-  // デザイン settings.jsx の選択肢を参照。
-  static const _hotcookSeries = ['KN-HW型', 'KN-HT型'];
-  static const _hotcookCapacities = ['1.0L', '1.6L', '2.4L'];
-  static const _healsioSeries = ['AX-XA型', 'AX-LSX型'];
-  static const _healsioCapacities = ['26L', '30L'];
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
@@ -1214,8 +1200,8 @@ class _ApplianceSection extends ConsumerWidget {
               name: l10n.settingsApplianceHotcook,
               icon: Icons.soup_kitchen_outlined,
               appliance: find(ApplianceType.hotcook),
-              seriesOpts: _hotcookSeries,
-              capacityOpts: _hotcookCapacities,
+              seriesOpts: applianceSeriesOptions[ApplianceType.hotcook]!,
+              capacityOpts: applianceCapacityOptions[ApplianceType.hotcook]!,
               onChanged: (a) => update(ApplianceType.hotcook, a),
             ),
             const SizedBox(height: 12),
@@ -1223,8 +1209,8 @@ class _ApplianceSection extends ConsumerWidget {
               name: l10n.settingsApplianceHealsio,
               icon: Icons.microwave_outlined,
               appliance: find(ApplianceType.healsio),
-              seriesOpts: _healsioSeries,
-              capacityOpts: _healsioCapacities,
+              seriesOpts: applianceSeriesOptions[ApplianceType.healsio]!,
+              capacityOpts: applianceCapacityOptions[ApplianceType.healsio]!,
               onChanged: (a) => update(ApplianceType.healsio, a),
             ),
             const SizedBox(height: 12),
@@ -1493,17 +1479,9 @@ class _DataSectionState extends ConsumerState<_DataSection> {
     if (!mounted) return;
     setState(() {
       _lastSyncedAt = settings.lastSyncedAt != null
-          ? _formatDate(settings.lastSyncedAt!)
+          ? formatDateTimeMinutes(settings.lastSyncedAt!)
           : null;
     });
-  }
-
-  String _formatDate(DateTime dt) {
-    return '${dt.year}-'
-        '${dt.month.toString().padLeft(2, '0')}-'
-        '${dt.day.toString().padLeft(2, '0')} '
-        '${dt.hour.toString().padLeft(2, '0')}:'
-        '${dt.minute.toString().padLeft(2, '0')}';
   }
 
   Future<void> _onToggleSyncEnabled(bool value) async {
@@ -1511,6 +1489,9 @@ class _DataSectionState extends ConsumerState<_DataSection> {
     if (value) {
       // 有効にした直後に 1 回バックアップ
       await ref.read(syncControllerProvider.notifier).backup();
+      // setSyncEnabled の指紋変化で autoBackupWatcher が予約した
+      // デバウンスバックアップは、直前の backup() と重複するため取り消す。
+      ref.read(backupSchedulerProvider).cancel();
     }
   }
 
@@ -1527,7 +1508,7 @@ class _DataSectionState extends ConsumerState<_DataSection> {
 
     // バックアップ内の日時と在庫件数を確認ダイアログで表示
     final backupDate = data.settingsCompanion.lastSyncedAt.value;
-    final backupDateStr = backupDate != null ? _formatDate(backupDate) : '--';
+    final backupDateStr = backupDate != null ? formatDateTimeMinutes(backupDate) : '--';
     final itemCount = data.ingredients.length;
 
     final confirmed = await showDialog<bool>(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/providers.dart';
+import '../../../core/utils/date_time_format.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../sync/presentation/sync_controller.dart';
@@ -20,37 +21,14 @@ class DataSettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _DataSettingsScreenState extends ConsumerState<DataSettingsScreen> {
-  String? _lastSyncedAt; // null = 未実施
-
-  @override
-  void initState() {
-    super.initState();
-    _loadLastSyncedAt();
-  }
-
-  Future<void> _loadLastSyncedAt() async {
-    final settings = await ref.read(settingsRepositoryProvider).get();
-    if (!mounted) return;
-    setState(() {
-      _lastSyncedAt = settings.lastSyncedAt != null
-          ? _formatDate(settings.lastSyncedAt!)
-          : null;
-    });
-  }
-
-  String _formatDate(DateTime dt) {
-    return '${dt.year}-'
-        '${dt.month.toString().padLeft(2, '0')}-'
-        '${dt.day.toString().padLeft(2, '0')} '
-        '${dt.hour.toString().padLeft(2, '0')}:'
-        '${dt.minute.toString().padLeft(2, '0')}';
-  }
-
   Future<void> _onToggleSyncEnabled(bool value) async {
     await ref.read(settingsRepositoryProvider).setSyncEnabled(value);
     if (value) {
       // 有効にした直後に 1 回バックアップ
       await ref.read(syncControllerProvider.notifier).backup();
+      // setSyncEnabled の指紋変化で autoBackupWatcher が予約した
+      // デバウンスバックアップは、直前の backup() と重複するため取り消す。
+      ref.read(backupSchedulerProvider).cancel();
     }
   }
 
@@ -61,7 +39,7 @@ class _DataSettingsScreenState extends ConsumerState<DataSettingsScreen> {
 
     final l10n = AppLocalizations.of(context);
     final backupDate = data.settingsCompanion.lastSyncedAt.value;
-    final backupDateStr = backupDate != null ? _formatDate(backupDate) : '--';
+    final backupDateStr = backupDate != null ? formatDateTimeMinutes(backupDate) : '--';
     final itemCount = data.ingredients.length;
 
     final confirmed = await showDialog<bool>(
@@ -106,8 +84,10 @@ class _DataSettingsScreenState extends ConsumerState<DataSettingsScreen> {
     final l10n = AppLocalizations.of(context);
     final syncState = ref.watch(syncControllerProvider);
     final isLoading = syncState is SyncLoading;
-    final syncEnabled =
-        ref.watch(userSettingsProvider).value?.syncEnabled ?? false;
+    final settings = ref.watch(userSettingsProvider).value;
+    final syncEnabled = settings?.syncEnabled ?? false;
+    // 最終バックアップ日時は設定 stream から導出する（手動 State を持たない）。
+    final lastSyncedAt = settings?.lastSyncedAt;
 
     // SyncSuccess / SyncError を SnackBar で通知（文言は種別→l10n で解決）
     ref.listen<SyncState>(syncControllerProvider, (previous, next) {
@@ -118,7 +98,6 @@ class _DataSettingsScreenState extends ConsumerState<DataSettingsScreen> {
         };
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(message)));
-        _loadLastSyncedAt();
       } else if (next is SyncError) {
         final message = switch (next.kind) {
           SyncErrorKind.unavailable => l10n.settingsDataICloudNotAvailable,
@@ -163,8 +142,9 @@ class _DataSettingsScreenState extends ConsumerState<DataSettingsScreen> {
                   ),
                   // 最終バックアップ + 手動操作
                   SettingsSection(
-                    note: _lastSyncedAt != null
-                        ? l10n.settingsDataLastBackup(_lastSyncedAt!)
+                    note: lastSyncedAt != null
+                        ? l10n.settingsDataLastBackup(
+                            formatDateTimeMinutes(lastSyncedAt))
                         : l10n.settingsDataNeverBackedUp,
                     children: [
                       SettingsRow(

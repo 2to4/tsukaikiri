@@ -8,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tsukaikiri/core/db/app_database.dart';
 import 'package:tsukaikiri/core/providers.dart';
-import 'package:tsukaikiri/core/secure_storage/secure_storage_service.dart';
 import 'package:tsukaikiri/features/settings/data/settings_repository.dart';
 import 'package:tsukaikiri/features/settings/presentation/locale_controller.dart';
 import 'package:tsukaikiri/features/settings/presentation/settings_desktop_view.dart';
@@ -20,29 +19,7 @@ import 'package:tsukaikiri/features/sync/domain/backup_codec.dart';
 import 'package:tsukaikiri/features/sync/service/sync_service.dart';
 import 'package:tsukaikiri/l10n/app_localizations.dart';
 
-// ──────────────────────────────────────────────────────────────
-// フェイク: SecureStorageService（インメモリ）
-// ──────────────────────────────────────────────────────────────
-class _FakeSecureStorage extends SecureStorageService {
-  _FakeSecureStorage() : super();
-  final Map<String, String> _store = {};
-
-  @override
-  Future<String?> getApiKey(String provider) async => _store[provider];
-
-  @override
-  Future<void> setApiKey(String provider, String apiKey) async =>
-      _store[provider] = apiKey;
-
-  @override
-  Future<void> deleteApiKey(String provider) async => _store.remove(provider);
-
-  @override
-  Future<bool> hasApiKey(String provider) async {
-    final k = _store[provider];
-    return k != null && k.isNotEmpty;
-  }
-}
+import 'fakes/fake_secure_storage.dart';
 
 // ──────────────────────────────────────────────────────────────
 // フェイク: ShoppingListService（getLists が常に失敗する版・成功版）
@@ -86,12 +63,12 @@ class _FakeSyncService implements SyncService {
 void main() {
   late AppDatabase db;
   late SettingsRepository repo;
-  late _FakeSecureStorage secure;
+  late FakeSecureStorage secure;
 
   setUp(() {
     db = AppDatabase(NativeDatabase.memory());
     repo = SettingsRepository(db);
-    secure = _FakeSecureStorage();
+    secure = FakeSecureStorage();
   });
 
   tearDown(() async => db.close());

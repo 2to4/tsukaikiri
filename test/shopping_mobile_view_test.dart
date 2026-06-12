@@ -15,6 +15,7 @@ import 'package:tsukaikiri/features/inventory/domain/ingredient_category.dart';
 import 'package:tsukaikiri/features/recipe/domain/suggested_recipe.dart';
 import 'package:tsukaikiri/features/recipe/presentation/meal_suggestion_controller.dart';
 import 'package:tsukaikiri/features/shopping/domain/shopping_list.dart';
+import 'package:tsukaikiri/features/shopping/presentation/shopping_confirm_controller.dart';
 import 'package:tsukaikiri/features/shopping/presentation/shopping_mobile_view.dart';
 import 'package:tsukaikiri/l10n/app_localizations.dart';
 
@@ -72,14 +73,21 @@ Future<void> pumpView(
 
   final recipe = fakeRecipe ?? FakeRecipeProvider();
 
-  // pumpWidget はコールバック登録だけ行い、フレームは確定させない。
+  // 本番フロー（献立画面で set() → push）と同じく、画面構築前に
+  // mealsForShoppingProvider へ決定済み献立を載せておく。
+  final container = ProviderContainer(overrides: [
+    databaseProvider.overrideWithValue(db),
+    shoppingListServiceProvider.overrideWithValue(fakeShopping),
+    recipeProviderProvider.overrideWith((ref) async => recipe),
+  ]);
+  addTearDown(container.dispose);
+  if (mealsForShopping.isNotEmpty) {
+    container.read(mealsForShoppingProvider.notifier).set(mealsForShopping);
+  }
+
   await tester.pumpWidget(
-    ProviderScope(
-      overrides: [
-        databaseProvider.overrideWithValue(db),
-        shoppingListServiceProvider.overrideWithValue(fakeShopping),
-        recipeProviderProvider.overrideWith((ref) async => recipe),
-      ],
+    UncontrolledProviderScope(
+      container: container,
       child: const MaterialApp(
         locale: Locale('ja'),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -89,15 +97,7 @@ Future<void> pumpView(
     ),
   );
 
-  // build の外（pump の前）で Provider を更新する。
-  if (mealsForShopping.isNotEmpty) {
-    final container = ProviderScope.containerOf(
-      tester.element(find.byType(ShoppingMobileScreen)),
-    );
-    container.read(mealsForShoppingProvider.notifier).set(mealsForShopping);
-  }
-
-  // ここで初めて pump → postFrameCallback（initialize）が走る。
+  // postFrameCallback（initialize）を実行させる。
   await tester.pump();
   for (var i = 0; i < 10; i++) {
     await tester.pump(const Duration(milliseconds: 50));
@@ -297,6 +297,77 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('1個'), findsOneWidget);
     expect(find.text('0個'), findsNothing);
+
+    await unmountApp(tester);
+  });
+
+  // ═══════════════════════════════════════════════════════
+  // ⑥ エラー画面の「もどる」は画面を離れ、エラー状態も解除する
+  // ═══════════════════════════════════════════════════════
+  testWidgets('⑥ エラー画面の「もどる」で pop され、次回入場は一覧から始まる',
+      (tester) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    final fakeShopping = FakeShoppingListService(
+      lists: const [ShoppingList(id: 'list-1', name: '買い物')],
+      failWithException: true,
+    );
+    final container = ProviderContainer(overrides: [
+      databaseProvider.overrideWithValue(db),
+      shoppingListServiceProvider.overrideWithValue(fakeShopping),
+      recipeProviderProvider.overrideWith((ref) async => FakeRecipeProvider()),
+    ]);
+    addTearDown(container.dispose);
+    container.read(mealsForShoppingProvider.notifier).set([
+      makeRecipe(
+          ingredients: const [RecipeIngredient(name: '玉ねぎ', amount: '1個')]),
+    ]);
+
+    final navKey = GlobalKey<NavigatorState>();
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: container,
+        child: MaterialApp(
+          navigatorKey: navKey,
+          locale: const Locale('ja'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: const Scaffold(body: SizedBox()),
+        ),
+      ),
+    );
+    // 本番同様 set 済みの状態で push する。
+    navKey.currentState!.push(MaterialPageRoute<void>(
+      builder: (_) => const ShoppingMobileScreen(),
+    ));
+    for (var i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+
+    // リストを選んで追加 → 失敗してエラー画面。
+    await tester.tap(find.text('変更'));
+    await tester.pump(const Duration(milliseconds: 200));
+    await tester.tap(find.text('買い物'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.textContaining('「買い物」に追加'));
+    for (var i = 0; i < 8; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+    expect(find.text('もどる'), findsOneWidget);
+
+    // 「もどる」で画面が pop される。
+    await tester.tap(find.text('もどる'));
+    await tester.pumpAndSettle();
+    expect(find.byType(ShoppingMobileScreen), findsNothing);
+
+    // エラー状態も解除されている（次回入場は listing から）。
+    expect(
+      container.read(shoppingConfirmControllerProvider).phase,
+      isNot(ShoppingConfirmPhase.error),
+    );
 
     await unmountApp(tester);
   });

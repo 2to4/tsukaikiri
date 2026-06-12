@@ -113,7 +113,6 @@
   "settingsSupportAuthor": "作者をサポート",
   "settingsHelp": "ヘルプ",
   "settingsAbout": "このアプリについて",
-  "settingsComingSoonValue": "準備中",
   "settingsSyncOffNote": "同期はオフです。この端末のみにデータが保存されます。",
   "settingsVersionLine": "つかいきり ・ v{version}",
   "@settingsVersionLine": {
@@ -465,7 +464,6 @@
   "cameraMobileReviewHint": "採用するものを選び、名前・数量・カテゴリを必要に応じて修正してください",
   "cameraMobileReviewFootnote": "AIが自動で読み取った候補です。登録前に確認できます",
   "cameraMobileErrorLater": "あとで解析する",
-  "cameraMobileBackToInventory": "在庫にもどる",
 
   "onboardingRailTitle": "設定アシスタント",
   "onboardingStep0": "ようこそ",

@@ -97,9 +97,11 @@ class IngredientDetailView extends ConsumerWidget {
           ..showSnackBar(
               SnackBar(content: Text(l10n.detailAddedToShoppingList)));
       } catch (_) {
+        // 通信失敗のほか、リマインダー権限の失効・保存済みリストの削除も
+        // ここに来るため、許可確認にも言及する買い物用の文言を使う。
         messenger
           ..clearSnackBars()
-          ..showSnackBar(SnackBar(content: Text(l10n.settingsNetworkError)));
+          ..showSnackBar(SnackBar(content: Text(l10n.shoppingErrorNetwork)));
       }
     }
 

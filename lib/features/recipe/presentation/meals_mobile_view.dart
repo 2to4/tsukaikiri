@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/db/app_database.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/widgets/mobile_nav_buttons.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../inventory/presentation/inventory_providers.dart';
 import '../../settings/presentation/settings_screen.dart';
@@ -53,45 +54,7 @@ class MealsMobileScreen extends ConsumerWidget {
 // 共通ヘルパー
 // ──────────────────────────────────────────────────────────────
 
-/// 戻る（pop）用の角丸ナビボタン。
-class _NavBackButton extends StatelessWidget {
-  const _NavBackButton();
 
-  @override
-  Widget build(BuildContext context) {
-    return _NavIconButton(
-      icon: Icons.arrow_back_ios_new,
-      onTap: () => Navigator.of(context).maybePop(),
-    );
-  }
-}
-
-class _NavIconButton extends StatelessWidget {
-  const _NavIconButton({required this.icon, required this.onTap});
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.card,
-      borderRadius: BorderRadius.circular(14),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(14),
-        onTap: onTap,
-        child: Container(
-          width: 42,
-          height: 42,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: AppColors.line, width: 1.5),
-          ),
-          child: Icon(icon, size: 19, color: AppColors.ink),
-        ),
-      ),
-    );
-  }
-}
 
 /// 条件チップの (kind, label) 一覧（デスクトップ版と同じ l10n キーを再利用）。
 List<(MealKind, String)> _kindLabels(AppLocalizations l10n) => [
@@ -237,7 +200,7 @@ class _BeforeView extends ConsumerWidget {
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
           child: Row(
             children: [
-              const _NavBackButton(),
+              const MobileNavBackButton(),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -398,7 +361,7 @@ class _ResultsView extends ConsumerWidget {
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
           child: Row(
             children: [
-              const _NavBackButton(),
+              const MobileNavBackButton(),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -415,7 +378,7 @@ class _ResultsView extends ConsumerWidget {
                   ],
                 ),
               ),
-              _NavIconButton(
+              MobileNavIconButton(
                 icon: Icons.refresh,
                 onTap: () => ref
                     .read(mealSuggestionControllerProvider.notifier)

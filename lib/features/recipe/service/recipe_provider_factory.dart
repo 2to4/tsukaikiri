@@ -8,6 +8,26 @@ import 'recipe_provider.dart';
 /// 設定可能な AI プロバイダの識別子（実装優先順位順）。
 const supportedProviderIds = ['gemini', 'grok', 'openai', 'claude'];
 
+/// API キー取得ページの URL（設定・オンボーディングの画面で共用）。
+const providerKeyUrls = <String, String>{
+  'gemini': 'https://aistudio.google.com/apikey',
+  'grok': 'https://console.x.ai',
+  'openai': 'https://platform.openai.com/api-keys',
+  'claude': 'https://console.anthropic.com/settings/keys',
+};
+
+/// 画面表示用のプロバイダ情報（表示名・Vision 対応）。
+///
+/// 未知の id（旧バージョンの設定や壊れたバックアップ由来）でも throw せず
+/// フォールバックを返す — 設定画面自体が開けなくなるのを防ぐため。
+({String displayName, bool supportsVision}) providerDisplayInfo(String id) {
+  if (!supportedProviderIds.contains(id)) {
+    return (displayName: id, supportsVision: false);
+  }
+  final p = createRecipeProvider(providerId: id, apiKey: '');
+  return (displayName: p.displayName, supportsVision: p.supportsVision);
+}
+
 /// プロバイダ識別子から RecipeProvider 実装を生成する。
 /// [model] が null のときは各実装のフォールバック既定値を使う
 /// （実際の選択肢は RecipeProvider.listModels で API から取得する）。

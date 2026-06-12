@@ -294,9 +294,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settingsAbout => 'このアプリについて';
 
   @override
-  String get settingsComingSoonValue => '準備中';
-
-  @override
   String get settingsSyncOffNote => '同期はオフです。この端末のみにデータが保存されます。';
 
   @override
@@ -1036,9 +1033,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get cameraMobileErrorLater => 'あとで解析する';
-
-  @override
-  String get cameraMobileBackToInventory => '在庫にもどる';
 
   @override
   String get onboardingRailTitle => '設定アシスタント';

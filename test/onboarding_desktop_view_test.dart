@@ -17,29 +17,7 @@ import 'package:tsukaikiri/features/shopping/domain/shopping_list.dart';
 import 'package:tsukaikiri/features/shopping/service/shopping_list_service.dart';
 import 'package:tsukaikiri/l10n/app_localizations.dart';
 
-// ──────────────────────────────────────────────────────────────
-// フェイク: SecureStorageService（インメモリ）
-// ──────────────────────────────────────────────────────────────
-class _FakeSecureStorage extends SecureStorageService {
-  _FakeSecureStorage() : super();
-  final Map<String, String> _store = {};
-
-  @override
-  Future<String?> getApiKey(String provider) async => _store[provider];
-
-  @override
-  Future<void> setApiKey(String provider, String apiKey) async =>
-      _store[provider] = apiKey;
-
-  @override
-  Future<void> deleteApiKey(String provider) async => _store.remove(provider);
-
-  @override
-  Future<bool> hasApiKey(String provider) async {
-    final k = _store[provider];
-    return k != null && k.isNotEmpty;
-  }
-}
+import 'fakes/fake_secure_storage.dart';
 
 // ──────────────────────────────────────────────────────────────
 // フェイク: ShoppingListService（成功版・失敗版）
@@ -127,12 +105,12 @@ Future<void> unmountApp(WidgetTester tester) async {
 void main() {
   late AppDatabase db;
   late SettingsRepository repo;
-  late _FakeSecureStorage secure;
+  late FakeSecureStorage secure;
 
   setUp(() {
     db = AppDatabase(NativeDatabase.memory());
     repo = SettingsRepository(db);
-    secure = _FakeSecureStorage();
+    secure = FakeSecureStorage();
   });
 
   tearDown(() async => db.close());

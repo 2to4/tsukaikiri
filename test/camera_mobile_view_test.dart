@@ -260,4 +260,63 @@ void main() {
 
     await unmountApp(tester);
   });
+
+  // ═══════════════════════════════════════════════════════
+  // ⑥ error フェーズで離脱→再入場すると自動リセットされ capture から始まる
+  // ═══════════════════════════════════════════════════════
+  testWidgets('error で離脱して再入場すると capture にリセットされる', (tester) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    final fake = FakeRecipeProvider(
+      recognizeError: const RecipeProviderException('gemini', 503, 'error'),
+      supportsVisionOverride: true,
+    );
+    // 同一コンテナ（= アプリ生存期間のコントローラ状態）を再入場間で共有する。
+    final container = ProviderContainer(overrides: [
+      databaseProvider.overrideWithValue(db),
+      recipeProviderProvider.overrideWith((ref) async => fake),
+    ]);
+    addTearDown(container.dispose);
+
+    Future<void> pumpScreen() async {
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            locale: Locale('ja'),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: CameraMobileScreen(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+    }
+
+    // 1回目: 解析失敗で error フェーズに。
+    await pumpScreen();
+    final notifier =
+        container.read(cameraCaptureControllerProvider.notifier);
+    await notifier.addImages([_makeJpegBytes()]);
+    await tester.pump();
+    await notifier.analyze();
+    await waitAfterAnalyze(tester);
+    expect(container.read(cameraCaptureControllerProvider).phase,
+        CameraCapturePhase.error);
+
+    // 離脱（アンマウント）→ 再入場。
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump(const Duration(milliseconds: 1));
+    await pumpScreen();
+
+    // error は入場時にリセットされ capture 画面から始まる。
+    expect(container.read(cameraCaptureControllerProvider).phase,
+        CameraCapturePhase.capture);
+    expect(find.text('冷蔵庫を撮影'), findsOneWidget);
+
+    await unmountApp(tester);
+  });
 }

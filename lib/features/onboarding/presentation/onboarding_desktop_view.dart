@@ -23,14 +23,6 @@ import '../../../l10n/app_localizations.dart';
 /// ステップレール幅（macosOnboarding.jsx に合わせて 220px）。
 const double _kRailWidth = 220.0;
 
-/// 各 AI プロバイダのキー取得ページ URL（設定画面と同じ経路）。
-const _keyUrls = <String, String>{
-  'gemini': 'https://aistudio.google.com/apikey',
-  'grok': 'https://console.x.ai',
-  'openai': 'https://platform.openai.com/api-keys',
-  'claude': 'https://console.anthropic.com/settings/keys',
-};
-
 // ─────────────────────────────────────────────────────────────
 // オンボーディングルートビュー
 // ─────────────────────────────────────────────────────────────
@@ -1810,7 +1802,7 @@ class _OnboardingApiKeyCardState
   }
 
   Future<void> _openKeyPage() async {
-    final url = _keyUrls[widget.providerId];
+    final url = providerKeyUrls[widget.providerId];
     if (url == null) return;
     await launchUrl(Uri.parse(url),
         mode: LaunchMode.externalApplication);
@@ -1931,7 +1923,7 @@ class _OnboardingApiKeyCardState
                   ),
                 ),
               ),
-              if (_keyUrls.containsKey(widget.providerId))
+              if (providerKeyUrls.containsKey(widget.providerId))
                 GestureDetector(
                   onTap: _openKeyPage,
                   child: MouseRegion(

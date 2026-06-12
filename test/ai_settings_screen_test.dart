@@ -9,38 +9,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tsukaikiri/core/db/app_database.dart';
 import 'package:tsukaikiri/core/providers.dart';
-import 'package:tsukaikiri/core/secure_storage/secure_storage_service.dart';
 import 'package:tsukaikiri/features/settings/presentation/ai_settings_screen.dart';
 import 'package:tsukaikiri/l10n/app_localizations.dart';
 
-class _FakeSecureStorage extends SecureStorageService {
-  _FakeSecureStorage() : super();
-  final Map<String, String> store = {};
-
-  @override
-  Future<String?> getApiKey(String provider) async => store[provider];
-
-  @override
-  Future<void> setApiKey(String provider, String apiKey) async =>
-      store[provider] = apiKey;
-
-  @override
-  Future<void> deleteApiKey(String provider) async => store.remove(provider);
-
-  @override
-  Future<bool> hasApiKey(String provider) async {
-    final k = store[provider];
-    return k != null && k.isNotEmpty;
-  }
-}
+import 'fakes/fake_secure_storage.dart';
 
 void main() {
   late AppDatabase db;
-  late _FakeSecureStorage secure;
+  late FakeSecureStorage secure;
 
   setUp(() {
     db = AppDatabase(NativeDatabase.memory());
-    secure = _FakeSecureStorage();
+    secure = FakeSecureStorage();
   });
 
   tearDown(() async => db.close());

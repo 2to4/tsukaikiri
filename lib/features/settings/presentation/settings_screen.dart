@@ -5,6 +5,7 @@ import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../recipe/service/recipe_provider_factory.dart';
 import '../domain/appliance.dart';
 import 'ai_settings_screen.dart';
 import 'data_settings_screen.dart';
@@ -45,7 +46,7 @@ class SettingsScreen extends ConsumerWidget {
     // 選択中の AI プロバイダ（行の現在値表示用）。
     final settings = ref.watch(userSettingsProvider).value;
     final aiInfo =
-        settings != null ? providerInfo(settings.selectedProvider) : null;
+        settings != null ? providerDisplayInfo(settings.selectedProvider) : null;
     final aiVisionLabel = aiInfo == null
         ? null
         : (aiInfo.supportsVision

@@ -10,22 +10,6 @@ import '../../recipe/service/recipe_provider.dart';
 import '../../recipe/service/recipe_provider_factory.dart';
 import 'settings_screen.dart';
 
-/// API キーの取得ページ（デスクトップ版 settings_desktop_view と同じ一覧）。
-const _keyUrls = <String, String>{
-  'gemini': 'https://aistudio.google.com/apikey',
-  'grok': 'https://console.x.ai',
-  'openai': 'https://platform.openai.com/api-keys',
-  'claude': 'https://console.anthropic.com/settings/keys',
-};
-
-/// プロバイダ名・Vision 対応を実装から取得する（ハードコードしない）。
-/// API キーがなくても displayName / supportsVision を引けるよう
-/// ダミーキーでインスタンスを生成して属性のみ参照する。
-({String displayName, bool supportsVision}) providerInfo(String id) {
-  final p = createRecipeProvider(providerId: id, apiKey: '');
-  return (displayName: p.displayName, supportsVision: p.supportsVision);
-}
-
 /// AI 設定（モバイル）: プロバイダ選択・API キー・モデル選択。
 /// デスクトップ版 _AiSection と同じデータ操作を1画面に縦並びで置く。
 class AiSettingsScreen extends ConsumerWidget {
@@ -96,7 +80,7 @@ class AiSettingsScreen extends ConsumerWidget {
     String selected, {
     required bool last,
   }) {
-    final info = providerInfo(id);
+    final info = providerDisplayInfo(id);
     return SettingsRow(
       icon: Icons.auto_awesome,
       label: info.displayName,
@@ -183,7 +167,7 @@ class _ApiKeySectionState extends ConsumerState<_ApiKeySection> {
   }
 
   Future<void> _openKeyPage() async {
-    final url = _keyUrls[widget.providerId];
+    final url = providerKeyUrls[widget.providerId];
     if (url == null) return;
     await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   }
@@ -191,7 +175,7 @@ class _ApiKeySectionState extends ConsumerState<_ApiKeySection> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final providerName = providerInfo(widget.providerId).displayName;
+    final providerName = providerDisplayInfo(widget.providerId).displayName;
 
     return SettingsSection(
       title: l10n.settingsApiKeyHeading,
@@ -214,7 +198,7 @@ class _ApiKeySectionState extends ConsumerState<_ApiKeySection> {
                 _savedView(l10n)
               else
                 _inputView(l10n),
-              if (_keyUrls.containsKey(widget.providerId))
+              if (providerKeyUrls.containsKey(widget.providerId))
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Align(

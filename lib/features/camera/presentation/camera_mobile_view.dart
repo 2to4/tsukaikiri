@@ -22,29 +22,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/widgets/mobile_nav_buttons.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../inventory/domain/category_style.dart';
 import '../../inventory/domain/ingredient_category.dart';
 import '../../settings/presentation/settings_screen.dart';
 import 'camera_capture_controller.dart';
-
-// ──────────────────────────────────────────────────────────────
-// カテゴリ絵文字（デスクトップ版と同じ代替表示）
-// ──────────────────────────────────────────────────────────────
-
-const _catEmoji = {
-  IngredientCategory.meat: '🥩',
-  IngredientCategory.fish: '🐟',
-  IngredientCategory.vegetable: '🥬',
-  IngredientCategory.fruit: '🍎',
-  IngredientCategory.dairy: '🧀',
-  IngredientCategory.egg: '🥚',
-  IngredientCategory.grain: '🌾',
-  IngredientCategory.seasoning: '🧂',
-  IngredientCategory.frozen: '🧊',
-  IngredientCategory.beverage: '🧃',
-  IngredientCategory.staple: '🥫',
-  IngredientCategory.other: '🛒',
-};
 
 // ──────────────────────────────────────────────────────────────
 // 確信度カラー定義（デスクトップ版と同じマッピング）
@@ -88,11 +71,33 @@ Future<List<Uint8List>> _pickImages() async {
 // ──────────────────────────────────────────────────────────────
 
 /// モバイル（狭い幅）のカメラ登録画面（Navigator.push で開く全画面）。
-class CameraMobileScreen extends ConsumerWidget {
+///
+/// コントローラはアプリ生存期間で状態を保持するため、capture/review の
+/// 途中状態は再入時に再開できる（撮影済み写真・編集中の候補を失わない）。
+/// error だけは過去のエラー画面を再表示しても意味がないため入場時にリセットする。
+class CameraMobileScreen extends ConsumerStatefulWidget {
   const CameraMobileScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<CameraMobileScreen> createState() =>
+      _CameraMobileScreenState();
+}
+
+class _CameraMobileScreenState extends ConsumerState<CameraMobileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final phase = ref.read(cameraCaptureControllerProvider).phase;
+      if (phase == CameraCapturePhase.error) {
+        ref.read(cameraCaptureControllerProvider.notifier).reset();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final st = ref.watch(cameraCaptureControllerProvider);
 
     return Scaffold(
@@ -113,32 +118,6 @@ class CameraMobileScreen extends ConsumerWidget {
 // 共通ヘルパー
 // ──────────────────────────────────────────────────────────────
 
-/// 角丸ナビボタン（戻る）。
-class _NavBackButton extends StatelessWidget {
-  const _NavBackButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.card,
-      borderRadius: BorderRadius.circular(14),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(14),
-        onTap: () => Navigator.of(context).maybePop(),
-        child: Container(
-          width: 42,
-          height: 42,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: AppColors.line, width: 1.5),
-          ),
-          child: const Icon(Icons.arrow_back_ios_new,
-              size: 19, color: AppColors.ink),
-        ),
-      ),
-    );
-  }
-}
 
 // ──────────────────────────────────────────────────────────────
 // 1. capture（写真追加 + サムネイル + 解析ボタン）
@@ -167,7 +146,7 @@ class _CaptureView extends ConsumerWidget {
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
           child: Row(
             children: [
-              const _NavBackButton(),
+              const MobileNavBackButton(),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(l10n.cameraMobileCaptureTitle,
@@ -479,7 +458,7 @@ class _ReviewView extends ConsumerWidget {
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
           child: Row(
             children: [
-              const _NavBackButton(),
+              const MobileNavBackButton(),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -673,7 +652,7 @@ class _CandidateCardState extends ConsumerState<_CandidateCard> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     alignment: Alignment.center,
-                    child: Text(_catEmoji[c.category] ?? '🛒',
+                    child: Text(c.category.style.emoji,
                         style: const TextStyle(fontSize: 22)),
                   ),
                   const SizedBox(width: 12),
@@ -828,7 +807,7 @@ class _CandidateCardState extends ConsumerState<_CandidateCard> {
                                       (cat) => DropdownMenuItem(
                                         value: cat,
                                         child: Text(
-                                          '${_catEmoji[cat] ?? ''} ${cat.label(l10n)}',
+                                          '${cat.style.emoji} ${cat.label(l10n)}',
                                           style: const TextStyle(fontSize: 13.5),
                                         ),
                                       ),

@@ -297,9 +297,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsAbout => 'About';
 
   @override
-  String get settingsComingSoonValue => 'Coming soon';
-
-  @override
   String get settingsSyncOffNote =>
       'Sync is off. Data is stored only on this device.';
 
@@ -1057,9 +1054,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cameraMobileErrorLater => 'Analyze later';
-
-  @override
-  String get cameraMobileBackToInventory => 'Back to inventory';
 
   @override
   String get onboardingRailTitle => 'Setup Assistant';

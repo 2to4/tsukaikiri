@@ -120,7 +120,6 @@
   "settingsSupportAuthor": "Support the developer",
   "settingsHelp": "Help",
   "settingsAbout": "About",
-  "settingsComingSoonValue": "Coming soon",
   "settingsSyncOffNote": "Sync is off. Data is stored only on this device.",
   "settingsVersionLine": "Tsukaikiri · v{version}",
   "@settingsVersionLine": {
@@ -475,7 +474,6 @@
   "cameraMobileReviewHint": "Select the items to keep and adjust the name, quantity, or category as needed",
   "cameraMobileReviewFootnote": "These candidates were read automatically by AI. You can review them before adding.",
   "cameraMobileErrorLater": "Analyze later",
-  "cameraMobileBackToInventory": "Back to inventory",
 
   "onboardingRailTitle": "Setup Assistant",
   "onboardingStep0": "Welcome",

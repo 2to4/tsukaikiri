@@ -226,12 +226,6 @@ class _ShoppingSettingsScreenState
 class ApplianceSettingsScreen extends ConsumerWidget {
   const ApplianceSettingsScreen({super.key});
 
-  // デザイン settings.jsx の選択肢（デスクトップ版と同一）。
-  static const _hotcookSeries = ['KN-HW型', 'KN-HT型'];
-  static const _hotcookCapacities = ['1.0L', '1.6L', '2.4L'];
-  static const _healsioSeries = ['AX-XA型', 'AX-LSX型'];
-  static const _healsioCapacities = ['26L', '30L'];
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
@@ -270,8 +264,8 @@ class ApplianceSettingsScreen extends ConsumerWidget {
                         name: l10n.settingsApplianceHotcook,
                         icon: Icons.soup_kitchen_outlined,
                         appliance: find(ApplianceType.hotcook),
-                        seriesOpts: _hotcookSeries,
-                        capacityOpts: _hotcookCapacities,
+                        seriesOpts: applianceSeriesOptions[ApplianceType.hotcook]!,
+                        capacityOpts: applianceCapacityOptions[ApplianceType.hotcook]!,
                         onChanged: (a) => update(ApplianceType.hotcook, a),
                       ),
                       _ApplianceTile(
@@ -279,8 +273,8 @@ class ApplianceSettingsScreen extends ConsumerWidget {
                         name: l10n.settingsApplianceHealsio,
                         icon: Icons.microwave_outlined,
                         appliance: find(ApplianceType.healsio),
-                        seriesOpts: _healsioSeries,
-                        capacityOpts: _healsioCapacities,
+                        seriesOpts: applianceSeriesOptions[ApplianceType.healsio]!,
+                        capacityOpts: applianceCapacityOptions[ApplianceType.healsio]!,
                         onChanged: (a) => update(ApplianceType.healsio, a),
                       ),
                       Padding(

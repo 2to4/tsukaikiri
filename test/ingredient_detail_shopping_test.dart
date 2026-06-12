@@ -120,7 +120,8 @@ void main() {
     await tester.tap(find.text('買い物リストに追加'));
     await tester.pumpAndSettle();
 
-    expect(find.text('電波の良い場所か Wi-Fi に接続してください。'), findsOneWidget);
+    // 権限・リスト失効の可能性にも言及する買い物用エラー文言を使う。
+    expect(find.textContaining('リマインダーへのアクセス許可'), findsOneWidget);
 
     await unmountApp(tester);
   });

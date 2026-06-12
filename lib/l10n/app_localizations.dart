@@ -656,12 +656,6 @@ abstract class AppLocalizations {
   /// **'About'**
   String get settingsAbout;
 
-  /// No description provided for @settingsComingSoonValue.
-  ///
-  /// In en, this message translates to:
-  /// **'Coming soon'**
-  String get settingsComingSoonValue;
-
   /// No description provided for @settingsSyncOffNote.
   ///
   /// In en, this message translates to:
@@ -1981,12 +1975,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Analyze later'**
   String get cameraMobileErrorLater;
-
-  /// No description provided for @cameraMobileBackToInventory.
-  ///
-  /// In en, this message translates to:
-  /// **'Back to inventory'**
-  String get cameraMobileBackToInventory;
 
   /// No description provided for @onboardingRailTitle.
   ///

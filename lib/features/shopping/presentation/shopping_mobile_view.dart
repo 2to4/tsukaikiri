@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/widgets/mobile_nav_buttons.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../recipe/presentation/meal_suggestion_controller.dart';
 import '../domain/shopping_list.dart';
 import 'shopping_confirm_controller.dart';
 
@@ -43,13 +43,9 @@ class _ShoppingMobileScreenState extends ConsumerState<ShoppingMobileScreen> {
   Widget build(BuildContext context) {
     final st = ref.watch(shoppingConfirmControllerProvider);
 
-    // mealsForShoppingProvider が（postFrameCallback より後に）非空へ変わった
-    // 場合に再初期化する。献立画面から set → push の順で来た直後をカバーする。
-    ref.listen<List>(mealsForShoppingProvider, (prev, next) {
-      if (next.isNotEmpty) {
-        ref.read(shoppingConfirmControllerProvider.notifier).initialize();
-      }
-    });
+    // 入場時の初期化は initState の postFrameCallback で行う。
+    // mealsForShoppingProvider への set() は常にこの画面の push 前に完了している
+    // （この画面の生存中に変化することはない）ため、listen による再初期化は不要。
 
     return Scaffold(
       backgroundColor: AppColors.bg,
@@ -75,32 +71,6 @@ void _popToRoot(BuildContext context) {
   Navigator.of(context).popUntil((route) => route.isFirst);
 }
 
-/// 角丸ナビボタン（戻る）。
-class _NavBackButton extends StatelessWidget {
-  const _NavBackButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.card,
-      borderRadius: BorderRadius.circular(14),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(14),
-        onTap: () => Navigator.of(context).maybePop(),
-        child: Container(
-          width: 42,
-          height: 42,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: AppColors.line, width: 1.5),
-          ),
-          child: const Icon(Icons.arrow_back_ios_new,
-              size: 19, color: AppColors.ink),
-        ),
-      ),
-    );
-  }
-}
 
 // ──────────────────────────────────────────────────────────────
 // 1. 一覧（不足食材チェック + 追加先選択 + 追加ボタン）
@@ -123,7 +93,7 @@ class _ListView extends ConsumerWidget {
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
           child: Row(
             children: [
-              const _NavBackButton(),
+              const MobileNavBackButton(),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -1036,9 +1006,14 @@ class _ErrorView extends ConsumerWidget {
                 onTap: notifier.retryFromError,
               ),
               const SizedBox(height: 12),
+              // 「もどる」は買い物フローから離脱する（エラー状態は解除して
+              // 次回入場時に listing から始められるようにする）。
               _SecondaryWideButton(
                 label: l10n.shoppingBack,
-                onTap: notifier.retryFromError,
+                onTap: () {
+                  notifier.retryFromError();
+                  Navigator.of(context).maybePop();
+                },
               ),
             ],
           ),
