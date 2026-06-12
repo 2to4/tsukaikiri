@@ -23,18 +23,16 @@
 - 2026-06-12: 在庫詳細「買い物リストに追加」実機能化（06732e3・テスト3件）。「レシピを見る」はデザイン仕様でも準備中トーストなので現状維持
 - 発見: **モバイル設定画面は言語以外すべて comingSoon スタブ**（AI・連携・同期・サポート）。これが iOS 前の最大ギャップ → セクション単位で移植中
 
-## 進行中: モバイル設定画面の実機能化
+## 完了（続き3）: モバイル設定画面の実機能化（2026-06-12）
 
-- ✅ AI セクション（`ai_settings_screen.dart`: プロバイダ選択・API キー保存/マスク/削除・モデル取得。デスクトップ _AiSection/_ApiKeyCard/_ModelCard と同じデータ操作）+ settings_screen の3行を配線 + テスト4件 — 全テスト確認中
-- 学び: Riverpod v3 の AsyncValue に `valueOrNull` はない → `.value`。`flutter analyze` はテスト側のコンパイルエラーを拾わないことがある（test 実行で発覚）
-- 次: ② 連携（買い物リスト選択・家電）→ ③ データ同期（SyncController 再利用）→ ④ サポート（ヘルプ/About、BMC はフェーズ9のURL待ちで comingSoon 維持）
+- AI（5522bbe）・連携=買い物リスト/家電（3410fff）・データ同期（次コミット）の3セクションをサブ画面方式で実装。デスクトップ版とデータ操作を共有、テスト14件追加（計198件）
+- 学び: Riverpod v3 AsyncValue に `valueOrNull` なし → `.value` / analyze はテスト側のコンパイルエラーを拾わない / 画面に drift stream watch を足すと既存テストの `pump()`（経過0）unmount が pending timer で落ちる → `pump(1ms)` / ScaffoldMessenger はスナックバーをキューするので連続表示のテストは間に5秒 pump
 
-## 残タスク（このセッションの自律作業キュー）
+## 残タスク（次セッション向け）
 
-1. モバイル設定: 連携セクション（買い物リスト選択 = デスクトップ _ShoppingSection 参照・家電 = _ApplianceSection 参照）
-2. モバイル設定: データ同期セクション（_DataSection 参照・SyncController/sync_controller.dart 再利用）
-3. モバイル設定: サポート（ヘルプ画面モバイル版 = helpAbout.jsx、About）
-4. 各マイルストーンでコミット & push & 完了通知
+1. モバイル設定サポート行（ヘルプ画面モバイル版 = helpAbout.jsx、About）— フェーズ9（BMC URL はユーザー待ち）と一緒にやるのが自然
+2. オンボーディング（設定アシスタント）のモバイル版・初回自動表示の検討（進捗管理 §4）
+3. iOS フェーズ: カメラ画像入力を image_picker に差し替え（camera_mobile_view.dart の `_pickImages` を差し替えるだけ）
 
 ## ユーザー待ちの事項（再開時に確認）
 

@@ -7,13 +7,15 @@ import '../../../core/theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/appliance.dart';
 import 'ai_settings_screen.dart';
+import 'data_settings_screen.dart';
 import 'integration_settings_screens.dart';
 import 'locale_controller.dart';
 
 /// 設定画面（Claude Design：リスト形式・カテゴリ別グループ）。
 ///
-/// 言語のみ実機能。AI・連携・同期・サポートは後フェーズのため、
-/// 行は表示しつつタップで「準備中」を案内する。
+/// 一般・AI・連携・データはサブ画面に遷移する実機能。
+/// サポート（ドネーション・ヘルプ・About）のみ後フェーズで、
+/// タップで「準備中」を案内する。
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
@@ -131,15 +133,21 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                   SettingsSection(
                     title: l10n.settingsSectionData,
-                    note: l10n.settingsSyncOffNote,
+                    note: (settings?.syncEnabled ?? false)
+                        ? null
+                        : l10n.settingsSyncOffNote,
                     children: [
                       SettingsRow(
                         icon: Icons.cloud_outlined,
                         label: l10n.settingsCloudSync,
+                        value: (settings?.syncEnabled ?? false)
+                            ? l10n.settingsDataSyncEnabledLabel
+                            : null,
                         last: true,
-                        trailing: _Toggle(
-                            on: false, onTap: () => _comingSoon(context)),
-                        onTap: () => _comingSoon(context),
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute<void>(
+                              builder: (_) => const DataSettingsScreen()),
+                        ),
                       ),
                     ],
                   ),
@@ -401,36 +409,6 @@ class SettingsRow extends StatelessWidget {
           content,
         if (!last) const Divider(height: 1, color: AppColors.line),
       ],
-    );
-  }
-}
-
-class _Toggle extends StatelessWidget {
-  const _Toggle({required this.on, required this.onTap});
-  final bool on;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        width: 48,
-        height: 28,
-        padding: const EdgeInsets.all(3),
-        alignment: on ? Alignment.centerRight : Alignment.centerLeft,
-        decoration: BoxDecoration(
-          color: on ? AppColors.green : const Color(0xFFDDD8CE),
-          borderRadius: BorderRadius.circular(99),
-        ),
-        child: Container(
-          width: 22,
-          height: 22,
-          decoration: const BoxDecoration(
-              color: Colors.white, shape: BoxShape.circle),
-        ),
-      ),
     );
   }
 }
