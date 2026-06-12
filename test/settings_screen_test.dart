@@ -48,7 +48,7 @@ void main() {
   /// 画面をアンマウントしてタイマーを消化させる（pending timer 検出の回避）。
   Future<void> unmountApp(WidgetTester tester) async {
     await tester.pumpWidget(const SizedBox.shrink());
-    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 1));
   }
 
   testWidgets('設定画面が現在の言語（日本語）を表示する', (tester) async {

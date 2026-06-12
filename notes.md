@@ -18,11 +18,23 @@
 - 判断メモ: 画像入力は当面 file_selector（`_pickImages` 関数に分離済み、iOS フェーズで image_picker に差し替え）。エラー時「再試行」= reset()（画像クリア）はデスクトップ版と同一 UX なので維持
 - ユーザーが CLAUDE.md から「モデル使い分け方針」を削除 → 以後メインセッションで直接実装してよい
 
+## 完了（続き2）
+
+- 2026-06-12: 在庫詳細「買い物リストに追加」実機能化（06732e3・テスト3件）。「レシピを見る」はデザイン仕様でも準備中トーストなので現状維持
+- 発見: **モバイル設定画面は言語以外すべて comingSoon スタブ**（AI・連携・同期・サポート）。これが iOS 前の最大ギャップ → セクション単位で移植中
+
+## 進行中: モバイル設定画面の実機能化
+
+- ✅ AI セクション（`ai_settings_screen.dart`: プロバイダ選択・API キー保存/マスク/削除・モデル取得。デスクトップ _AiSection/_ApiKeyCard/_ModelCard と同じデータ操作）+ settings_screen の3行を配線 + テスト4件 — 全テスト確認中
+- 学び: Riverpod v3 の AsyncValue に `valueOrNull` はない → `.value`。`flutter analyze` はテスト側のコンパイルエラーを拾わないことがある（test 実行で発覚）
+- 次: ② 連携（買い物リスト選択・家電）→ ③ データ同期（SyncController 再利用）→ ④ サポート（ヘルプ/About、BMC はフェーズ9のURL待ちで comingSoon 維持）
+
 ## 残タスク（このセッションの自律作業キュー）
 
-1. （任意）ヘルプ/オンボーディングのモバイル版 or フェーズ9（ヘルプ/About 出典表記）の残作業確認
-2. 在庫詳細の「買い物リストに追加」「レシピを見る」ボタンが comingSoon のまま（モバイル詳細画面）
-3. 各マイルストーンでコミット & push & 完了通知
+1. モバイル設定: 連携セクション（買い物リスト選択 = デスクトップ _ShoppingSection 参照・家電 = _ApplianceSection 参照）
+2. モバイル設定: データ同期セクション（_DataSection 参照・SyncController/sync_controller.dart 再利用）
+3. モバイル設定: サポート（ヘルプ画面モバイル版 = helpAbout.jsx、About）
+4. 各マイルストーンでコミット & push & 完了通知
 
 ## ユーザー待ちの事項（再開時に確認）
 

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
+import 'ai_settings_screen.dart';
 import 'locale_controller.dart';
 
 /// 設定画面（Claude Design：リスト形式・カテゴリ別グループ）。
@@ -20,6 +22,12 @@ class SettingsScreen extends ConsumerWidget {
       ..showSnackBar(SnackBar(content: Text(l10n.comingSoon)));
   }
 
+  void _openAi(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (_) => const AiSettingsScreen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
@@ -32,11 +40,21 @@ class SettingsScreen extends ConsumerWidget {
     };
     final soon = l10n.settingsComingSoonValue;
 
+    // 選択中の AI プロバイダ（行の現在値表示用）。
+    final settings = ref.watch(userSettingsProvider).value;
+    final aiInfo =
+        settings != null ? providerInfo(settings.selectedProvider) : null;
+    final aiVisionLabel = aiInfo == null
+        ? null
+        : (aiInfo.supportsVision
+            ? l10n.settingsAiVisionYes
+            : l10n.settingsAiVisionNo);
+
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
-            _NavBar(title: l10n.settingsTitle),
+            SettingsNavBar(title: l10n.settingsTitle),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(16, 6, 16, 30),
@@ -62,19 +80,18 @@ class SettingsScreen extends ConsumerWidget {
                       SettingsRow(
                           icon: Icons.auto_awesome,
                           label: l10n.settingsAiProvider,
-                          value: soon,
-                          onTap: () => _comingSoon(context)),
+                          value: aiInfo?.displayName,
+                          onTap: () => _openAi(context)),
                       SettingsRow(
                           icon: Icons.vpn_key_outlined,
                           label: l10n.settingsApiKey,
-                          value: soon,
-                          onTap: () => _comingSoon(context)),
+                          onTap: () => _openAi(context)),
                       SettingsRow(
                           icon: Icons.photo_camera_outlined,
                           label: l10n.settingsImageRecognition,
-                          value: soon,
+                          value: aiVisionLabel,
                           last: true,
-                          onTap: () => _comingSoon(context)),
+                          onTap: () => _openAi(context)),
                     ],
                   ),
                   SettingsSection(
@@ -170,7 +187,7 @@ class LanguageDetailScreen extends ConsumerWidget {
       body: SafeArea(
         child: Column(
           children: [
-            _NavBar(title: l10n.settingsLanguage),
+            SettingsNavBar(title: l10n.settingsLanguage),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
@@ -182,7 +199,7 @@ class LanguageDetailScreen extends ConsumerWidget {
                           label: opts[i].$2,
                           last: i == opts.length - 1,
                           onTap: () => controller.setPref(opts[i].$1),
-                          trailing: _RadioMark(on: current == opts[i].$1),
+                          trailing: SettingsRadioMark(on: current == opts[i].$1),
                         ),
                     ],
                   ),
@@ -208,8 +225,8 @@ class LanguageDetailScreen extends ConsumerWidget {
 // ─────────────────────────────────────────────────────────────
 // 共通パーツ
 // ─────────────────────────────────────────────────────────────
-class _NavBar extends StatelessWidget {
-  const _NavBar({required this.title});
+class SettingsNavBar extends StatelessWidget {
+  const SettingsNavBar({super.key, required this.title});
   final String title;
 
   @override
@@ -399,8 +416,8 @@ class _Toggle extends StatelessWidget {
   }
 }
 
-class _RadioMark extends StatelessWidget {
-  const _RadioMark({required this.on});
+class SettingsRadioMark extends StatelessWidget {
+  const SettingsRadioMark({super.key, required this.on});
   final bool on;
 
   @override
