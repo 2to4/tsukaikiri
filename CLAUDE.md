@@ -2,11 +2,6 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## モデル使い分け方針
-
-実装にあたってはトークンを節約するために**Opus/Sonnetを適切にサブエージェントとして切り出して実行**し、このメインセッション(Fable 5)は設計と監査、レビューに専念する。
-実装難易度が特に高いところはこのセッションでやってよい。
-
 ## プロジェクト概要
 
 **つかいきり (Tsukaikiri)** — 冷蔵庫の在庫を起点に献立を AI が提案し、不足食材を買い物リスト（macOS/iOS=リマインダー / Android=Google ToDo）へ自動追加する Flutter アプリ。
