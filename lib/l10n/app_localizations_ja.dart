@@ -222,6 +222,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get detailAddToShoppingList => '買い物リストに追加';
 
   @override
+  String get detailAddedToShoppingList => '買い物リストに追加しました';
+
+  @override
+  String get detailShoppingListNotConfigured => '設定で買い物リストを選択してください';
+
+  @override
   String get detailViewRecipe => 'レシピを見る';
 
   @override

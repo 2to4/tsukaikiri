@@ -94,6 +94,8 @@
   "toastDeleted": "Deleted",
 
   "detailAddToShoppingList": "Add to shopping list",
+  "detailAddedToShoppingList": "Added to the shopping list",
+  "detailShoppingListNotConfigured": "Choose a shopping list in Settings first",
   "detailViewRecipe": "See recipes",
   "comingSoon": "This feature is coming in a future update.",
 

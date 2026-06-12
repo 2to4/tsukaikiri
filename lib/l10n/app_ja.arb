@@ -87,6 +87,8 @@
   "toastDeleted": "削除しました",
 
   "detailAddToShoppingList": "買い物リストに追加",
+  "detailAddedToShoppingList": "買い物リストに追加しました",
+  "detailShoppingListNotConfigured": "設定で買い物リストを選択してください",
   "detailViewRecipe": "レシピを見る",
   "comingSoon": "この機能は今後のアップデートで対応予定です",
 

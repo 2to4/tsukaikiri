@@ -223,6 +223,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get detailAddToShoppingList => 'Add to shopping list';
 
   @override
+  String get detailAddedToShoppingList => 'Added to the shopping list';
+
+  @override
+  String get detailShoppingListNotConfigured =>
+      'Choose a shopping list in Settings first';
+
+  @override
   String get detailViewRecipe => 'See recipes';
 
   @override

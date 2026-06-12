@@ -8,6 +8,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/utils/quantity_format.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../shopping/domain/shopping_list.dart';
 import '../../domain/category_style.dart';
 import '../../domain/unit_option.dart';
 import '../expiry_status.dart';
@@ -69,6 +70,37 @@ class IngredientDetailView extends ConsumerWidget {
             onPressed: () => repo.save(snapshot),
           ),
         ));
+    }
+
+    void toast(String message) => ScaffoldMessenger.of(context)
+      ..clearSnackBars()
+      ..showSnackBar(SnackBar(content: Text(message)));
+
+    // この食材1件を設定済みの買い物リストへ追加する。
+    // リスト未設定なら設定への誘導、通信失敗ならオフライン文言を出す。
+    Future<void> addToShoppingList() async {
+      final messenger = ScaffoldMessenger.of(context);
+      final settings = await ref.read(settingsRepositoryProvider).get();
+      final listId = settings.shoppingListId;
+      if (listId == null || listId.isEmpty) {
+        messenger
+          ..clearSnackBars()
+          ..showSnackBar(
+              SnackBar(content: Text(l10n.detailShoppingListNotConfigured)));
+        return;
+      }
+      try {
+        final service = ref.read(shoppingListServiceProvider);
+        await service.addItems(listId, [ShoppingListItem(title: ing.name)]);
+        messenger
+          ..clearSnackBars()
+          ..showSnackBar(
+              SnackBar(content: Text(l10n.detailAddedToShoppingList)));
+      } catch (_) {
+        messenger
+          ..clearSnackBars()
+          ..showSnackBar(SnackBar(content: Text(l10n.settingsNetworkError)));
+      }
     }
 
     return Column(
@@ -166,17 +198,17 @@ class IngredientDetailView extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 14),
-              // 副アクション（後フェーズ機能）
+              // 副アクション（レシピ提案は後フェーズ機能）
               Row(
                 children: [
                   Expanded(
                     child: _secondary(context, Icons.shopping_bag_outlined,
-                        l10n.detailAddToShoppingList, l10n.comingSoon),
+                        l10n.detailAddToShoppingList, addToShoppingList),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child: _secondary(context, Icons.menu_book_outlined,
-                        l10n.detailViewRecipe, l10n.comingSoon),
+                        l10n.detailViewRecipe, () => toast(l10n.comingSoon)),
                   ),
                 ],
               ),
@@ -259,12 +291,10 @@ class IngredientDetailView extends ConsumerWidget {
         ),
       );
 
-  Widget _secondary(
-          BuildContext context, IconData icon, String label, String toast) =>
+  Widget _secondary(BuildContext context, IconData icon, String label,
+          VoidCallback onPressed) =>
       OutlinedButton.icon(
-        onPressed: () => ScaffoldMessenger.of(context)
-          ..clearSnackBars()
-          ..showSnackBar(SnackBar(content: Text(toast))),
+        onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.ink,
           backgroundColor: AppColors.card,

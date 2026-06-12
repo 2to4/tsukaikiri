@@ -512,6 +512,18 @@ abstract class AppLocalizations {
   /// **'Add to shopping list'**
   String get detailAddToShoppingList;
 
+  /// No description provided for @detailAddedToShoppingList.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to the shopping list'**
+  String get detailAddedToShoppingList;
+
+  /// No description provided for @detailShoppingListNotConfigured.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a shopping list in Settings first'**
+  String get detailShoppingListNotConfigured;
+
   /// No description provided for @detailViewRecipe.
   ///
   /// In en, this message translates to:
