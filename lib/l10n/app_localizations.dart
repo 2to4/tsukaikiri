@@ -958,6 +958,24 @@ abstract class AppLocalizations {
   /// **'No image recognition'**
   String get settingsAiVisionNo;
 
+  /// No description provided for @settingsAiOnDeviceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Free · no API key · offline'**
+  String get settingsAiOnDeviceDesc;
+
+  /// No description provided for @settingsAiOnDeviceUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Not available on this device'**
+  String get settingsAiOnDeviceUnavailable;
+
+  /// No description provided for @settingsAiOnDeviceNoKeyNote.
+  ///
+  /// In en, this message translates to:
+  /// **'On-device AI works with no API key. Nothing leaves your device.'**
+  String get settingsAiOnDeviceNoKeyNote;
+
   /// No description provided for @settingsApiKeyHeading.
   ///
   /// In en, this message translates to:

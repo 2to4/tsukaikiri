@@ -456,6 +456,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settingsAiVisionNo => '画像認識なし';
 
   @override
+  String get settingsAiOnDeviceDesc => '無料・キー不要・オフライン';
+
+  @override
+  String get settingsAiOnDeviceUnavailable => 'この端末では利用できません';
+
+  @override
+  String get settingsAiOnDeviceNoKeyNote =>
+      'オンデバイス AI はキー不要で使えます。データは端末外に出ません。';
+
+  @override
   String get settingsApiKeyHeading => 'APIキー';
 
   @override

@@ -32,13 +32,19 @@ class AiSettingsScreen extends ConsumerWidget {
                 error: (e, _) => Center(child: Text('$e')),
                 data: (settings) {
                   final selected = settings.selectedProvider;
+                  final onDeviceAvailable = ref
+                      .watch(onDeviceAiAvailabilityProvider)
+                      .maybeWhen(
+                          data: (a) => a.available, orElse: () => false);
+                  final isOnDevice = selected == onDeviceProviderId;
                   return ListView(
                     padding: const EdgeInsets.fromLTRB(16, 6, 16, 30),
                     children: [
-                      // ── プロバイダ選択 ──
+                      // ── プロバイダ選択（先頭=オンデバイス、続けてクラウド4社） ──
                       SettingsSection(
                         title: l10n.settingsAiProvider,
                         children: [
+                          _onDeviceRow(ref, l10n, selected, onDeviceAvailable),
                           for (var i = 0;
                               i < supportedProviderIds.length;
                               i++)
@@ -51,17 +57,30 @@ class AiSettingsScreen extends ConsumerWidget {
                             ),
                         ],
                       ),
-                      // ── API キー（選択中プロバイダ。切替時は key で再構築） ──
-                      _ApiKeySection(
-                        key: ValueKey('apikey_$selected'),
-                        providerId: selected,
-                      ),
-                      // ── モデル選択 ──
-                      _ModelSection(
-                        key: ValueKey('model_$selected'),
-                        providerId: selected,
-                        currentModel: settings.modelOverrides[selected],
-                      ),
+                      // オンデバイス選択時はキー不要 → APIキー/モデルを隠す。
+                      if (isOnDevice)
+                        SettingsSection(
+                          children: [
+                            SettingsRow(
+                              icon: Icons.verified_user_outlined,
+                              label: l10n.settingsAiOnDeviceNoKeyNote,
+                              last: true,
+                            ),
+                          ],
+                        )
+                      else ...[
+                        // ── API キー（選択中プロバイダ。切替時は key で再構築） ──
+                        _ApiKeySection(
+                          key: ValueKey('apikey_$selected'),
+                          providerId: selected,
+                        ),
+                        // ── モデル選択 ──
+                        _ModelSection(
+                          key: ValueKey('model_$selected'),
+                          providerId: selected,
+                          currentModel: settings.modelOverrides[selected],
+                        ),
+                      ],
                     ],
                   );
                 },
@@ -71,6 +90,30 @@ class AiSettingsScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  /// オンデバイス（先頭）の行。非対応端末はグレーアウトして選択不可。
+  Widget _onDeviceRow(
+    WidgetRef ref,
+    AppLocalizations l10n,
+    String selected,
+    bool available,
+  ) {
+    final row = SettingsRow(
+      icon: Icons.verified_user_outlined,
+      label: providerDisplayInfo(onDeviceProviderId).displayName,
+      value: available
+          ? l10n.settingsAiOnDeviceDesc
+          : l10n.settingsAiOnDeviceUnavailable,
+      trailing: SettingsRadioMark(on: selected == onDeviceProviderId),
+      onTap: available
+          ? () => ref
+              .read(settingsRepositoryProvider)
+              .setSelectedProvider(onDeviceProviderId)
+          : null,
+    );
+    // 非対応端末はグレーアウト（タップ不可は onTap=null で担保）。
+    return available ? row : Opacity(opacity: 0.45, child: row);
   }
 
   Widget _providerRow(

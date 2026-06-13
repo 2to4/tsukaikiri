@@ -130,6 +130,12 @@ final onDeviceAiServiceProvider = Provider<OnDeviceAiService>(
   (_) => const OnDeviceAiService(),
 );
 
+/// オンデバイス AI の可用性。設定 UI のグレーアウト判定・既定決定に使う。
+final onDeviceAiAvailabilityProvider =
+    FutureProvider<OnDeviceAiAvailability>(
+  (ref) => ref.read(onDeviceAiServiceProvider).availability(),
+);
+
 /// 実際に使う RecipeProvider を解決する（2段構え・オンデバイス既定）。
 ///
 /// 解決順:

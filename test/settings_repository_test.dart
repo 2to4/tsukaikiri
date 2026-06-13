@@ -44,6 +44,17 @@ void main() {
     expect(settings.syncKeepOnFailure, isTrue);
   });
 
+  test('initializeDefaultProviderIfUnset: 行が無ければ既定を保存する', () async {
+    await repo.initializeDefaultProviderIfUnset('ondevice');
+    expect((await repo.get()).selectedProvider, 'ondevice');
+  });
+
+  test('initializeDefaultProviderIfUnset: 既に設定行があれば変更しない', () async {
+    await repo.setSelectedProvider('claude'); // 行を作成
+    await repo.initializeDefaultProviderIfUnset('ondevice');
+    expect((await repo.get()).selectedProvider, 'claude');
+  });
+
   test('setCameraPreserveState / setSyncKeepOnFailure が往復する', () async {
     await repo.setCameraPreserveState(false);
     await repo.setSyncKeepOnFailure(false);

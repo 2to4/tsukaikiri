@@ -462,6 +462,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsAiVisionNo => 'No image recognition';
 
   @override
+  String get settingsAiOnDeviceDesc => 'Free · no API key · offline';
+
+  @override
+  String get settingsAiOnDeviceUnavailable => 'Not available on this device';
+
+  @override
+  String get settingsAiOnDeviceNoKeyNote =>
+      'On-device AI works with no API key. Nothing leaves your device.';
+
+  @override
   String get settingsApiKeyHeading => 'API Key';
 
   @override

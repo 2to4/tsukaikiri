@@ -13,6 +13,7 @@ import 'package:tsukaikiri/features/settings/presentation/locale_controller.dart
 import 'package:tsukaikiri/features/settings/presentation/settings_desktop_view.dart';
 import 'package:tsukaikiri/features/inventory/data/inventory_repository.dart';
 import 'package:tsukaikiri/features/inventory/domain/ingredient_category.dart';
+import 'package:tsukaikiri/features/recipe/service/on_device_ai_service.dart';
 import 'package:tsukaikiri/features/shopping/domain/shopping_list.dart';
 import 'package:tsukaikiri/features/shopping/service/shopping_list_service.dart';
 import 'package:tsukaikiri/features/sync/domain/backup_codec.dart';
@@ -40,6 +41,13 @@ class _FailingShoppingService implements ShoppingListService {
 // ──────────────────────────────────────────────────────────────
 // フェイク: SyncService（インメモリ・可用性切替可能）
 // ──────────────────────────────────────────────────────────────
+class _FakeOnDeviceAiService extends OnDeviceAiService {
+  _FakeOnDeviceAiService(this._availability);
+  final OnDeviceAiAvailability _availability;
+  @override
+  Future<OnDeviceAiAvailability> availability() async => _availability;
+}
+
 class _FakeSyncService implements SyncService {
   _FakeSyncService({this.available = true, this.storedBackup});
 
@@ -77,6 +85,7 @@ void main() {
     WidgetTester tester, {
     bool failShopping = false,
     SyncService? syncService,
+    OnDeviceAiAvailability? onDeviceAvailability,
   }) async {
     tester.view.physicalSize = const Size(1280, 800);
     tester.view.devicePixelRatio = 1.0;
@@ -93,6 +102,9 @@ void main() {
                 .overrideWithValue(_FailingShoppingService()),
           if (syncService != null)
             syncServiceProvider.overrideWithValue(syncService),
+          if (onDeviceAvailability != null)
+            onDeviceAiServiceProvider.overrideWithValue(
+                _FakeOnDeviceAiService(onDeviceAvailability)),
         ],
         child: Consumer(builder: (context, ref, _) {
           final locale = ref.watch(localeControllerProvider);
@@ -154,6 +166,49 @@ void main() {
     await tester.pumpAndSettle();
 
     expect((await repo.get()).selectedProvider, 'claude');
+
+    await unmountApp(tester);
+  });
+
+  testWidgets('オンデバイス対応端末: 先頭にオンデバイスを表示し選択でキー欄が消える',
+      (tester) async {
+    await repo.setLocalePref('ja');
+    await pumpView(
+      tester,
+      onDeviceAvailability: const OnDeviceAiAvailability(
+          available: true, supportsVision: false),
+    );
+
+    // オンデバイス（Apple Intelligence）カードが表示される。
+    expect(find.text('Apple Intelligence'), findsOneWidget);
+    expect(find.text('無料・キー不要・オフライン'), findsOneWidget);
+
+    // タップで selectedProvider が 'ondevice' になる。
+    await tester.tap(find.text('Apple Intelligence'));
+    await tester.pumpAndSettle();
+    expect((await repo.get()).selectedProvider, 'ondevice');
+
+    // キー不要なので API キー見出しは出ず、注記が出る。
+    expect(find.text('API Key'), findsNothing);
+    expect(find.textContaining('オンデバイス AI はキー不要'), findsOneWidget);
+
+    await unmountApp(tester);
+  });
+
+  testWidgets('オンデバイス非対応端末: グレーアウトで選択できない', (tester) async {
+    await repo.setLocalePref('ja');
+    await pumpView(
+      tester,
+      onDeviceAvailability: OnDeviceAiAvailability.unavailable,
+    );
+
+    expect(find.text('Apple Intelligence'), findsOneWidget);
+    expect(find.text('この端末では利用できません'), findsOneWidget);
+
+    // タップしても選択されない（既定 gemini のまま）。
+    await tester.tap(find.text('Apple Intelligence'));
+    await tester.pumpAndSettle();
+    expect((await repo.get()).selectedProvider, 'gemini');
 
     await unmountApp(tester);
   });

@@ -60,6 +60,16 @@ class SettingsRepository {
         selectedProvider: Value(provider),
       );
 
+  /// 初回起動時のみ既定プロバイダを設定する。
+  /// 設定行がまだ無い（＝一度も設定していない）ときだけ [providerId] を保存し、
+  /// 既に行があればユーザーの選択を尊重して何もしない。
+  /// 呼び出し元が端末のオンデバイス可否で 'ondevice' / 'gemini' を決めて渡す。
+  Future<void> initializeDefaultProviderIfUnset(String providerId) async {
+    final row = await getRow();
+    if (row != null) return;
+    await setSelectedProvider(providerId);
+  }
+
   /// プロバイダの使用モデルを設定する。[modelId] が null なら上書きを解除し
   /// 実装側のフォールバック既定値に戻す。
   Future<void> setModelOverride(String provider, String? modelId) async {

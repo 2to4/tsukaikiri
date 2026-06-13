@@ -1,4 +1,28 @@
-# A: 既定プロバイダ解決ロジック実装セッション — 2026-06-13（最新）
+# 仕様変更: プロバイダ選択にオンデバイス表示 + 端末依存の既定 — 2026-06-13（最新）
+
+**要件**:
+1. AIプロバイダ選択画面に「オンデバイス」を**選択肢の先頭**に表示し、明示的に選べるようにする。
+2. オンデバイスAI非対応機種では、オンデバイスをグレーアウト（選択不可）。
+3. 既定値: オンデバイス対応機 → `'ondevice'` / 非対応機 → `'gemini'`（初回起動時に端末で判定して永続化）。
+
+**設計（確定）**:
+- `onDeviceAiAvailabilityProvider`（FutureProvider<OnDeviceAiAvailability>）を追加 → UI がグレーアウト判定に watch。
+- 初回既定: `SettingsRepository.initializeDefaultProviderIfUnset(providerId)`（行が無ければ保存・あれば no-op = 初回のみ）。main() で `UncontrolledProviderScope` 化し、起動時に availability→id を決めて呼ぶ（同一 DB を共有するため container を main で生成）。
+- UI: desktop `_ProviderGrid` / mobile ai_settings の**先頭**にオンデバイスカード/行を追加。unavailable はグレー+onTap無効+「この端末では利用できません」。selected=='ondevice' のときは APIキー/モデルカードを隠し「キー不要」注記。
+- l10n: settingsAiOnDeviceName / Desc / Unavailable / NoKeyNote を en/ja/es に追加。
+- TDD: 仕様書→Red(initializeDefaultProviderIfUnset + UI widget)→Green→Refactor。設計変更は設計書へ反映。
+
+**完了サマリ (2-3行)**:
+- ①仕様書 §6.2 + 設計書 §5.1.1 を更新（先頭オンデバイス・非対応グレーアウト・端末依存既定）。
+- ②③ Red→Green: `initializeDefaultProviderIfUnset`（行未作成時のみ既定保存）を repo に追加（テスト2件）。`onDeviceAiAvailabilityProvider` 追加。main を `UncontrolledProviderScope` 化し起動時に availability→既定（可='ondevice'/不可='gemini'）を初回のみ設定。
+- UI: desktop `_ProviderGrid`/`_ProviderCard` を先頭オンデバイス対応に書換（enabled で Opacity グレーアウト・タップ無効、selected で APIキー/モデル非表示＋注記）。mobile `ai_settings` も `_onDeviceRow` 先頭追加・同様の出し分け。l10n 3言語に OnDevice 文言追加。
+- desktop widget テスト2件（対応=選択でキー欄消える / 非対応=グレーで選択不可）。
+- 検証: **flutter analyze 0 / 全242テストパス / macOS ビルド成功**。
+- 既定値変更は initializeDefaultProviderIfUnset 経由（DB の static 既定 'gemini' は維持＝初回判定の fallback も兼ねる）。
+
+---
+
+# A: 既定プロバイダ解決ロジック実装セッション — 2026-06-13
 
 **開発ルール更新（CLAUDE.md）**: 「設計変更は随時設計書に反映する」が追加。TDD は **①仕様書作成 → ②Red（失敗テスト）→ ③Green（実装）→ ④Refactor** の順を厳守。
 

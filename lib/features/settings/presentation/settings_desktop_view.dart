@@ -270,27 +270,56 @@ class _AiSection extends ConsumerWidget {
       error: (e, _) => Text('$e'),
       data: (settings) {
         final selected = settings.selectedProvider;
+        final onDeviceAvailable = ref
+            .watch(onDeviceAiAvailabilityProvider)
+            .maybeWhen(data: (a) => a.available, orElse: () => false);
+        final isOnDevice = selected == onDeviceProviderId;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _SectionHeading(l10n.settingsAiHeading),
-            // プロバイダカード 2×2 グリッド
+            // プロバイダカード（先頭=オンデバイス、続けてクラウド4社）
             _ProviderGrid(
               selected: selected,
+              onDeviceAvailable: onDeviceAvailable,
               onSelect: (id) => ref
                   .read(settingsRepositoryProvider)
                   .setSelectedProvider(id),
             ),
             const SizedBox(height: 16),
-            // APIキーカード（プロバイダごとに状態を持つため key で再構築）
-            _ApiKeyCard(key: ValueKey('apikey_$selected'), providerId: selected),
-            const SizedBox(height: 16),
-            // モデル選択カード
-            _ModelCard(
-              key: ValueKey('model_$selected'),
-              providerId: selected,
-              currentModel: settings.modelOverrides[selected],
-            ),
+            // オンデバイス選択時はキー不要なので APIキー/モデルカードを隠す。
+            if (isOnDevice)
+              _Card(
+                child: Row(
+                  children: [
+                    const Icon(Icons.verified_user_outlined,
+                        size: 16, color: AppColors.green),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        l10n.settingsAiOnDeviceNoKeyNote,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.sub,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            else ...[
+              // APIキーカード（プロバイダごとに状態を持つため key で再構築）
+              _ApiKeyCard(
+                  key: ValueKey('apikey_$selected'), providerId: selected),
+              const SizedBox(height: 16),
+              // モデル選択カード
+              _ModelCard(
+                key: ValueKey('model_$selected'),
+                providerId: selected,
+                currentModel: settings.modelOverrides[selected],
+              ),
+            ],
           ],
         );
       },
@@ -316,13 +345,19 @@ List<_ProviderInfo> _providerInfos() {
 }
 
 class _ProviderGrid extends StatelessWidget {
-  const _ProviderGrid({required this.selected, required this.onSelect});
+  const _ProviderGrid({
+    required this.selected,
+    required this.onSelect,
+    required this.onDeviceAvailable,
+  });
 
   final String selected;
   final ValueChanged<String> onSelect;
+  final bool onDeviceAvailable;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final infos = _providerInfos();
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -332,11 +367,27 @@ class _ProviderGrid extends StatelessWidget {
           spacing: gap,
           runSpacing: gap,
           children: [
+            // 先頭=オンデバイス。非対応端末はグレーアウトして選択不可。
+            SizedBox(
+              width: cardWidth,
+              child: _ProviderCard(
+                displayName: providerDisplayInfo(onDeviceProviderId).displayName,
+                subtitle: onDeviceAvailable
+                    ? l10n.settingsAiOnDeviceDesc
+                    : l10n.settingsAiOnDeviceUnavailable,
+                selected: selected == onDeviceProviderId,
+                enabled: onDeviceAvailable,
+                onTap: () => onSelect(onDeviceProviderId),
+              ),
+            ),
             for (final info in infos)
               SizedBox(
                 width: cardWidth,
                 child: _ProviderCard(
-                  info: info,
+                  displayName: info.displayName,
+                  subtitle: info.supportsVision
+                      ? l10n.settingsAiVisionYes
+                      : l10n.settingsAiVisionNo,
                   selected: selected == info.id,
                   onTap: () => onSelect(info.id),
                 ),
@@ -350,77 +401,82 @@ class _ProviderGrid extends StatelessWidget {
 
 class _ProviderCard extends StatelessWidget {
   const _ProviderCard({
-    required this.info,
+    required this.displayName,
+    required this.subtitle,
     required this.selected,
     required this.onTap,
+    this.enabled = true,
   });
 
-  final _ProviderInfo info;
+  final String displayName;
+  final String subtitle;
   final bool selected;
+  final bool enabled;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return GestureDetector(
-      onTap: onTap,
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 120),
-          padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(
-            color: selected ? AppColors.greenSoft : AppColors.card,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: selected ? AppColors.green : AppColors.line,
-              width: 2,
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    final highlight = selected && enabled;
+    final card = AnimatedContainer(
+      duration: const Duration(milliseconds: 120),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: highlight ? AppColors.greenSoft : AppColors.card,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: highlight ? AppColors.green : AppColors.line,
+          width: 2,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  Container(
-                    width: 28,
-                    height: 28,
-                    decoration: BoxDecoration(
-                      color: selected ? AppColors.green : AppColors.sub,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    alignment: Alignment.center,
-                    child: const Icon(Icons.auto_awesome,
-                        size: 14, color: Colors.white),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      info.displayName,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.ink,
-                      ),
-                    ),
-                  ),
-                ],
+              Container(
+                width: 28,
+                height: 28,
+                decoration: BoxDecoration(
+                  color: highlight ? AppColors.green : AppColors.sub,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                alignment: Alignment.center,
+                child: const Icon(Icons.auto_awesome,
+                    size: 14, color: Colors.white),
               ),
-              const SizedBox(height: 6),
-              Text(
-                info.supportsVision
-                    ? l10n.settingsAiVisionYes
-                    : l10n.settingsAiVisionNo,
-                style: const TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.sub,
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  displayName,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.ink,
+                  ),
                 ),
               ),
             ],
           ),
-        ),
+          const SizedBox(height: 6),
+          Text(
+            subtitle,
+            style: const TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: AppColors.sub,
+            ),
+          ),
+        ],
       ),
+    );
+
+    // 非対応（enabled=false）はグレーアウトしてタップ不可にする。
+    if (!enabled) {
+      return Opacity(opacity: 0.45, child: card);
+    }
+    return GestureDetector(
+      onTap: onTap,
+      child: MouseRegion(cursor: SystemMouseCursors.click, child: card),
     );
   }
 }
