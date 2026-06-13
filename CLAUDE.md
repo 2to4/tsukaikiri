@@ -14,6 +14,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - 対象: macOS + iOS 26 + Android（Flutter 既定の最低 API レベル）
 - **開発優先度: macOS → iOS → Android**（macOS で縦通しし、その後 iOS、Android の順）
 
+## 開発ルール
+
+テスト駆動開発の手順に従って開発する
+設計変更は随時設計書に反映する
+1. 仕様書を作成する
+2. レッド：仕様に対して失敗する（エラーになる）テストコードを書く
+3. グリーン：1をもとに成功する（パスする）コードを書く
+4. リファクタリング：できたものに対して余分なものをそぎ落とし、きれいに整える
+
 ## ロードマップと現状
 
 設計メモの段階的な順序に従う。✅ = 実装済み:
