@@ -17,7 +17,11 @@ String buildSuggestPrompt(
   RecipeConstraints constraints, {
   DateTime? now,
 }) {
-  final lang = constraints.outputLocale == 'ja' ? '日本語' : 'English';
+  final lang = switch (constraints.outputLocale) {
+        'ja' => '日本語',
+        'es' => 'Español',
+        _ => 'English',
+      };
   final base = now ?? DateTime.now();
   final inventoryLines = inventory.map((i) {
     final daysLeft = i.expiryDate?.difference(base).inDays;

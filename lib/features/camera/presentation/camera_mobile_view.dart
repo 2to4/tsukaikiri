@@ -20,6 +20,7 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/mobile_nav_buttons.dart';
@@ -87,10 +88,15 @@ class _CameraMobileScreenState extends ConsumerState<CameraMobileScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      // 設定で「途中状態を保持しない」なら入場時に常にリセットする。
+      // 保持する設定でも error フェーズだけはリセット（過去のエラー残留を防ぐ）。
+      final settings = await ref.read(settingsRepositoryProvider).get();
       if (!mounted) return;
       final phase = ref.read(cameraCaptureControllerProvider).phase;
-      if (phase == CameraCapturePhase.error) {
+      if (!settings.cameraPreserveState ||
+          phase == CameraCapturePhase.error) {
         ref.read(cameraCaptureControllerProvider.notifier).reset();
       }
     });

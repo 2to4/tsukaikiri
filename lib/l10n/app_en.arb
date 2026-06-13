@@ -104,6 +104,7 @@
   "languageSystem": "System default",
   "languageJa": "日本語",
   "languageEn": "English",
+  "languageEs": "Español",
   "languageHint": "Choosing \"System default\" follows your device language setting.",
 
   "settingsSectionGeneral": "General",
@@ -264,6 +265,10 @@
   "settingsDataRestoreConfirmOk": "Restore",
   "settingsDataSyncEnabledLabel": "iCloud Auto Backup",
   "settingsDataSyncEnabledDesc": "Automatically backs up when inventory or settings change",
+  "settingsDataSyncKeepOnFailureLabel": "Stay on when backup fails",
+  "settingsDataSyncKeepOnFailureDesc": "Keep auto backup on even if the first backup fails (e.g. not signed in to iCloud). Turn off to revert the switch on failure.",
+  "settingsDataCameraPreserveLabel": "Keep camera progress",
+  "settingsDataCameraPreserveDesc": "Keep photos and edited candidates when you leave and return to the camera screen. Turn off to start fresh each time.",
   "settingsDataRestoreConfirmDate": "Backup date: {date}",
   "@settingsDataRestoreConfirmDate": {
     "placeholders": { "date": { "type": "String" } }
@@ -304,6 +309,10 @@
   "mealsBeforeBody": "Click \"Suggest from inventory\"",
   "mealsGenerating": "Generating recipes…",
   "mealsLowStockBanner": "Inventory is low, so suggestions include recipes that need shopping.",
+  "mealsFocusBanner": "Suggesting from \"{name}\"",
+  "@mealsFocusBanner": {
+    "placeholders": { "name": { "type": "String" } }
+  },
   "mealsErrorNetwork": "Couldn't get suggestions. Move to a spot with better signal or connect to Wi-Fi, then retry.",
   "mealsErrorNoApiKey": "No AI API key is registered. Add an API key in Settings.",
   "mealsRetry": "Retry",

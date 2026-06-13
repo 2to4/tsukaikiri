@@ -86,6 +86,16 @@ class SettingsRepository {
         ),
       );
 
+  /// カメラ登録画面の途中状態を再入場時に保持するか。
+  Future<void> setCameraPreserveState(bool preserve) => _upsert(
+        cameraPreserveState: Value(preserve),
+      );
+
+  /// 同期トグル ON 直後の自動バックアップ失敗時も ON を維持するか。
+  Future<void> setSyncKeepOnFailure(bool keep) => _upsert(
+        syncKeepOnFailure: Value(keep),
+      );
+
   // ---- 内部ユーティリティ ----
 
   /// 既存行を読み出して指定フィールドだけ上書きして保存（upsert）。
@@ -98,6 +108,8 @@ class SettingsRepository {
     Value<bool> syncEnabled = const Value.absent(),
     Value<DateTime?> lastSyncedAt = const Value.absent(),
     Value<String> appliancesJson = const Value.absent(),
+    Value<bool> cameraPreserveState = const Value.absent(),
+    Value<bool> syncKeepOnFailure = const Value.absent(),
   }) async {
     final existing = await (_db.select(_db.settingsTable)
           ..where((t) => t.id.equals(_rowId)))
@@ -129,6 +141,12 @@ class SettingsRepository {
       appliancesJson: appliancesJson.present
           ? appliancesJson
           : Value(existing?.appliancesJson ?? '[]'),
+      cameraPreserveState: cameraPreserveState.present
+          ? cameraPreserveState
+          : Value(existing?.cameraPreserveState ?? true),
+      syncKeepOnFailure: syncKeepOnFailure.present
+          ? syncKeepOnFailure
+          : Value(existing?.syncKeepOnFailure ?? true),
     );
 
     await _db.into(_db.settingsTable).insertOnConflictUpdate(companion);
@@ -148,6 +166,8 @@ class SettingsRepository {
       appliances: appliancesRaw
           .map((e) => Appliance.fromJson(e as Map<String, dynamic>))
           .toList(),
+      cameraPreserveState: row.cameraPreserveState,
+      syncKeepOnFailure: row.syncKeepOnFailure,
     );
   }
 }

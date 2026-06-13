@@ -10,8 +10,10 @@ import 'package:tsukaikiri/core/db/app_database.dart';
 import 'package:tsukaikiri/core/providers.dart';
 import 'package:tsukaikiri/features/inventory/domain/ingredient_category.dart';
 import 'package:tsukaikiri/features/inventory/presentation/widgets/ingredient_detail_view.dart';
+import 'package:tsukaikiri/features/recipe/presentation/meal_suggestion_controller.dart';
 import 'package:tsukaikiri/l10n/app_localizations.dart';
 
+import 'fakes/fake_recipe_provider.dart';
 import 'shopping_desktop_view_test.dart' show FakeShoppingListService;
 
 void main() {
@@ -122,6 +124,58 @@ void main() {
 
     // 権限・リスト失効の可能性にも言及する買い物用エラー文言を使う。
     expect(find.textContaining('リマインダーへのアクセス許可'), findsOneWidget);
+
+    await unmountApp(tester);
+  });
+
+  // Phase3: レシピを見る ボタン（focus 設定）
+  testWidgets('レシピを見る: focusIngredient が設定される', (tester) async {
+    final service = FakeShoppingListService();
+    final fakeRecipe = FakeRecipeProvider(suggestResult: []);
+
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          databaseProvider.overrideWithValue(db),
+          shoppingListServiceProvider.overrideWithValue(service),
+          recipeProviderProvider.overrideWith((ref) async => fakeRecipe),
+        ],
+        child: const MaterialApp(
+          locale: Locale('ja'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: IngredientDetailView(ingredientId: 'tofu-1'),
+          ),
+        ),
+      ),
+    );
+    final container = ProviderScope.containerOf(
+        tester.element(find.byType(IngredientDetailView)));
+    // seed via container repo
+    await container.read(inventoryRepositoryProvider).save(Ingredient(
+      id: 'tofu-1',
+      name: '豆腐',
+      normalizedName: 'tofu',
+      category: IngredientCategory.other,
+      quantity: 1,
+      unit: '個',
+      expiryDate: null,
+      updatedAt: DateTime.now(),
+    ));
+    await tester.pumpAndSettle();
+
+    // レシピボタン
+    await tester.tap(find.text('レシピを見る'));
+    await tester.pump();  // state 反映
+
+    final state = container.read(mealSuggestionControllerProvider);
+    expect(state.focusIngredient?.name, '豆腐');
 
     await unmountApp(tester);
   });

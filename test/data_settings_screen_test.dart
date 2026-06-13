@@ -78,7 +78,8 @@ void main() {
   testWidgets('トグル ON で即時バックアップされ成功スナックバーが出る', (tester) async {
     final container = await pumpScreen(tester);
 
-    await tester.tap(find.byType(Switch));
+    // 先頭の Switch が iCloud 自動バックアップ（他に詳細トグルが2つある）。
+    await tester.tap(find.byType(Switch).first);
     await tester.pumpAndSettle();
 
     expect(sync.writeCount, 1);
@@ -87,6 +88,33 @@ void main() {
     final settings = await container.read(settingsRepositoryProvider).get();
     expect(settings.syncEnabled, isTrue);
 
+    await unmountApp(tester);
+  });
+
+  testWidgets('syncKeepOnFailure=false: ON で失敗するとトグルが OFF に戻る',
+      (tester) async {
+    sync.available = false; // 即時バックアップが失敗する
+    final container = await pumpScreen(tester);
+    await container.read(settingsRepositoryProvider).setSyncKeepOnFailure(false);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byType(Switch).first);
+    await tester.pumpAndSettle();
+
+    final settings = await container.read(settingsRepositoryProvider).get();
+    expect(settings.syncEnabled, isFalse); // 失敗で巻き戻る
+    await unmountApp(tester);
+  });
+
+  testWidgets('既定(keep=true): 失敗してもトグルは ON のまま', (tester) async {
+    sync.available = false; // 即時バックアップが失敗する
+    final container = await pumpScreen(tester);
+
+    await tester.tap(find.byType(Switch).first);
+    await tester.pumpAndSettle();
+
+    final settings = await container.read(settingsRepositoryProvider).get();
+    expect(settings.syncEnabled, isTrue); // keep=true なので維持
     await unmountApp(tester);
   });
 

@@ -1,0 +1,582 @@
+{
+  "@@locale": "es",
+
+  "appTitle": "Tsukaikiri",
+  "@appTitle": { "description": "Application name" },
+
+  "inventoryTitle": "Inventario",
+  "emptyInventory": "Aún no hay ingredientes.\nToca + para añadir uno.",
+  "addIngredient": "Añadir ingrediente",
+  "editIngredient": "Editar ingrediente",
+  "filterAll": "Todos",
+
+  "categoryMeat": "Carne",
+  "categoryFish": "Pescado",
+  "categoryVegetable": "Verduras",
+  "categoryFruit": "Fruta",
+  "categoryDairy": "Lácteos",
+  "categoryEgg": "Huevos",
+  "categoryGrain": "Cereales y básicos",
+  "categorySeasoning": "Condimentos",
+  "categoryFrozen": "Congelados",
+  "categoryBeverage": "Bebidas",
+  "categoryStaple": "Despensa",
+  "categoryOther": "Otros",
+
+  "unitPiece": "uds",
+  "unitGram": "g",
+  "unitKg": "kg",
+  "unitMl": "ml",
+  "unitL": "L",
+  "unitBottle": "botellas",
+  "unitSheet": "hojas",
+  "unitPack": "paquetes",
+  "unitBag": "bolsas",
+  "unitGo": "go",
+  "unitCup": "tazas",
+  "unitCan": "latas",
+  "unitCustom": "Personalizada…",
+
+  "fieldName": "Nombre",
+  "fieldCategory": "Categoría",
+  "fieldQuantity": "Cantidad",
+  "fieldUnit": "Unidad",
+  "fieldExpiry": "Fecha de caducidad",
+  "fieldExpiryOptional": "Fecha de caducidad (opcional)",
+  "customUnitLabel": "Unidad personalizada",
+
+  "actionSave": "Guardar",
+  "actionCancel": "Cancelar",
+  "actionDelete": "Eliminar",
+  "actionClear": "Borrar",
+
+  "validationNameRequired": "Introduce un nombre",
+  "validationQuantityInvalid": "Introduce un número mayor que 0",
+  "validationUnitRequired": "Introduce una unidad",
+
+  "deleteConfirmTitle": "¿Eliminar este ingrediente?",
+  "deleteConfirmBody": "{name} se eliminará de tu inventario.",
+  "@deleteConfirmBody": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+
+  "expiryExpired": "Caducado",
+  "expiryToday": "Hoy",
+  "expiryInDays": "Quedan {days} días",
+  "@expiryInDays": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+  "expiryNone": "Sin fecha",
+
+  "selectIngredientPrompt": "Selecciona un ingrediente para ver los detalles",
+
+  "inventoryCountLine": "{count} artículos en la nevera · los más próximos primero",
+  "@inventoryCountLine": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "groupNow": "Usar hoy o pronto",
+  "groupWeek": "Esta semana",
+  "groupPlenty": "Tiempo de sobra",
+  "groupNoDate": "Sin fecha de caducidad",
+  "swipeHint": "← Desliza una tarjeta a la izquierda para acciones rápidas",
+
+  "emptyInventoryTitle": "Tu inventario está vacío",
+  "emptyInventoryBody": "Añade ingredientes y te sugeriremos comidas para aprovecharlos, empezando por los que caducan antes.",
+  "cameraRegister": "Añadir con la cámara",
+  "manualAdd": "Añadir manualmente",
+
+  "suggestRecipes": "Sugerir recetas",
+  "suggestRecipesSub": "Ver menú para aprovechar",
+
+  "actionUsedUp": "Agotado",
+  "actionUndo": "Deshacer",
+  "toastUsedUp": "Marcado como agotado",
+  "toastDeleted": "Eliminado",
+
+  "detailAddToShoppingList": "Añadir a la lista de la compra",
+  "detailAddedToShoppingList": "Añadido a la lista de la compra",
+  "detailShoppingListNotConfigured": "Elige primero una lista de la compra en Ajustes",
+  "detailViewRecipe": "Ver recetas",
+  "comingSoon": "Esta función llegará en una próxima actualización.",
+
+  "settingsTitle": "Ajustes",
+  "settingsLanguage": "Idioma",
+  "languageSystem": "Predeterminado del sistema",
+  "languageJa": "日本語",
+  "languageEn": "English",
+  "languageEs": "Español",
+  "languageHint": "Elegir «Predeterminado del sistema» sigue el idioma de tu dispositivo.",
+
+  "settingsSectionGeneral": "General",
+  "settingsSectionAi": "IA (reconocimiento y recetas)",
+  "settingsSectionIntegration": "Integraciones",
+  "settingsSectionData": "Datos",
+  "settingsSectionSupport": "Soporte",
+  "settingsAiProvider": "Proveedor de IA",
+  "settingsApiKey": "Clave de API",
+  "settingsImageRecognition": "Reconocimiento de imágenes",
+  "settingsShoppingList": "Lista de la compra",
+  "settingsAppliances": "Electrodomésticos",
+  "settingsCloudSync": "Sincronización en la nube",
+  "settingsSupportAuthor": "Apoyar al desarrollador",
+  "settingsHelp": "Ayuda",
+  "settingsAbout": "Acerca de",
+  "settingsSyncOffNote": "La sincronización está desactivada. Los datos se guardan solo en este dispositivo.",
+  "settingsVersionLine": "Tsukaikiri · v{version}",
+  "@settingsVersionLine": {
+    "placeholders": { "version": { "type": "String" } }
+  },
+
+  "shellNavInventory": "Inventario",
+  "shellNavCamera": "Cámara",
+  "shellNavMeals": "Planificador de comidas",
+  "shellNavShopping": "Lista de la compra",
+  "shellNavOnboarding": "Asistente de configuración",
+  "shellNavSettings": "Ajustes",
+  "shellNavHelp": "Ayuda",
+  "shellSectionMain": "PRINCIPAL",
+  "shellSectionOther": "OTROS",
+  "shellInventoryCount": "{count} artículos",
+  "@shellInventoryCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "shellPlaceholder": "Esta pantalla llegará pronto.",
+  "shellPlaceholderTitle": "En construcción",
+
+  "desktopCategoryLabel": "Categoría",
+  "desktopGroupNow": "Hoy y pronto",
+  "desktopGroupWeek": "Esta semana",
+  "desktopGroupPlenty": "Tiempo de sobra",
+  "desktopSearchPlaceholder": "Buscar ingredientes…",
+  "desktopNoResults": "No hay ingredientes que coincidan",
+  "desktopSelectPrompt": "Selecciona un ingrediente",
+  "desktopSelectBody": "Haz clic en un elemento de la lista para ver los detalles y editar.",
+  "desktopAddIngredient": "Añadir ingrediente",
+  "desktopAddIngredientShortcut": "⌘N",
+  "desktopCameraRegister": "Cámara",
+  "desktopCameraShortcut": "⌘K",
+  "desktopSuggestMeals": "Sugerir comidas",
+  "desktopSuggestMealsShortcut": "⌘R",
+  "desktopQuantityUnit": "{qty} {unit}",
+  "@desktopQuantityUnit": {
+    "placeholders": {
+      "qty": { "type": "String" },
+      "unit": { "type": "String" }
+    }
+  },
+  "desktopExpiryDaysOver": "{n} días de retraso",
+  "@desktopExpiryDaysOver": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "desktopExpiryToday": "Hoy",
+  "desktopExpiryDaysLeft": "Quedan {n} días",
+  "@desktopExpiryDaysLeft": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "desktopDetailQty": "Cantidad",
+  "desktopDetailCategory": "Categoría",
+  "desktopDetailExpiry": "Caducidad",
+  "desktopSuggestWithIngredient": "Sugerir comida con esto",
+  "desktopUsedUp": "Marcar como agotado",
+  "desktopDelete": "Eliminar",
+  "desktopEditHint": "Usa el botón de editar para cambiar el nombre y la cantidad.",
+  "desktopCountSuffix": "{n} artículos",
+  "@desktopCountSuffix": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+
+  "settingsNavAi": "IA",
+  "settingsNavGeneral": "General",
+  "settingsNavShopping": "Lista de la compra",
+  "settingsNavAppliance": "Electrodomésticos",
+  "settingsNavData": "Datos",
+  "settingsNavSupport": "Soporte",
+
+  "settingsAiHeading": "IA (reconocimiento y sugerencias de comidas)",
+  "settingsAiVisionYes": "Reconocimiento de imágenes",
+  "settingsAiVisionNo": "Sin reconocimiento de imágenes",
+  "settingsApiKeyHeading": "Clave de API",
+  "settingsApiKeyPlaceholder": "Pega tu clave de API",
+  "settingsApiKeyNote": "Tu clave se guarda de forma segura en este dispositivo.",
+  "settingsApiKeySave": "Guardar",
+  "settingsApiKeyChange": "Cambiar",
+  "settingsApiKeyDelete": "Eliminar",
+  "settingsApiKeyGetLink": "Obtener clave de {provider}",
+  "@settingsApiKeyGetLink": {
+    "placeholders": { "provider": { "type": "String" } }
+  },
+  "settingsApiKeySavedMasked": "Guardada: {masked}",
+  "@settingsApiKeySavedMasked": {
+    "placeholders": { "masked": { "type": "String" } }
+  },
+  "settingsModelHeading": "Modelo",
+  "settingsModelFetch": "Obtener modelos",
+  "settingsModelFetching": "Obteniendo…",
+  "settingsModelNeedKey": "Guarda primero una clave de API para obtener modelos.",
+  "settingsModelCurrent": "En uso: {model}",
+  "@settingsModelCurrent": {
+    "placeholders": { "model": { "type": "String" } }
+  },
+  "settingsModelDefault": "Predeterminado (automático)",
+  "settingsNetworkError": "Muévete a una zona con buena señal o conéctate a Wi-Fi.",
+
+  "settingsGeneralHeading": "General",
+
+  "settingsShoppingHeading": "Lista de la compra",
+  "settingsShoppingLinkedApp": "App vinculada",
+  "settingsShoppingReminders": "Recordatorios (macOS)",
+  "settingsShoppingLists": "Lista de destino",
+  "settingsShoppingLoad": "Cargar listas",
+  "settingsShoppingLoading": "Cargando…",
+  "settingsShoppingCurrent": "Actual: {name}",
+  "@settingsShoppingCurrent": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "settingsShoppingNone": "Sin seleccionar",
+  "settingsShoppingNewName": "Nombre de la nueva lista",
+  "settingsShoppingCreate": "Crear",
+  "settingsShoppingLoadError": "No se pudieron cargar las listas. Comprueba que el acceso a Recordatorios esté permitido.",
+
+  "settingsApplianceHeading": "Electrodomésticos",
+  "settingsApplianceHotcook": "Hotcook",
+  "settingsApplianceHealsio": "Healsio",
+  "settingsApplianceNotOwned": "No lo tengo",
+  "settingsApplianceSeries": "Serie",
+  "settingsApplianceCapacity": "Capacidad",
+  "settingsApplianceNote": "Los electrodomésticos registrados reciben recetas prioritarias, con las raciones ajustadas al modelo y la capacidad.",
+
+  "settingsDataHeading": "Sincronización de datos",
+  "settingsDataICloud": "Sincronización con iCloud",
+  "settingsDataComingSoon": "La sincronización llegará pronto.",
+
+  "settingsDataLastBackup": "Última copia: {date}",
+  "@settingsDataLastBackup": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "settingsDataNeverBackedUp": "Aún no hay copia",
+  "settingsDataBackupButton": "Hacer copia ahora",
+  "settingsDataRestoreButton": "Restaurar desde copia",
+  "settingsDataBackupSuccess": "Copia guardada.",
+  "settingsDataRestoreConfirmTitle": "¿Restaurar la copia?",
+  "settingsDataRestoreConfirmBody": "El inventario actual ({count} artículos) y los ajustes se reemplazarán por el contenido del archivo de copia. Esto no se puede deshacer.",
+  "@settingsDataRestoreConfirmBody": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "settingsDataRestoreConfirmOk": "Restaurar",
+  "settingsDataSyncEnabledLabel": "Copia automática en iCloud",
+  "settingsDataSyncEnabledDesc": "Hace una copia automáticamente cuando cambian el inventario o los ajustes",
+  "settingsDataSyncKeepOnFailureLabel": "Seguir activado si falla la copia",
+  "settingsDataSyncKeepOnFailureDesc": "Mantiene la copia automática activada aunque la primera copia falle (p. ej. sin sesión en iCloud). Desactívalo para revertir el interruptor si falla.",
+  "settingsDataCameraPreserveLabel": "Conservar progreso de la cámara",
+  "settingsDataCameraPreserveDesc": "Conserva las fotos y los candidatos editados al salir y volver a la pantalla de la cámara. Desactívalo para empezar de cero cada vez.",
+  "settingsDataRestoreConfirmDate": "Fecha de la copia: {date}",
+  "@settingsDataRestoreConfirmDate": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "settingsDataRestoreConfirmCount": "Artículos en la copia: {count}",
+  "@settingsDataRestoreConfirmCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "settingsDataRestoreConfirmWarning": "Esto reemplazará tus datos actuales. No se puede deshacer.",
+  "settingsDataICloudNotAvailable": "iCloud no está disponible. Inicia sesión en iCloud en Ajustes del Sistema.",
+  "settingsDataRestoreSuccess": "Datos restaurados.",
+  "settingsDataRestoreFormatError": "Archivo de copia no válido. Usa una copia creada por Tsukaikiri.",
+  "settingsDataRestoreNewerVersionError": "Esta copia se creó con una versión más reciente de Tsukaikiri. Actualiza primero la app.",
+  "settingsDataNoBackupFound": "No se encontró ninguna copia en iCloud.",
+  "settingsDataSyncFailed": "Algo salió mal: {detail}",
+  "@settingsDataSyncFailed": {
+    "placeholders": { "detail": { "type": "String" } }
+  },
+
+  "settingsSupportHeading": "Soporte",
+  "settingsSupportAuthor": "Apoyar al autor",
+  "settingsSupportComingSoon": "(próximamente)",
+  "settingsSupportHelp": "Ayuda",
+  "settingsSupportAbout": "Acerca de",
+  "settingsAboutVersion": "Versión {version}",
+  "@settingsAboutVersion": {
+    "placeholders": { "version": { "type": "String" } }
+  },
+  "settingsAboutClose": "Cerrar",
+
+  "mealsConditionsLabel": "Condiciones",
+  "mealsCondAuto": "Cualquiera",
+  "mealsCondMainOnly": "Solo plato principal",
+  "mealsCondOneMore": "Un plato más",
+  "mealsCondQuick": "Rápido",
+  "mealsSuggestButton": "Sugerir según el inventario",
+  "mealsSuggestShortcut": "⌘R",
+  "mealsBeforeBody": "Haz clic en «Sugerir según el inventario»",
+  "mealsGenerating": "Generando recetas…",
+  "mealsLowStockBanner": "Hay poco inventario, así que las sugerencias incluyen recetas que requieren compras.",
+  "mealsFocusBanner": "Sugiriendo a partir de «{name}»",
+  "@mealsFocusBanner": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "mealsErrorNetwork": "No se pudieron obtener sugerencias. Muévete a un lugar con mejor señal o conéctate a Wi-Fi y reinténtalo.",
+  "mealsErrorNoApiKey": "No hay ninguna clave de API de IA registrada. Añade una clave de API en Ajustes.",
+  "mealsRetry": "Reintentar",
+  "mealsOpenSettings": "Abrir Ajustes",
+  "mealsBadgeUseNear": "Usar pronto",
+  "mealsApplianceHotcook": "🍲 Hotcook",
+  "mealsApplianceHealsio": "♨️ Healsio",
+  "mealsApplianceNormal": "🔥 Fogón",
+  "mealsCookMinutes": "⏱ {minutes} min",
+  "@mealsCookMinutes": {
+    "placeholders": { "minutes": { "type": "int" } }
+  },
+  "mealsDetailEmpty": "Selecciona una receta",
+  "mealsCookTime": "Tiempo de cocción {minutes} min",
+  "@mealsCookTime": {
+    "placeholders": { "minutes": { "type": "int" } }
+  },
+  "mealsToShopping": "Añadir a la lista de la compra",
+  "mealsDecide": "Elegir esta receta",
+  "mealsDecided": "Elegida",
+  "mealsIngredientsHeading": "Ingredientes",
+  "mealsStepsHeading": "Pasos",
+  "mealsTitle": "Ideas de comidas",
+  "mealsSubtitle": "Planificaremos comidas para aprovechar lo que tienes.",
+  "mealsConditionsPrompt": "¿Qué tipo de comida?",
+  "mealsGeneratingTitle": "Planificando tus comidas",
+  "mealsCancel": "Cancelar",
+  "mealsResultCount": "{count} ideas a partir de tu inventario",
+  "@mealsResultCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "mealsResultBanner": "Hemos elegido recetas que aprovechan los ingredientes que caducan pronto.",
+  "mealsToShoppingCount": "Añadir a la lista de la compra ({count})",
+  "@mealsToShoppingCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "mealsShortageCount": "Comprar {count}",
+  "@mealsShortageCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "mealsIngInStock": "En stock",
+  "mealsIngToBuy": "Comprar",
+  "mealsErrorTitle": "No se pudieron obtener sugerencias",
+  "mealsErrorNoApiKeyTitle": "No hay clave de API registrada",
+  "mealsBackToInventory": "Volver al inventario",
+
+  "shoppingMissingCount": "Artículos que faltan ({n})",
+  "@shoppingMissingCount": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "shoppingSelectAll": "Seleccionar todo",
+  "shoppingDeselectAll": "Deseleccionar todo",
+  "shoppingForLabel": "para {meal}",
+  "@shoppingForLabel": {
+    "placeholders": { "meal": { "type": "String" } }
+  },
+  "shoppingRightPanelTitle": "Lista de destino",
+  "shoppingAppLabel": "App",
+  "shoppingRemindersApp": "Recordatorios (macOS)",
+  "shoppingLoadLists": "Cargar listas",
+  "shoppingLoadingLists": "Cargando…",
+  "shoppingNewListName": "Nombre de la nueva lista",
+  "shoppingCreateList": "Crear",
+  "shoppingAddButton": "Añadir a «{list}» ({n} artículos)",
+  "@shoppingAddButton": {
+    "placeholders": {
+      "list": { "type": "String" },
+      "n": { "type": "int" }
+    }
+  },
+  "shoppingAddButtonNoList": "Selecciona primero una lista",
+  "shoppingDoneTitle": "{n} artículos añadidos",
+  "@shoppingDoneTitle": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "shoppingDoneBody": "Encuéntralos en Recordatorios: «{list}»",
+  "@shoppingDoneBody": {
+    "placeholders": { "list": { "type": "String" } }
+  },
+  "shoppingOpenReminders": "Abrir Recordatorios",
+  "shoppingBackToInventory": "Volver al inventario",
+  "shoppingEmptyTitle": "No faltan ingredientes",
+  "shoppingEmptyBody": "Decide tus comidas para ver qué necesitas comprar.",
+  "shoppingGoToMeals": "Ir al planificador de comidas",
+  "shoppingErrorTitle": "No se pudo añadir a la lista",
+  "shoppingErrorNetwork": "Muévete a una zona con buena señal o conéctate a Wi-Fi. Comprueba también que el acceso a Recordatorios esté permitido.",
+  "shoppingRetry": "Reintentar",
+  "shoppingListLoadError": "No se pudieron cargar las listas. Comprueba que el acceso a Recordatorios esté permitido.",
+  "shoppingQtyUnit": "{qty} uds",
+  "@shoppingQtyUnit": {
+    "placeholders": { "qty": { "type": "int" } }
+  },
+  "shoppingMobileTitle": "Lista de la compra",
+  "shoppingMobileSubtitle": "Ingredientes que faltan para tus comidas",
+  "shoppingMobileSummary": "{total} faltan · añadiendo {chosen}",
+  "@shoppingMobileSummary": {
+    "placeholders": {
+      "total": { "type": "int" },
+      "chosen": { "type": "int" }
+    }
+  },
+  "shoppingDest": "Añadir a",
+  "shoppingChange": "Cambiar",
+  "shoppingAdding": "Añadiendo a Recordatorios…",
+  "shoppingAddingDetail": "Enviando {count} artículos a «{list}»",
+  "@shoppingAddingDetail": {
+    "placeholders": {
+      "list": { "type": "String" },
+      "count": { "type": "int" }
+    }
+  },
+  "shoppingErrorRetainNotice": "Tu selección se ha conservado",
+  "shoppingTryAgain": "Reintentar",
+  "shoppingBack": "Atrás",
+
+  "cameraTitle": "Registro con cámara",
+  "cameraDropZoneTitle": "Suelta fotos o haz clic para seleccionar",
+  "cameraDropZoneBody": "Añade hasta 10 fotos de tu nevera",
+  "cameraAnalyzeButton": "Analizar {n} foto(s) ⌘R",
+  "@cameraAnalyzeButton": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "cameraMaxPhotosHint": "Puedes añadir hasta 10 fotos. Las fotos de más se omitieron.",
+  "cameraAnalyzingTitle": "La IA está analizando tus fotos…",
+  "cameraAnalyzingBody": "Reconociendo ingredientes. Espera un momento.",
+  "cameraReviewHeader": "Ingredientes detectados ({n} artículos)",
+  "@cameraReviewHeader": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "cameraConfHighLabel": "Alta",
+  "cameraConfMidLabel": "Media",
+  "cameraConfLowLabel": "Baja",
+  "cameraConfirmButton": "Añadir seleccionados ({n} artículos)",
+  "@cameraConfirmButton": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "cameraEditNameLabel": "Nombre",
+  "cameraEditQtyLabel": "Cantidad",
+  "cameraEditUnitLabel": "Unidad",
+  "cameraEditCategoryLabel": "Categoría",
+  "cameraErrorNetworkTitle": "No se pudieron analizar las fotos",
+  "cameraErrorNetworkBody": "Muévete a una zona con mejor señal o conéctate a Wi-Fi.",
+  "cameraErrorNoApiKeyTitle": "No hay clave de API registrada",
+  "cameraErrorNoApiKeyBody": "Ve a Ajustes y añade una clave de API para activar el reconocimiento por IA.",
+  "cameraErrorNoVisionTitle": "Este proveedor no admite el reconocimiento de imágenes",
+  "cameraErrorNoVisionBody": "Cambia a un proveedor con reconocimiento de imágenes en Ajustes.",
+  "cameraErrorRetry": "Reintentar",
+  "cameraErrorOpenSettings": "Abrir Ajustes",
+  "cameraAddedToast": "Se añadieron {n} artículos al inventario",
+  "@cameraAddedToast": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "cameraMobileCaptureTitle": "Fotografía tu nevera",
+  "cameraMobileAddPhotos": "Añadir fotos",
+  "cameraMobilePhotoCount": "{n} / 10",
+  "@cameraMobilePhotoCount": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "cameraMobileAnalyzeButton": "Analizar {n} foto(s)",
+  "@cameraMobileAnalyzeButton": {
+    "placeholders": { "n": { "type": "int" } }
+  },
+  "cameraMobileReviewTitle": "Ingredientes detectados",
+  "cameraMobileReviewSummary": "{total} candidatos · {chosen} seleccionados",
+  "@cameraMobileReviewSummary": {
+    "placeholders": { "total": { "type": "int" }, "chosen": { "type": "int" } }
+  },
+  "cameraMobileReviewHint": "Selecciona los artículos que quieres conservar y ajusta el nombre, la cantidad o la categoría según necesites",
+  "cameraMobileReviewFootnote": "La IA leyó estos candidatos automáticamente. Puedes revisarlos antes de añadirlos.",
+  "cameraMobileErrorLater": "Analizar más tarde",
+
+  "onboardingRailTitle": "Asistente de configuración",
+  "onboardingStep0": "Bienvenida",
+  "onboardingStep1": "Elegir IA",
+  "onboardingStep2": "Recordatorios",
+  "onboardingStep3": "Elegir lista",
+  "onboardingStep4": "Electrodomésticos",
+  "onboardingStep5": "Listo",
+
+  "onboardingWelcomeTitle": "Te damos la bienvenida a Tsukaikiri",
+  "onboardingWelcomeSub": "Registra los ingredientes de tu nevera y recibe sugerencias de comidas para aprovecharlos.\nEmpecemos con una configuración rápida.",
+  "onboardingWelcomeFeature1Title": "Registra con una foto",
+  "onboardingWelcomeFeature1Body": "Añade ingredientes en lote con tu cámara",
+  "onboardingWelcomeFeature2Title": "Comidas para aprovechar",
+  "onboardingWelcomeFeature2Body": "Prioriza los ingredientes que caducan antes",
+  "onboardingWelcomeFeature3Title": "Lista de la compra",
+  "onboardingWelcomeFeature3Body": "Añade automáticamente lo que falta a Recordatorios",
+  "onboardingWelcomeStart": "Empezar",
+
+  "onboardingAiTitle": "Elige un proveedor de IA",
+  "onboardingAiSub": "Selecciona la IA que se usará para reconocer ingredientes y sugerir comidas.\nTu clave de API se guarda de forma segura en este Mac.",
+  "onboardingAiSkip": "Configurar más tarde",
+  "onboardingAiKeyLabel": "Clave de API",
+  "onboardingAiGetKeyLink": "Obtener clave de API de {provider}",
+  "@onboardingAiGetKeyLink": {
+    "placeholders": { "provider": { "type": "String" } }
+  },
+  "onboardingAiSelected": "Seleccionado",
+
+  "onboardingLinkTitle": "Conectar Recordatorios",
+  "onboardingLinkSub": "Los ingredientes que falten se añadirán automáticamente a Recordatorios de macOS.",
+  "onboardingLinkSkip": "Más tarde",
+  "onboardingLinkApp": "App",
+  "onboardingLinkAppValue": "Recordatorios (macOS)",
+  "onboardingLinkAction": "Puede hacer",
+  "onboardingLinkActionValue": "Añadir artículos a una lista de la compra",
+  "onboardingLinkPrivacy": "Privacidad",
+  "onboardingLinkPrivacyValue": "Las fotos se procesan solo en este Mac",
+  "onboardingLinkButton": "Permitir acceso a Recordatorios",
+  "onboardingLinkDone": "Conectado a Recordatorios",
+  "onboardingLinkError": "No se pudo acceder a Recordatorios. Puedes configurarlo más tarde en Ajustes.",
+
+  "onboardingListTitle": "Elige una lista de destino",
+  "onboardingListSub": "Selecciona la lista de Recordatorios donde se añadirán los artículos de la compra.",
+  "onboardingListSkip": "Más tarde",
+  "onboardingListNewName": "Nombre de la nueva lista…",
+  "onboardingListCreate": "Crear",
+  "onboardingListLoading": "Cargando…",
+
+  "onboardingApplianceTitle": "Registra tus electrodomésticos",
+  "onboardingApplianceSub": "Selecciona los electrodomésticos que tienes para recetas personalizadas.",
+  "onboardingApplianceSkip": "No tengo ninguno",
+  "onboardingApplianceSeries": "Serie",
+
+  "onboardingFinishTitle": "¡Todo listo!",
+  "onboardingFinishSub": "Registra los ingredientes de tu nevera y empieza a recibir sugerencias de comidas para aprovecharlos.",
+  "onboardingFinishAiLabel": "IA",
+  "onboardingFinishListLabel": "Lista de Recordatorios",
+  "onboardingFinishApplianceLabel": "Electrodomésticos",
+  "onboardingFinishNotSet": "Sin configurar",
+  "onboardingFinishSettingsNote": "Puedes cambiar estos ajustes en cualquier momento en la pantalla de Ajustes.",
+  "onboardingFinishStart": "Registrar ingredientes y empezar",
+
+  "onboardingBack": "Atrás",
+  "onboardingNext": "Siguiente",
+
+  "helpTitle": "Ayuda / Acerca de",
+  "helpAppTagline": "Una app que te ayuda a aprovechar los ingredientes de la nevera sugiriéndote comidas para gastarlos.",
+  "helpGuideEyebrow": "GUÍA",
+  "helpGuideTitle": "Cómo usarla",
+  "helpStep1Title": "Registra ingredientes",
+  "helpStep1Body": "Haz una foto de tu nevera y la IA reconocerá los ingredientes para añadirlos a tu inventario. También puedes añadirlos manualmente.",
+  "helpStep2Title": "Revisa el inventario y la caducidad",
+  "helpStep2Body": "Los ingredientes se ordenan por fecha de caducidad. Los que caducan pronto se muestran en naranja; los vencidos en rojo.",
+  "helpStep3Title": "Recibe sugerencias de comidas",
+  "helpStep3Body": "Recibe ideas de comidas para aprovechar tu inventario actual. Se incluyen recetas adaptadas a tus electrodomésticos.",
+  "helpStep4Title": "Añade lo que falta a la lista de la compra",
+  "helpStep4Body": "Los ingredientes que necesitas para las comidas elegidas se añaden en lote a tu lista de la compra de Recordatorios.",
+  "helpDataEyebrow": "DATOS",
+  "helpDataTitle": "Sobre los datos de caducidad",
+  "helpDataP1": "Las pautas de caducidad de esta app se basan en el conjunto de datos FoodKeeper publicado por el Servicio de Inocuidad e Inspección de los Alimentos (FSIS) del USDA. FoodKeeper es un conjunto de datos oficial que resume los periodos de conservación recomendados para diversos alimentos.",
+  "helpDataP2": "Los alimentos no incluidos en FoodKeeper —como los ingredientes propios de Japón— se complementan con pautas de conservación investigadas de forma independiente.",
+  "helpDataCalloutTitle": "Las fechas mostradas son solo estimaciones",
+  "helpDataCalloutBody": "La duración real varía según las condiciones de conservación, si el envase se ha abierto y la estación del año. Comprueba siempre el estado de los alimentos por ti mismo.",
+  "helpSourceTitle": "Fuentes y referencias",
+  "helpSourceFoodkeeperTitle": "FoodKeeper",
+  "helpSourceFoodkeeperDesc": "Pautas de conservación de alimentos de USDA / FSIS",
+  "helpSourceDatagovTitle": "Data.gov (datos de FoodKeeper)",
+  "helpSourceDatagovDesc": "Catálogo de datos abiertos del Gobierno de EE. UU.",
+  "helpEditCalloutTitle": "Puedes editar las fechas de caducidad en cualquier momento",
+  "helpEditCalloutBody": "Abre la vista de detalle de cualquier ingrediente para actualizar su fecha de caducidad. Sobrescríbela con la fecha del envase o tu propio criterio.",
+  "helpLegalTitle": "Aviso legal y privacidad",
+  "helpLegalTerms": "Condiciones de uso",
+  "helpLegalPrivacy": "Política de privacidad",
+  "helpLegalFaq": "Preguntas frecuentes y soporte",
+  "helpFooter": "Datos de FoodKeeper © USDA / FSIS (Dominio público)\n© 2026 Tsukaikiri"
+}

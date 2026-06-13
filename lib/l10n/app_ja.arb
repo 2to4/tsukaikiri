@@ -97,6 +97,7 @@
   "languageSystem": "システムに従う",
   "languageJa": "日本語",
   "languageEn": "English",
+  "languageEs": "Español",
   "languageHint": "「システムに従う」を選ぶと、端末の言語設定に合わせて表示します。",
 
   "settingsSectionGeneral": "一般",
@@ -257,6 +258,10 @@
   "settingsDataRestoreConfirmOk": "復元する",
   "settingsDataSyncEnabledLabel": "iCloud 自動バックアップ",
   "settingsDataSyncEnabledDesc": "在庫・設定の変更時に自動でバックアップ",
+  "settingsDataSyncKeepOnFailureLabel": "失敗してもオンのまま",
+  "settingsDataSyncKeepOnFailureDesc": "最初のバックアップが失敗（iCloud 未サインインなど）しても自動バックアップをオンのまま維持します。オフにすると失敗時にスイッチを元に戻します。",
+  "settingsDataCameraPreserveLabel": "カメラの途中状態を保持",
+  "settingsDataCameraPreserveDesc": "カメラ登録画面から戻って再び開いたとき、撮影済みの写真や編集中の候補を保持します。オフにすると毎回最初からになります。",
   "settingsDataRestoreConfirmDate": "バックアップ日時: {date}",
   "@settingsDataRestoreConfirmDate": {
     "placeholders": { "date": { "type": "String" } }
@@ -294,6 +299,10 @@
   "mealsBeforeBody": "「在庫から提案する」をクリックしてください",
   "mealsGenerating": "献立を生成中…",
   "mealsLowStockBanner": "在庫が少ないため、買い足し前提の献立も含めて提案しています。",
+  "mealsFocusBanner": "「{name}」から提案中",
+  "@mealsFocusBanner": {
+    "placeholders": { "name": { "type": "String" } }
+  },
   "mealsErrorNetwork": "提案を取得できませんでした。電波の良い場所か Wi-Fi に接続して再試行してください。",
   "mealsErrorNoApiKey": "AI の API キーが未登録です。設定で API キーを登録してください。",
   "mealsRetry": "再試行",

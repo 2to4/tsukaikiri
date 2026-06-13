@@ -1492,6 +1492,13 @@ class _DataSectionState extends ConsumerState<_DataSection> {
       // setSyncEnabled の指紋変化で autoBackupWatcher が予約した
       // デバウンスバックアップは、直前の backup() と重複するため取り消す。
       ref.read(backupSchedulerProvider).cancel();
+      // 即時バックアップが失敗し、かつ「失敗時はオフに戻す」設定なら
+      // トグルを OFF に巻き戻す（ON のままだと誤解を招くため）。
+      final settings = await ref.read(settingsRepositoryProvider).get();
+      if (!settings.syncKeepOnFailure &&
+          ref.read(syncControllerProvider) is SyncError) {
+        await ref.read(settingsRepositoryProvider).setSyncEnabled(false);
+      }
     }
   }
 
@@ -1560,6 +1567,14 @@ class _DataSectionState extends ConsumerState<_DataSection> {
     final syncEnabled = settingsAsync.maybeWhen(
       data: (s) => s.syncEnabled,
       orElse: () => false,
+    );
+    final cameraPreserve = settingsAsync.maybeWhen(
+      data: (s) => s.cameraPreserveState,
+      orElse: () => true,
+    );
+    final syncKeepOnFailure = settingsAsync.maybeWhen(
+      data: (s) => s.syncKeepOnFailure,
+      orElse: () => true,
     );
 
     // SyncSuccess / SyncError を SnackBar で通知（文言は種別→l10n で解決）
@@ -1683,6 +1698,80 @@ class _DataSectionState extends ConsumerState<_DataSection> {
               child: CircularProgressIndicator(strokeWidth: 2),
             ),
           ),
+        const SizedBox(height: 12),
+
+        // 同期失敗時にトグルを ON のまま維持するか
+        _Card(
+          child: _ToggleRow(
+            title: l10n.settingsDataSyncKeepOnFailureLabel,
+            desc: l10n.settingsDataSyncKeepOnFailureDesc,
+            on: syncKeepOnFailure,
+            onTap: () => ref
+                .read(settingsRepositoryProvider)
+                .setSyncKeepOnFailure(!syncKeepOnFailure),
+          ),
+        ),
+        const SizedBox(height: 12),
+
+        // カメラ登録の途中状態を保持するか
+        _Card(
+          child: _ToggleRow(
+            title: l10n.settingsDataCameraPreserveLabel,
+            desc: l10n.settingsDataCameraPreserveDesc,
+            on: cameraPreserve,
+            onTap: () => ref
+                .read(settingsRepositoryProvider)
+                .setCameraPreserveState(!cameraPreserve),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// タイトル＋説明＋ピルトグルの行（データセクションの設定トグル用）。
+class _ToggleRow extends StatelessWidget {
+  const _ToggleRow({
+    required this.title,
+    required this.desc,
+    required this.on,
+    required this.onTap,
+  });
+
+  final String title;
+  final String desc;
+  final bool on;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.ink,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                desc,
+                style: const TextStyle(
+                  fontSize: 11.5,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.faint,
+                ),
+              ),
+            ],
+          ),
+        ),
+        _PillToggle(on: on, onTap: onTap),
       ],
     );
   }

@@ -29,6 +29,13 @@ class _DataSettingsScreenState extends ConsumerState<DataSettingsScreen> {
       // setSyncEnabled の指紋変化で autoBackupWatcher が予約した
       // デバウンスバックアップは、直前の backup() と重複するため取り消す。
       ref.read(backupSchedulerProvider).cancel();
+      // 即時バックアップが失敗し、かつ「失敗時はオフに戻す」設定なら
+      // トグルを OFF に巻き戻す（ON のままだと誤解を招くため）。
+      final settings = await ref.read(settingsRepositoryProvider).get();
+      if (!settings.syncKeepOnFailure &&
+          ref.read(syncControllerProvider) is SyncError) {
+        await ref.read(settingsRepositoryProvider).setSyncEnabled(false);
+      }
     }
   }
 
@@ -86,6 +93,8 @@ class _DataSettingsScreenState extends ConsumerState<DataSettingsScreen> {
     final isLoading = syncState is SyncLoading;
     final settings = ref.watch(userSettingsProvider).value;
     final syncEnabled = settings?.syncEnabled ?? false;
+    final cameraPreserve = settings?.cameraPreserveState ?? true;
+    final syncKeepOnFailure = settings?.syncKeepOnFailure ?? true;
     // 最終バックアップ日時は設定 stream から導出する（手動 State を持たない）。
     final lastSyncedAt = settings?.lastSyncedAt;
 
@@ -161,6 +170,34 @@ class _DataSettingsScreenState extends ConsumerState<DataSettingsScreen> {
                         label: l10n.settingsDataRestoreButton,
                         last: true,
                         onTap: isLoading ? null : _onRestoreTap,
+                      ),
+                    ],
+                  ),
+                  // 詳細トグル: 同期失敗時の挙動・カメラ途中状態保持
+                  SettingsSection(
+                    children: [
+                      SettingsRow(
+                        icon: Icons.sync_problem_outlined,
+                        label: l10n.settingsDataSyncKeepOnFailureLabel,
+                        trailing: Switch(
+                          value: syncKeepOnFailure,
+                          activeTrackColor: AppColors.green,
+                          onChanged: (v) => ref
+                              .read(settingsRepositoryProvider)
+                              .setSyncKeepOnFailure(v),
+                        ),
+                      ),
+                      SettingsRow(
+                        icon: Icons.photo_camera_outlined,
+                        label: l10n.settingsDataCameraPreserveLabel,
+                        last: true,
+                        trailing: Switch(
+                          value: cameraPreserve,
+                          activeTrackColor: AppColors.green,
+                          onChanged: (v) => ref
+                              .read(settingsRepositoryProvider)
+                              .setCameraPreserveState(v),
+                        ),
                       ),
                     ],
                   ),

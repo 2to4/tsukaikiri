@@ -7,6 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tsukaikiri/features/help/presentation/help_desktop_view.dart';
+import 'package:tsukaikiri/features/help/presentation/help_mobile_view.dart';
 import 'package:tsukaikiri/l10n/app_localizations.dart';
 
 // ──────────────────────────────────────────────────────────────
@@ -126,6 +127,59 @@ void main() {
     expect(find.text('利用規約'), findsOneWidget);
     expect(find.text('プライバシーポリシー'), findsOneWidget);
     expect(find.text('よくある質問・お問い合わせ'), findsOneWidget);
+
+    await unmountApp(tester);
+  });
+
+  // ═══════════════════════════════════════════════════════
+  // モバイル Help スモーク（narrow 幅で開けること）
+  // ═══════════════════════════════════════════════════════
+  testWidgets('モバイル HelpMobileView が narrow 幅で主要見出しを表示', (tester) async {
+    tester.view.physicalSize = const Size(400, 800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        locale: Locale('ja'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(body: HelpMobileView()),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+
+    // 共有コンテンツの主要見出し
+    expect(find.text('かんたんな使い方'), findsOneWidget);
+    expect(find.text('賞味期限データについて'), findsOneWidget);
+
+    await unmountApp(tester);
+  });
+
+  // モバイル Help 追加: STEP・コールアウト・出典・legal 行
+  testWidgets('モバイル HelpMobileView が STEP・目安コールアウト・出典・規約行を表示', (tester) async {
+    tester.view.physicalSize = const Size(400, 800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        locale: Locale('ja'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(body: HelpMobileView()),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+
+    expect(find.text('STEP 1'), findsOneWidget);
+    expect(find.text('表示される期限はあくまで目安です'), findsOneWidget);
+    expect(find.text('FoodKeeper'), findsOneWidget);
+    expect(find.text('利用規約'), findsOneWidget);
 
     await unmountApp(tester);
   });

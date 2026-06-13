@@ -7,6 +7,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/quantity_format.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../recipe/presentation/meal_suggestion_controller.dart';
 import '../../shell/presentation/shell_providers.dart';
 import '../domain/category_style.dart';
 import '../domain/ingredient_category.dart';
@@ -190,7 +191,12 @@ class _InventoryDesktopViewState extends ConsumerState<InventoryDesktopView> {
               onDelete: (ing) => _removeIngredient(
                   ing, AppLocalizations.of(context).toastDeleted),
               onSuggestMeals: () {
-                // TODO(M4): 選択食材をコンテキストとして献立提案に渡す
+                // 選択食材を起点に meals へ（focus 設定 + セクション切替）
+                if (selectedItem != null) {
+                  ref
+                      .read(mealSuggestionControllerProvider.notifier)
+                      .suggestFromIngredient(selectedItem);
+                }
                 ref
                     .read(shellSectionProvider.notifier)
                     .select(ShellSection.meals);

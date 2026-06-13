@@ -32,19 +32,33 @@ class MealsMobileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final st = ref.watch(mealSuggestionControllerProvider);
+    final focus = st.focusIngredient;
 
     return Scaffold(
       backgroundColor: AppColors.bg,
       body: SafeArea(
-        child: switch (st.status) {
-          MealSuggestionStatus.before => _BeforeView(state: st),
-          MealSuggestionStatus.generating => const _GeneratingView(),
-          MealSuggestionStatus.error =>
-            _ErrorView(error: st.error ?? MealSuggestionError.network),
-          MealSuggestionStatus.results ||
-          MealSuggestionStatus.lowStock =>
-            _ResultsView(state: st),
-        },
+        child: Column(
+          children: [
+            if (focus != null)
+              _MobileFocusBanner(
+                ingredient: focus,
+                onClear: () => ref
+                    .read(mealSuggestionControllerProvider.notifier)
+                    .clearFocusIngredient(),
+              ),
+            Expanded(
+              child: switch (st.status) {
+                MealSuggestionStatus.before => _BeforeView(state: st),
+                MealSuggestionStatus.generating => const _GeneratingView(),
+                MealSuggestionStatus.error =>
+                  _ErrorView(error: st.error ?? MealSuggestionError.network),
+                MealSuggestionStatus.results ||
+                MealSuggestionStatus.lowStock =>
+                  _ResultsView(state: st),
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -930,6 +944,46 @@ class _SecondaryButton extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   color: AppColors.ink)),
         ),
+      ),
+    );
+  }
+}
+
+/// モバイル用 起点食材バナー（「レシピを見る」から来た場合）。
+class _MobileFocusBanner extends StatelessWidget {
+  const _MobileFocusBanner({
+    required this.ingredient,
+    required this.onClear,
+  });
+
+  final Ingredient ingredient;
+  final VoidCallback onClear;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: AppColors.greenSoft,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.eco_outlined, size: 18, color: AppColors.greenInk),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              l10n.mealsFocusBanner(ingredient.name),
+              style: const TextStyle(fontSize: 13, color: AppColors.greenInk),
+            ),
+          ),
+          GestureDetector(
+            onTap: onClear,
+            child: const Icon(Icons.close, size: 18, color: AppColors.greenInk),
+          ),
+        ],
       ),
     );
   }

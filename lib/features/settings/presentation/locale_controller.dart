@@ -26,12 +26,14 @@ class LocaleController extends Notifier<Locale?> {
   String get currentPref => switch (state) {
         Locale(languageCode: 'ja') => 'ja',
         Locale(languageCode: 'en') => 'en',
+        Locale(languageCode: 'es') => 'es',
         _ => 'system',
       };
 
   Locale? _toLocale(String pref) => switch (pref) {
         'ja' => const Locale('ja'),
         'en' => const Locale('en'),
+        'es' => const Locale('es'),
         _ => null,
       };
 }

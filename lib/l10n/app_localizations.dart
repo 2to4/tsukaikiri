@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
 import 'app_localizations_ja.dart';
 
 // ignore_for_file: type=lint
@@ -95,6 +96,7 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
+    Locale('es'),
     Locale('ja'),
   ];
 
@@ -565,6 +567,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'English'**
   String get languageEn;
+
+  /// No description provided for @languageEs.
+  ///
+  /// In en, this message translates to:
+  /// **'Español'**
+  String get languageEs;
 
   /// No description provided for @languageHint.
   ///
@@ -1232,6 +1240,30 @@ abstract class AppLocalizations {
   /// **'Automatically backs up when inventory or settings change'**
   String get settingsDataSyncEnabledDesc;
 
+  /// No description provided for @settingsDataSyncKeepOnFailureLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay on when backup fails'**
+  String get settingsDataSyncKeepOnFailureLabel;
+
+  /// No description provided for @settingsDataSyncKeepOnFailureDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep auto backup on even if the first backup fails (e.g. not signed in to iCloud). Turn off to revert the switch on failure.'**
+  String get settingsDataSyncKeepOnFailureDesc;
+
+  /// No description provided for @settingsDataCameraPreserveLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep camera progress'**
+  String get settingsDataCameraPreserveLabel;
+
+  /// No description provided for @settingsDataCameraPreserveDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep photos and edited candidates when you leave and return to the camera screen. Turn off to start fresh each time.'**
+  String get settingsDataCameraPreserveDesc;
+
   /// No description provided for @settingsDataRestoreConfirmDate.
   ///
   /// In en, this message translates to:
@@ -1381,6 +1413,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Inventory is low, so suggestions include recipes that need shopping.'**
   String get mealsLowStockBanner;
+
+  /// No description provided for @mealsFocusBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggesting from \"{name}\"'**
+  String mealsFocusBanner(String name);
 
   /// No description provided for @mealsErrorNetwork.
   ///
@@ -2492,7 +2530,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en', 'ja'].contains(locale.languageCode);
+      <String>['en', 'es', 'ja'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -2503,6 +2541,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'en':
       return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
     case 'ja':
       return AppLocalizationsJa();
   }

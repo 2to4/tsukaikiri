@@ -11,6 +11,8 @@ class UserSettings {
     this.syncEnabled = false,
     this.lastSyncedAt,
     this.appliances = const [],
+    this.cameraPreserveState = true,
+    this.syncKeepOnFailure = true,
   });
 
   /// 'ja' / 'en' / 'system'
@@ -33,6 +35,13 @@ class UserSettings {
   final DateTime? lastSyncedAt;
   final List<Appliance> appliances;
 
+  /// カメラ登録画面の途中状態を再入場時に保持するか（デフォルト true = 現行挙動:
+  /// capture/review の途中状態を保持し error のみリセット。false なら毎回リセット）。
+  final bool cameraPreserveState;
+
+  /// 同期トグル ON 直後の自動バックアップ失敗時も ON を維持するか（デフォルト true = 現行）。
+  final bool syncKeepOnFailure;
+
   UserSettings copyWith({
     String? localePref,
     String? shoppingListId,
@@ -42,6 +51,8 @@ class UserSettings {
     bool? syncEnabled,
     DateTime? lastSyncedAt,
     List<Appliance>? appliances,
+    bool? cameraPreserveState,
+    bool? syncKeepOnFailure,
   }) =>
       UserSettings(
         localePref: localePref ?? this.localePref,
@@ -52,5 +63,7 @@ class UserSettings {
         syncEnabled: syncEnabled ?? this.syncEnabled,
         lastSyncedAt: lastSyncedAt ?? this.lastSyncedAt,
         appliances: appliances ?? this.appliances,
+        cameraPreserveState: cameraPreserveState ?? this.cameraPreserveState,
+        syncKeepOnFailure: syncKeepOnFailure ?? this.syncKeepOnFailure,
       );
 }

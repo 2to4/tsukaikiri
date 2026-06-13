@@ -3,11 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/db/app_database.dart';
+import '../../../../core/layout/breakpoints.dart';
 import '../../../../core/providers.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/utils/quantity_format.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../recipe/presentation/meals_mobile_view.dart';
+import '../../../shell/presentation/shell_providers.dart';
+import '../../../recipe/presentation/meal_suggestion_controller.dart';
 import '../../../shopping/domain/shopping_list.dart';
 import '../../domain/category_style.dart';
 import '../../domain/unit_option.dart';
@@ -71,10 +75,6 @@ class IngredientDetailView extends ConsumerWidget {
           ),
         ));
     }
-
-    void toast(String message) => ScaffoldMessenger.of(context)
-      ..clearSnackBars()
-      ..showSnackBar(SnackBar(content: Text(message)));
 
     // この食材1件を設定済みの買い物リストへ追加する。
     // リスト未設定なら設定への誘導、通信失敗ならオフライン文言を出す。
@@ -210,7 +210,23 @@ class IngredientDetailView extends ConsumerWidget {
                   const SizedBox(width: 10),
                   Expanded(
                     child: _secondary(context, Icons.menu_book_outlined,
-                        l10n.detailViewRecipe, () => toast(l10n.comingSoon)),
+                        l10n.detailViewRecipe, () {
+                      ref
+                          .read(mealSuggestionControllerProvider.notifier)
+                          .suggestFromIngredient(ing);
+                      if (MediaQuery.of(context).size.width >=
+                          kDesktopBreakpoint) {
+                        ref
+                            .read(shellSectionProvider.notifier)
+                            .select(ShellSection.meals);
+                      } else {
+                        Navigator.of(context).push(
+                          MaterialPageRoute<void>(
+                            builder: (_) => const MealsMobileScreen(),
+                          ),
+                        );
+                      }
+                    }),
                   ),
                 ],
               ),

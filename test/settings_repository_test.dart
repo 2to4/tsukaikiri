@@ -37,4 +37,24 @@ void main() {
     expect(settings.selectedProvider, 'grok');
     expect(settings.modelOverrides['grok'], 'grok-4.3');
   });
+
+  test('カメラ途中保持・同期失敗時維持の既定は現行挙動（true）', () async {
+    final settings = await repo.get();
+    expect(settings.cameraPreserveState, isTrue);
+    expect(settings.syncKeepOnFailure, isTrue);
+  });
+
+  test('setCameraPreserveState / setSyncKeepOnFailure が往復する', () async {
+    await repo.setCameraPreserveState(false);
+    await repo.setSyncKeepOnFailure(false);
+    var settings = await repo.get();
+    expect(settings.cameraPreserveState, isFalse);
+    expect(settings.syncKeepOnFailure, isFalse);
+
+    await repo.setCameraPreserveState(true);
+    settings = await repo.get();
+    expect(settings.cameraPreserveState, isTrue);
+    // 片方の更新でもう片方が壊れない。
+    expect(settings.syncKeepOnFailure, isFalse);
+  });
 }

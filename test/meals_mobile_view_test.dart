@@ -11,6 +11,7 @@ import 'package:tsukaikiri/core/providers.dart';
 import 'package:tsukaikiri/features/inventory/data/inventory_repository.dart';
 import 'package:tsukaikiri/features/inventory/domain/ingredient_category.dart';
 import 'package:tsukaikiri/features/recipe/domain/suggested_recipe.dart';
+import 'package:tsukaikiri/features/recipe/presentation/meal_suggestion_controller.dart';
 import 'package:tsukaikiri/features/recipe/presentation/meals_mobile_view.dart';
 import 'package:tsukaikiri/features/recipe/service/recipe_provider.dart';
 import 'package:tsukaikiri/l10n/app_localizations.dart';
@@ -200,5 +201,39 @@ void main() {
     expect(fake.suggestCalls.single.allowNewIngredients, isTrue);
 
     await unmountApp(tester);
+  });
+
+  // ═══════════════════════════════════════════════════════
+  // Phase3: focusIngredient サポート（controller API）
+  // ═══════════════════════════════════════════════════════
+  testWidgets('suggestFromIngredient / clearFocusIngredient が正しく動作', (tester) async {
+    // シンプルな ProviderContainer で controller ロジックのみテスト（UI タイミング避け）
+    final container = ProviderContainer(
+      overrides: [
+        databaseProvider.overrideWithValue(db),
+        recipeProviderProvider.overrideWith((ref) async => FakeRecipeProvider(suggestResult: [])),
+      ],
+    );
+    addTearDown(container.dispose);
+
+    final focusIng = Ingredient(
+      id: 'test-ing',
+      name: 'テスト食材',
+      normalizedName: 'test',
+      category: IngredientCategory.vegetable,
+      quantity: 1,
+      unit: '個',
+      updatedAt: DateTime.now(),
+    );
+
+    // テスト専用メソッドで focus 設定（suggest 副作用完全回避）
+    container.read(mealSuggestionControllerProvider.notifier).setFocusIngredientForTest(focusIng);
+    var state = container.read(mealSuggestionControllerProvider);
+    expect(state.focusIngredient?.name, 'テスト食材');
+
+    // クリア
+    container.read(mealSuggestionControllerProvider.notifier).clearFocusIngredient();
+    state = container.read(mealSuggestionControllerProvider);
+    expect(state.focusIngredient, isNull);
   });
 }

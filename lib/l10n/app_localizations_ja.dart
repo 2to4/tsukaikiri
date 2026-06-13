@@ -249,6 +249,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get languageEn => 'English';
 
   @override
+  String get languageEs => 'Español';
+
+  @override
   String get languageHint => '「システムに従う」を選ぶと、端末の言語設定に合わせて表示します。';
 
   @override
@@ -608,6 +611,20 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settingsDataSyncEnabledDesc => '在庫・設定の変更時に自動でバックアップ';
 
   @override
+  String get settingsDataSyncKeepOnFailureLabel => '失敗してもオンのまま';
+
+  @override
+  String get settingsDataSyncKeepOnFailureDesc =>
+      '最初のバックアップが失敗（iCloud 未サインインなど）しても自動バックアップをオンのまま維持します。オフにすると失敗時にスイッチを元に戻します。';
+
+  @override
+  String get settingsDataCameraPreserveLabel => 'カメラの途中状態を保持';
+
+  @override
+  String get settingsDataCameraPreserveDesc =>
+      'カメラ登録画面から戻って再び開いたとき、撮影済みの写真や編集中の候補を保持します。オフにすると毎回最初からになります。';
+
+  @override
   String settingsDataRestoreConfirmDate(String date) {
     return 'バックアップ日時: $date';
   }
@@ -693,6 +710,11 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get mealsLowStockBanner => '在庫が少ないため、買い足し前提の献立も含めて提案しています。';
+
+  @override
+  String mealsFocusBanner(String name) {
+    return '「$name」から提案中';
+  }
 
   @override
   String get mealsErrorNetwork =>

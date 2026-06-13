@@ -11,6 +11,7 @@ import 'package:tsukaikiri/core/providers.dart';
 import 'package:tsukaikiri/features/inventory/data/inventory_repository.dart';
 import 'package:tsukaikiri/features/inventory/domain/ingredient_category.dart';
 import 'package:tsukaikiri/features/recipe/domain/suggested_recipe.dart';
+import 'package:tsukaikiri/features/recipe/presentation/meal_suggestion_controller.dart';
 import 'package:tsukaikiri/features/recipe/presentation/meals_desktop_view.dart';
 import 'package:tsukaikiri/features/recipe/service/recipe_provider.dart';
 import 'package:tsukaikiri/l10n/app_localizations.dart';
@@ -230,6 +231,32 @@ void main() {
     expect(find.textContaining('買い足し前提'), findsOneWidget);
     // 制約に allowNewIngredients が乗っている
     expect(fake.suggestCalls.single.allowNewIngredients, isTrue);
+
+    await unmountApp(tester);
+  });
+
+  // ═══════════════════════════════════════════════════════
+  // Phase3: focusIngredient バナー UI (detail recipe から)
+  // ═══════════════════════════════════════════════════════
+  testWidgets('focus 設定で起点食材バナーが表示されクリア可能 (desktop)', (tester) async {
+    await seedPlenty();
+    final fake = FakeRecipeProvider(suggestResult: [sampleRecipe()]);
+    await pumpView(tester, fake);
+
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(MealsDesktopView)),
+    );
+    final focusIng = (await repo.getInventory()).first;
+    container.read(mealSuggestionControllerProvider.notifier).suggestFromIngredient(focusIng);
+    await tester.pumpAndSettle();
+
+    // バナー ( _FocusIngredientBanner ) テキスト (名前はレシピタイトル等にもあるので banner 形式で特定)
+    expect(find.textContaining('「${focusIng.name}」から提案中'), findsOneWidget);
+
+    // クリアアイコンで消す
+    await tester.tap(find.byIcon(Icons.close));
+    await tester.pump();
+    expect(find.textContaining('から提案中'), findsNothing);
 
     await unmountApp(tester);
   });

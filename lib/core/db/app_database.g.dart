@@ -648,6 +648,35 @@ class $SettingsTableTable extends SettingsTable
     requiredDuringInsert: false,
     defaultValue: const Constant('[]'),
   );
+  static const VerificationMeta _cameraPreserveStateMeta =
+      const VerificationMeta('cameraPreserveState');
+  @override
+  late final GeneratedColumn<bool> cameraPreserveState = GeneratedColumn<bool>(
+    'camera_preserve_state',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("camera_preserve_state" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _syncKeepOnFailureMeta = const VerificationMeta(
+    'syncKeepOnFailure',
+  );
+  @override
+  late final GeneratedColumn<bool> syncKeepOnFailure = GeneratedColumn<bool>(
+    'sync_keep_on_failure',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("sync_keep_on_failure" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -659,6 +688,8 @@ class $SettingsTableTable extends SettingsTable
     syncEnabled,
     lastSyncedAt,
     appliancesJson,
+    cameraPreserveState,
+    syncKeepOnFailure,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -744,6 +775,24 @@ class $SettingsTableTable extends SettingsTable
         ),
       );
     }
+    if (data.containsKey('camera_preserve_state')) {
+      context.handle(
+        _cameraPreserveStateMeta,
+        cameraPreserveState.isAcceptableOrUnknown(
+          data['camera_preserve_state']!,
+          _cameraPreserveStateMeta,
+        ),
+      );
+    }
+    if (data.containsKey('sync_keep_on_failure')) {
+      context.handle(
+        _syncKeepOnFailureMeta,
+        syncKeepOnFailure.isAcceptableOrUnknown(
+          data['sync_keep_on_failure']!,
+          _syncKeepOnFailureMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -789,6 +838,14 @@ class $SettingsTableTable extends SettingsTable
         DriftSqlType.string,
         data['${effectivePrefix}appliances_json'],
       )!,
+      cameraPreserveState: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}camera_preserve_state'],
+      )!,
+      syncKeepOnFailure: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}sync_keep_on_failure'],
+      )!,
     );
   }
 
@@ -822,6 +879,8 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
 
   /// [{"type":"hotcook","capacity":"2.4L"}, ...] の形式で保存。
   final String appliancesJson;
+  final bool cameraPreserveState;
+  final bool syncKeepOnFailure;
   const AppSettings({
     required this.id,
     required this.localePref,
@@ -832,6 +891,8 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
     required this.syncEnabled,
     this.lastSyncedAt,
     required this.appliancesJson,
+    required this.cameraPreserveState,
+    required this.syncKeepOnFailure,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -851,6 +912,8 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
       map['last_synced_at'] = Variable<DateTime>(lastSyncedAt);
     }
     map['appliances_json'] = Variable<String>(appliancesJson);
+    map['camera_preserve_state'] = Variable<bool>(cameraPreserveState);
+    map['sync_keep_on_failure'] = Variable<bool>(syncKeepOnFailure);
     return map;
   }
 
@@ -871,6 +934,8 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
           ? const Value.absent()
           : Value(lastSyncedAt),
       appliancesJson: Value(appliancesJson),
+      cameraPreserveState: Value(cameraPreserveState),
+      syncKeepOnFailure: Value(syncKeepOnFailure),
     );
   }
 
@@ -891,6 +956,10 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
       syncEnabled: serializer.fromJson<bool>(json['syncEnabled']),
       lastSyncedAt: serializer.fromJson<DateTime?>(json['lastSyncedAt']),
       appliancesJson: serializer.fromJson<String>(json['appliancesJson']),
+      cameraPreserveState: serializer.fromJson<bool>(
+        json['cameraPreserveState'],
+      ),
+      syncKeepOnFailure: serializer.fromJson<bool>(json['syncKeepOnFailure']),
     );
   }
   @override
@@ -906,6 +975,8 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
       'syncEnabled': serializer.toJson<bool>(syncEnabled),
       'lastSyncedAt': serializer.toJson<DateTime?>(lastSyncedAt),
       'appliancesJson': serializer.toJson<String>(appliancesJson),
+      'cameraPreserveState': serializer.toJson<bool>(cameraPreserveState),
+      'syncKeepOnFailure': serializer.toJson<bool>(syncKeepOnFailure),
     };
   }
 
@@ -919,6 +990,8 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
     bool? syncEnabled,
     Value<DateTime?> lastSyncedAt = const Value.absent(),
     String? appliancesJson,
+    bool? cameraPreserveState,
+    bool? syncKeepOnFailure,
   }) => AppSettings(
     id: id ?? this.id,
     localePref: localePref ?? this.localePref,
@@ -933,6 +1006,8 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
     syncEnabled: syncEnabled ?? this.syncEnabled,
     lastSyncedAt: lastSyncedAt.present ? lastSyncedAt.value : this.lastSyncedAt,
     appliancesJson: appliancesJson ?? this.appliancesJson,
+    cameraPreserveState: cameraPreserveState ?? this.cameraPreserveState,
+    syncKeepOnFailure: syncKeepOnFailure ?? this.syncKeepOnFailure,
   );
   AppSettings copyWithCompanion(SettingsTableCompanion data) {
     return AppSettings(
@@ -961,6 +1036,12 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
       appliancesJson: data.appliancesJson.present
           ? data.appliancesJson.value
           : this.appliancesJson,
+      cameraPreserveState: data.cameraPreserveState.present
+          ? data.cameraPreserveState.value
+          : this.cameraPreserveState,
+      syncKeepOnFailure: data.syncKeepOnFailure.present
+          ? data.syncKeepOnFailure.value
+          : this.syncKeepOnFailure,
     );
   }
 
@@ -975,7 +1056,9 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
           ..write('modelOverridesJson: $modelOverridesJson, ')
           ..write('syncEnabled: $syncEnabled, ')
           ..write('lastSyncedAt: $lastSyncedAt, ')
-          ..write('appliancesJson: $appliancesJson')
+          ..write('appliancesJson: $appliancesJson, ')
+          ..write('cameraPreserveState: $cameraPreserveState, ')
+          ..write('syncKeepOnFailure: $syncKeepOnFailure')
           ..write(')'))
         .toString();
   }
@@ -991,6 +1074,8 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
     syncEnabled,
     lastSyncedAt,
     appliancesJson,
+    cameraPreserveState,
+    syncKeepOnFailure,
   );
   @override
   bool operator ==(Object other) =>
@@ -1004,7 +1089,9 @@ class AppSettings extends DataClass implements Insertable<AppSettings> {
           other.modelOverridesJson == this.modelOverridesJson &&
           other.syncEnabled == this.syncEnabled &&
           other.lastSyncedAt == this.lastSyncedAt &&
-          other.appliancesJson == this.appliancesJson);
+          other.appliancesJson == this.appliancesJson &&
+          other.cameraPreserveState == this.cameraPreserveState &&
+          other.syncKeepOnFailure == this.syncKeepOnFailure);
 }
 
 class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
@@ -1017,6 +1104,8 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
   final Value<bool> syncEnabled;
   final Value<DateTime?> lastSyncedAt;
   final Value<String> appliancesJson;
+  final Value<bool> cameraPreserveState;
+  final Value<bool> syncKeepOnFailure;
   const SettingsTableCompanion({
     this.id = const Value.absent(),
     this.localePref = const Value.absent(),
@@ -1027,6 +1116,8 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
     this.syncEnabled = const Value.absent(),
     this.lastSyncedAt = const Value.absent(),
     this.appliancesJson = const Value.absent(),
+    this.cameraPreserveState = const Value.absent(),
+    this.syncKeepOnFailure = const Value.absent(),
   });
   SettingsTableCompanion.insert({
     this.id = const Value.absent(),
@@ -1038,6 +1129,8 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
     this.syncEnabled = const Value.absent(),
     this.lastSyncedAt = const Value.absent(),
     this.appliancesJson = const Value.absent(),
+    this.cameraPreserveState = const Value.absent(),
+    this.syncKeepOnFailure = const Value.absent(),
   });
   static Insertable<AppSettings> custom({
     Expression<int>? id,
@@ -1049,6 +1142,8 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
     Expression<bool>? syncEnabled,
     Expression<DateTime>? lastSyncedAt,
     Expression<String>? appliancesJson,
+    Expression<bool>? cameraPreserveState,
+    Expression<bool>? syncKeepOnFailure,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -1061,6 +1156,9 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
       if (syncEnabled != null) 'sync_enabled': syncEnabled,
       if (lastSyncedAt != null) 'last_synced_at': lastSyncedAt,
       if (appliancesJson != null) 'appliances_json': appliancesJson,
+      if (cameraPreserveState != null)
+        'camera_preserve_state': cameraPreserveState,
+      if (syncKeepOnFailure != null) 'sync_keep_on_failure': syncKeepOnFailure,
     });
   }
 
@@ -1074,6 +1172,8 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
     Value<bool>? syncEnabled,
     Value<DateTime?>? lastSyncedAt,
     Value<String>? appliancesJson,
+    Value<bool>? cameraPreserveState,
+    Value<bool>? syncKeepOnFailure,
   }) {
     return SettingsTableCompanion(
       id: id ?? this.id,
@@ -1085,6 +1185,8 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
       syncEnabled: syncEnabled ?? this.syncEnabled,
       lastSyncedAt: lastSyncedAt ?? this.lastSyncedAt,
       appliancesJson: appliancesJson ?? this.appliancesJson,
+      cameraPreserveState: cameraPreserveState ?? this.cameraPreserveState,
+      syncKeepOnFailure: syncKeepOnFailure ?? this.syncKeepOnFailure,
     );
   }
 
@@ -1118,6 +1220,12 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
     if (appliancesJson.present) {
       map['appliances_json'] = Variable<String>(appliancesJson.value);
     }
+    if (cameraPreserveState.present) {
+      map['camera_preserve_state'] = Variable<bool>(cameraPreserveState.value);
+    }
+    if (syncKeepOnFailure.present) {
+      map['sync_keep_on_failure'] = Variable<bool>(syncKeepOnFailure.value);
+    }
     return map;
   }
 
@@ -1132,7 +1240,9 @@ class SettingsTableCompanion extends UpdateCompanion<AppSettings> {
           ..write('modelOverridesJson: $modelOverridesJson, ')
           ..write('syncEnabled: $syncEnabled, ')
           ..write('lastSyncedAt: $lastSyncedAt, ')
-          ..write('appliancesJson: $appliancesJson')
+          ..write('appliancesJson: $appliancesJson, ')
+          ..write('cameraPreserveState: $cameraPreserveState, ')
+          ..write('syncKeepOnFailure: $syncKeepOnFailure')
           ..write(')'))
         .toString();
   }
@@ -1426,6 +1536,8 @@ typedef $$SettingsTableTableCreateCompanionBuilder =
       Value<bool> syncEnabled,
       Value<DateTime?> lastSyncedAt,
       Value<String> appliancesJson,
+      Value<bool> cameraPreserveState,
+      Value<bool> syncKeepOnFailure,
     });
 typedef $$SettingsTableTableUpdateCompanionBuilder =
     SettingsTableCompanion Function({
@@ -1438,6 +1550,8 @@ typedef $$SettingsTableTableUpdateCompanionBuilder =
       Value<bool> syncEnabled,
       Value<DateTime?> lastSyncedAt,
       Value<String> appliancesJson,
+      Value<bool> cameraPreserveState,
+      Value<bool> syncKeepOnFailure,
     });
 
 class $$SettingsTableTableFilterComposer
@@ -1491,6 +1605,16 @@ class $$SettingsTableTableFilterComposer
 
   ColumnFilters<String> get appliancesJson => $composableBuilder(
     column: $table.appliancesJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get cameraPreserveState => $composableBuilder(
+    column: $table.cameraPreserveState,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get syncKeepOnFailure => $composableBuilder(
+    column: $table.syncKeepOnFailure,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -1548,6 +1672,16 @@ class $$SettingsTableTableOrderingComposer
     column: $table.appliancesJson,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<bool> get cameraPreserveState => $composableBuilder(
+    column: $table.cameraPreserveState,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get syncKeepOnFailure => $composableBuilder(
+    column: $table.syncKeepOnFailure,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$SettingsTableTableAnnotationComposer
@@ -1601,6 +1735,16 @@ class $$SettingsTableTableAnnotationComposer
     column: $table.appliancesJson,
     builder: (column) => column,
   );
+
+  GeneratedColumn<bool> get cameraPreserveState => $composableBuilder(
+    column: $table.cameraPreserveState,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get syncKeepOnFailure => $composableBuilder(
+    column: $table.syncKeepOnFailure,
+    builder: (column) => column,
+  );
 }
 
 class $$SettingsTableTableTableManager
@@ -1643,6 +1787,8 @@ class $$SettingsTableTableTableManager
                 Value<bool> syncEnabled = const Value.absent(),
                 Value<DateTime?> lastSyncedAt = const Value.absent(),
                 Value<String> appliancesJson = const Value.absent(),
+                Value<bool> cameraPreserveState = const Value.absent(),
+                Value<bool> syncKeepOnFailure = const Value.absent(),
               }) => SettingsTableCompanion(
                 id: id,
                 localePref: localePref,
@@ -1653,6 +1799,8 @@ class $$SettingsTableTableTableManager
                 syncEnabled: syncEnabled,
                 lastSyncedAt: lastSyncedAt,
                 appliancesJson: appliancesJson,
+                cameraPreserveState: cameraPreserveState,
+                syncKeepOnFailure: syncKeepOnFailure,
               ),
           createCompanionCallback:
               ({
@@ -1665,6 +1813,8 @@ class $$SettingsTableTableTableManager
                 Value<bool> syncEnabled = const Value.absent(),
                 Value<DateTime?> lastSyncedAt = const Value.absent(),
                 Value<String> appliancesJson = const Value.absent(),
+                Value<bool> cameraPreserveState = const Value.absent(),
+                Value<bool> syncKeepOnFailure = const Value.absent(),
               }) => SettingsTableCompanion.insert(
                 id: id,
                 localePref: localePref,
@@ -1675,6 +1825,8 @@ class $$SettingsTableTableTableManager
                 syncEnabled: syncEnabled,
                 lastSyncedAt: lastSyncedAt,
                 appliancesJson: appliancesJson,
+                cameraPreserveState: cameraPreserveState,
+                syncKeepOnFailure: syncKeepOnFailure,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

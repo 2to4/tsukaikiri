@@ -140,6 +140,14 @@ class _ListPane extends ConsumerWidget {
                   disabled: generating,
                   onTap: generating ? null : onSuggest,
                 ),
+                // 起点食材バナー（詳細の「レシピを見る」から来た場合）
+                if (state.focusIngredient != null)
+                  _FocusIngredientBanner(
+                    ingredient: state.focusIngredient!,
+                    onClear: () => ref
+                        .read(mealSuggestionControllerProvider.notifier)
+                        .clearFocusIngredient(),
+                  ),
               ],
             ),
           ),
@@ -471,6 +479,46 @@ class _ConditionChip extends StatelessWidget {
             color: selected ? AppColors.greenInk : AppColors.ink,
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// 「レシピを見る」などで指定された起点食材のバナー（クリア可能）。
+class _FocusIngredientBanner extends StatelessWidget {
+  const _FocusIngredientBanner({
+    required this.ingredient,
+    required this.onClear,
+  });
+
+  final Ingredient ingredient;
+  final VoidCallback onClear;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Container(
+      margin: const EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      decoration: BoxDecoration(
+        color: AppColors.greenSoft,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.eco_outlined, size: 16, color: AppColors.greenInk),
+          const SizedBox(width: 6),
+          Expanded(
+            child: Text(
+              l10n.mealsFocusBanner(ingredient.name),
+              style: const TextStyle(fontSize: 12, color: AppColors.greenInk),
+            ),
+          ),
+          GestureDetector(
+            onTap: onClear,
+            child: const Icon(Icons.close, size: 16, color: AppColors.greenInk),
+          ),
+        ],
       ),
     );
   }

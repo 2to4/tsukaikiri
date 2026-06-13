@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meta/meta.dart';
 
 import '../../../core/db/app_database.dart';
 import '../../../core/providers.dart';
@@ -24,6 +25,7 @@ class MealSuggestionState {
     this.recipes = const [],
     this.kind = MealKind.auto,
     this.error,
+    this.focusIngredient,
   });
 
   final MealSuggestionStatus status;
@@ -37,17 +39,26 @@ class MealSuggestionState {
   /// エラー種別（error のときのみ）。
   final MealSuggestionError? error;
 
+  /// 「レシピを見る」などで指定された起点食材（UIバナー用。提案ロジック自体は在庫全体を使用）。
+  final Ingredient? focusIngredient;
+
+  static const _sentinel = Object();
+
   MealSuggestionState copyWith({
     MealSuggestionStatus? status,
     List<SuggestedRecipe>? recipes,
     MealKind? kind,
     MealSuggestionError? error,
+    Object? focusIngredient = _sentinel,
   }) =>
       MealSuggestionState(
         status: status ?? this.status,
         recipes: recipes ?? this.recipes,
         kind: kind ?? this.kind,
         error: error,
+        focusIngredient: focusIngredient == _sentinel
+            ? this.focusIngredient
+            : focusIngredient as Ingredient?,
       );
 }
 
@@ -79,6 +90,23 @@ class MealSuggestionController extends Notifier<MealSuggestionState> {
 
   /// 条件チップを変更する（提案結果はそのまま保持）。
   void setKind(MealKind kind) => state = state.copyWith(kind: kind);
+
+  /// 「レシピを見る」などで指定された食材を起点に提案（focus を保持し、suggest を実行）。
+  Future<void> suggestFromIngredient(Ingredient ingredient) async {
+    state = state.copyWith(focusIngredient: ingredient);
+    await suggest();
+  }
+
+  /// 起点食材の文脈をクリア。
+  void clearFocusIngredient() {
+    state = state.copyWith(focusIngredient: null);
+  }
+
+  /// テスト用: suggest 副作用なしで focus を直接設定。
+  @visibleForTesting
+  void setFocusIngredientForTest(Ingredient ing) {
+    state = state.copyWith(focusIngredient: ing);
+  }
 
   /// 在庫から献立を提案する。
   Future<void> suggest() async {
@@ -115,7 +143,7 @@ class MealSuggestionController extends Notifier<MealSuggestionState> {
       final settings = await ref.read(settingsRepositoryProvider).get();
       appliances = settings.appliances;
       // 出力言語: 'system' のときは日本語にフォールバック（プロンプトは ja/en のみ対応）。
-      outputLocale = settings.localePref == 'en' ? 'en' : 'ja';
+      outputLocale = settings.localePref == 'en' ? 'en' : (settings.localePref == 'es' ? 'es' : 'ja');
     } catch (_) {
       state = state.copyWith(
         status: MealSuggestionStatus.error,

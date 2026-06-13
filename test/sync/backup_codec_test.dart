@@ -31,6 +31,8 @@ void main() {
         syncEnabled: true,
         lastSyncedAt: null,
         appliancesJson: '[]',
+        cameraPreserveState: false,
+        syncKeepOnFailure: true,
       );
 
   test('1. ラウンドトリップ（encode → decode → 同じデータ）', () {

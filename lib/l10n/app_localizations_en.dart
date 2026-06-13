@@ -251,6 +251,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageEn => 'English';
 
   @override
+  String get languageEs => 'Español';
+
+  @override
   String get languageHint =>
       'Choosing \"System default\" follows your device language setting.';
 
@@ -617,6 +620,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'Automatically backs up when inventory or settings change';
 
   @override
+  String get settingsDataSyncKeepOnFailureLabel => 'Stay on when backup fails';
+
+  @override
+  String get settingsDataSyncKeepOnFailureDesc =>
+      'Keep auto backup on even if the first backup fails (e.g. not signed in to iCloud). Turn off to revert the switch on failure.';
+
+  @override
+  String get settingsDataCameraPreserveLabel => 'Keep camera progress';
+
+  @override
+  String get settingsDataCameraPreserveDesc =>
+      'Keep photos and edited candidates when you leave and return to the camera screen. Turn off to start fresh each time.';
+
+  @override
   String settingsDataRestoreConfirmDate(String date) {
     return 'Backup date: $date';
   }
@@ -703,6 +720,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get mealsLowStockBanner =>
       'Inventory is low, so suggestions include recipes that need shopping.';
+
+  @override
+  String mealsFocusBanner(String name) {
+    return 'Suggesting from \"$name\"';
+  }
 
   @override
   String get mealsErrorNetwork =>

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../help/presentation/help_mobile_view.dart';
+import '../../onboarding/presentation/onboarding_mobile_view.dart';
 import '../../recipe/service/recipe_provider_factory.dart';
 import '../domain/appliance.dart';
 import 'ai_settings_screen.dart';
@@ -25,6 +28,36 @@ class SettingsScreen extends ConsumerWidget {
     ScaffoldMessenger.of(context)
       ..clearSnackBars()
       ..showSnackBar(SnackBar(content: Text(l10n.comingSoon)));
+  }
+
+  /// About ダイアログを表示（desktop と同じパターン）。
+  /// URL 未定の Buy Me a Coffee は将来の注入ポイントとしてコメントを残し、
+  /// 「準備中」表示を維持（l10n.settingsSupportComingSoon 活用可能）。
+  Future<void> _showAbout(BuildContext context) async {
+    final l10n = AppLocalizations.of(context);
+    String version = '';
+    try {
+      final info = await PackageInfo.fromPlatform();
+      version = info.version;
+    } catch (_) {
+      // テスト環境などで取得できない場合はアプリ名のみ表示する。
+    }
+    if (!context.mounted) return;
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.appTitle),
+        content: version.isEmpty
+            ? null
+            : Text(l10n.settingsAboutVersion(version)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: Text(l10n.settingsAboutClose),
+          ),
+        ],
+      ),
+    );
   }
 
   void _openAi(BuildContext context) {
@@ -155,6 +188,9 @@ class SettingsScreen extends ConsumerWidget {
                   SettingsSection(
                     title: l10n.settingsSectionSupport,
                     children: [
+                      // Buy Me a Coffee: URL 未定のため準備中表示を維持。
+                      // 将来 URL 確定時に url_launcher で外部リンク開くよう変更予定（注入ポイント）。
+                      // 現在は _comingSoon で一般メッセージ。
                       SettingsRow(
                           icon: Icons.local_cafe_outlined,
                           iconBg: AppColors.coffeeSoft,
@@ -164,13 +200,25 @@ class SettingsScreen extends ConsumerWidget {
                       SettingsRow(
                           icon: Icons.help_outline,
                           label: l10n.settingsHelp,
-                          onTap: () => _comingSoon(context)),
+                          onTap: () => Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (_) => const HelpMobileView(),
+                                ),
+                              )),
+                      SettingsRow(
+                          icon: Icons.school_outlined,
+                          label: l10n.onboardingRailTitle,
+                          onTap: () => Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (_) => const OnboardingMobileView(),
+                                ),
+                              )),
                       SettingsRow(
                           icon: Icons.info_outline,
                           label: l10n.settingsAbout,
                           value: 'v1.0.0',
                           last: true,
-                          onTap: () => _comingSoon(context)),
+                          onTap: () => _showAbout(context)),
                     ],
                   ),
                   Padding(
@@ -208,6 +256,7 @@ class LanguageDetailScreen extends ConsumerWidget {
     final opts = <(String, String)>[
       ('ja', l10n.languageJa),
       ('en', l10n.languageEn),
+      ('es', l10n.languageEs),
       ('system', l10n.languageSystem),
     ];
 

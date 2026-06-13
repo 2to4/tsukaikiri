@@ -73,6 +73,14 @@ class SettingsTable extends Table {
   TextColumn get appliancesJson =>
       text().withDefault(const Constant('[]'))();
 
+  // ---- カメラ/同期 UX 基盤 ----
+  // どちらも既定は現行挙動: カメラは途中状態を保持、同期は失敗しても ON 維持。
+  BoolColumn get cameraPreserveState =>
+      boolean().withDefault(const Constant(true))();
+
+  BoolColumn get syncKeepOnFailure =>
+      boolean().withDefault(const Constant(true))();
+
   @override
   Set<Column> get primaryKey => {id};
 }
@@ -83,7 +91,7 @@ class AppDatabase extends _$AppDatabase {
       : super(executor ?? driftDatabase(name: 'tsukaikiri'));
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -98,6 +106,10 @@ class AppDatabase extends _$AppDatabase {
           }
           if (from < 3) {
             await m.addColumn(settingsTable, settingsTable.modelOverridesJson);
+          }
+          if (from < 4) {
+            await m.addColumn(settingsTable, settingsTable.cameraPreserveState);
+            await m.addColumn(settingsTable, settingsTable.syncKeepOnFailure);
           }
         },
       );

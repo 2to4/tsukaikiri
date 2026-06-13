@@ -319,4 +319,82 @@ void main() {
 
     await unmountApp(tester);
   });
+
+  // ═══════════════════════════════════════════════════════
+  // ⑦ cameraPreserveState による途中状態の保持/リセット
+  // ═══════════════════════════════════════════════════════
+  Future<ProviderContainer> reviewReentryContainer(
+    WidgetTester tester, {
+    required bool preserve,
+  }) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    final fake = FakeRecipeProvider(
+      recognizeResult: [_highConf('牛乳')],
+      supportsVisionOverride: true,
+    );
+    final container = ProviderContainer(overrides: [
+      databaseProvider.overrideWithValue(db),
+      recipeProviderProvider.overrideWith((ref) async => fake),
+    ]);
+    addTearDown(container.dispose);
+
+    if (!preserve) {
+      await container
+          .read(settingsRepositoryProvider)
+          .setCameraPreserveState(false);
+    }
+
+    Future<void> pumpScreen() async {
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: container,
+          child: const MaterialApp(
+            locale: Locale('ja'),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: CameraMobileScreen(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+    }
+
+    // 1回目: 解析成功で review フェーズに。
+    await pumpScreen();
+    final notifier = container.read(cameraCaptureControllerProvider.notifier);
+    await notifier.addImages([_makeJpegBytes()]);
+    await tester.pump();
+    await notifier.analyze();
+    await waitAfterAnalyze(tester);
+    expect(container.read(cameraCaptureControllerProvider).phase,
+        CameraCapturePhase.review);
+
+    // 離脱→再入場。
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump(const Duration(milliseconds: 1));
+    await pumpScreen();
+    return container;
+  }
+
+  testWidgets('preserve=false: review で離脱して再入場すると capture にリセットされる',
+      (tester) async {
+    final container =
+        await reviewReentryContainer(tester, preserve: false);
+    expect(container.read(cameraCaptureControllerProvider).phase,
+        CameraCapturePhase.capture);
+    await unmountApp(tester);
+  });
+
+  testWidgets('既定(preserve=true): review で離脱して再入場しても review を保持する',
+      (tester) async {
+    final container =
+        await reviewReentryContainer(tester, preserve: true);
+    expect(container.read(cameraCaptureControllerProvider).phase,
+        CameraCapturePhase.review);
+    await unmountApp(tester);
+  });
 }
