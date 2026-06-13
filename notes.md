@@ -1,4 +1,22 @@
-# 仕様変更: プロバイダ選択にオンデバイス表示 + 端末依存の既定 — 2026-06-13（最新）
+# B2: Android オンデバイス AI（Gemini Nano / AICore）実装 — 2026-06-13（最新）
+
+**環境確認**: Android SDK あり・`flutter build apk --debug` 成功（Kotlin コンパイル検証可。SDK platform 35/34 自動取得済み）。実機 Gemini Nano での生成品質確認はユーザー（対応端末）。
+
+**設計（確定）**:
+- channel は B1 と同一（`com.futo4.tsukaikiri/ondevice_ai`、`availability`/`generate`）。Dart 側のロジックは iOS/macOS と完全共通 → **Dart provider を platform-neutral にリネーム**（`AppleFoundationModelsProvider`→`OnDeviceRecipeProvider`）。displayName は `onDeviceDisplayName()`（`Platform.isAndroid`→'Gemini Nano' / それ以外→'Apple Intelligence'）で出し分け。`providerDisplayInfo('ondevice')` も同 helper を使用。
+- Android native: `OnDeviceAiPlugin.kt`（MethodChannel）+ `MainActivity.configureFlutterEngine` で登録。モデルは AICore `GenerativeModel`（`com.google.ai.edge.aicore:aicore`）の `generateContent`。availability は AICore 利用可否。**非対応端末/SDK では available=false に安全縮退**（Android 非対応端末は AI 無効=設計どおり）。
+- 方針: AICore 実装を書いて **APK ビルドでコンパイル検証**。experimental API が確定できない場合は graceful stub（available=false）+ 設計書に統合ポイント明記にフォールバック（アプリは必ずビルド可能に保つ）。
+- TDD: 仕様書/設計書反映 → Dart リネーム（既存テスト型名更新=Red→Green）→ Android native → ビルド検証（macOS/Android/test/analyze）→ commit。
+
+**B2 完了サマリ (2-3行)**:
+- Dart: `AppleFoundationModelsProvider`→`OnDeviceRecipeProvider`（platform-neutral・file も git mv）。`onDeviceDisplayName()`（Android=Gemini Nano / 他=Apple Intelligence）を factory に追加し provider/`providerDisplayInfo('ondevice')` で共用。providers.dart・テスト（型名/modelId 'on-device'）更新。
+- Android: `OnDeviceAiPlugin.kt`（同 channel、AICore `GenerativeModel.generateContent`、availability=AICore パッケージ有無+SDK_INT≥34 の軽量判定）+ `MainActivity.configureFlutterEngine` 登録。`build.gradle.kts` に `com.google.ai.edge.aicore:aicore:0.0.1-exp01`。**minSdk 24→31**（AICore 要求。ユーザー承諾済み）。
+- 検証: **flutter analyze 0 / 全242テスト / macOS ビルド / Android APK ビルド すべて成功**。AICore API（generationConfig/generateContent/response.text）が実コンパイル通過。実機 Gemini Nano 生成はユーザー ToDo。
+- 設計書 §5.1.1 を Android 実装内容に更新。残: C(オンボーディングのキー削除)・E(Android 非対応端末 gating UI)・F(ヘルプ AI 文言)。
+
+---
+
+# 仕様変更: プロバイダ選択にオンデバイス表示 + 端末依存の既定 — 2026-06-13
 
 **要件**:
 1. AIプロバイダ選択画面に「オンデバイス」を**選択肢の先頭**に表示し、明示的に選べるようにする。

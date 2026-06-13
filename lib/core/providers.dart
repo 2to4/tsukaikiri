@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../features/inventory/data/inventory_repository.dart';
-import '../features/recipe/service/apple_foundation_models_provider.dart';
 import '../features/recipe/service/on_device_ai_service.dart';
+import '../features/recipe/service/on_device_recipe_provider.dart';
 import '../features/recipe/service/recipe_provider.dart';
 import '../features/recipe/service/recipe_provider_factory.dart';
 import '../features/settings/data/settings_repository.dart';
@@ -141,7 +141,7 @@ final onDeviceAiAvailabilityProvider =
 /// 解決順:
 ///   1. クラウドのプロバイダが選択され、その API キーが登録済み → そのクラウド
 ///   2. それ以外（キー無し / `'ondevice'` 選択など）でオンデバイス AI が使える
-///      端末 → [AppleFoundationModelsProvider]
+///      端末 → [OnDeviceRecipeProvider]
 ///   3. どちらも使えない → null（AI 機能は無効。UI が案内）
 ///
 /// モデルはユーザーの上書き設定があればそれを、なければ実装の既定値を使う。
@@ -168,7 +168,7 @@ final recipeProviderProvider = FutureProvider<RecipeProvider?>((ref) async {
   final service = ref.read(onDeviceAiServiceProvider);
   final availability = await service.availability();
   if (availability.available) {
-    return AppleFoundationModelsProvider(
+    return OnDeviceRecipeProvider(
       service: service,
       supportsVision: availability.supportsVision,
     );

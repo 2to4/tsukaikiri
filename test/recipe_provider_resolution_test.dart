@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tsukaikiri/core/db/app_database.dart';
 import 'package:tsukaikiri/core/providers.dart';
-import 'package:tsukaikiri/features/recipe/service/apple_foundation_models_provider.dart';
+import 'package:tsukaikiri/features/recipe/service/on_device_recipe_provider.dart';
 import 'package:tsukaikiri/features/recipe/service/gemini_provider.dart';
 import 'package:tsukaikiri/features/recipe/service/on_device_ai_service.dart';
 import 'package:tsukaikiri/features/settings/data/settings_repository.dart';
@@ -70,7 +70,7 @@ void main() {
       keys: const {},
       availability: available,
     );
-    expect(p, isA<AppleFoundationModelsProvider>());
+    expect(p, isA<OnDeviceRecipeProvider>());
   });
 
   test('③ ondevice 選択 + オンデバイス可 → オンデバイス（vision を引き継ぐ）', () async {
@@ -79,8 +79,8 @@ void main() {
       availability:
           const OnDeviceAiAvailability(available: true, supportsVision: true),
     );
-    expect(p, isA<AppleFoundationModelsProvider>());
-    expect((p as AppleFoundationModelsProvider).supportsVision, isTrue);
+    expect(p, isA<OnDeviceRecipeProvider>());
+    expect((p as OnDeviceRecipeProvider).supportsVision, isTrue);
   });
 
   test('④ クラウド選択でキー無し + オンデバイス不可 → null', () async {

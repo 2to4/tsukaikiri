@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tsukaikiri/features/recipe/domain/recipe_constraints.dart';
-import 'package:tsukaikiri/features/recipe/service/apple_foundation_models_provider.dart';
+import 'package:tsukaikiri/features/recipe/service/on_device_recipe_provider.dart';
 import 'package:tsukaikiri/features/recipe/service/on_device_ai_service.dart';
 import 'package:tsukaikiri/features/recipe/service/recipe_provider.dart';
 
@@ -32,16 +32,16 @@ void main() {
   const constraints = RecipeConstraints(outputLocale: 'ja');
 
   test('メタ情報: displayName / modelId / supportsVision / listModels', () async {
-    final p = AppleFoundationModelsProvider(
+    final p = OnDeviceRecipeProvider(
       service: _FakeOnDeviceAiService(response: '{}'),
       supportsVision: true,
     );
     expect(p.displayName, 'Apple Intelligence');
-    expect(p.modelId, 'apple-foundation-models');
+    expect(p.modelId, 'on-device');
     expect(p.supportsVision, isTrue);
     final models = await p.listModels();
     expect(models, hasLength(1));
-    expect(models.single.id, 'apple-foundation-models');
+    expect(models.single.id, 'on-device');
   });
 
   test('suggestRecipes: 生成テキストを既存パーサで SuggestedRecipe に変換', () async {
@@ -51,7 +51,7 @@ void main() {
           '"appliance":null,"cookMode":null,"cookMinutes":15,"steps":["切る","煮る"],'
           '"usesExpiringSoon":true}]}',
     );
-    final p = AppleFoundationModelsProvider(service: fake);
+    final p = OnDeviceRecipeProvider(service: fake);
     final recipes = await p.suggestRecipes(const [], constraints);
     expect(recipes, hasLength(1));
     expect(recipes.single.title, '親子丼');
@@ -61,7 +61,7 @@ void main() {
   });
 
   test('normalize: {normalized:{...}} をマップに変換', () async {
-    final p = AppleFoundationModelsProvider(
+    final p = OnDeviceRecipeProvider(
       service: _FakeOnDeviceAiService(
         response: '{"normalized":{"鶏むね":"chicken_breast"}}',
       ),
@@ -71,7 +71,7 @@ void main() {
   });
 
   test('recognizeIngredients: supportsVision=false なら UnsupportedError', () async {
-    final p = AppleFoundationModelsProvider(
+    final p = OnDeviceRecipeProvider(
       service: _FakeOnDeviceAiService(response: '{}'),
       supportsVision: false,
     );
@@ -86,7 +86,7 @@ void main() {
       response:
           '{"ingredients":[{"name":"牛乳","estimatedQuantity":1,"unit":"本","confidence":0.9}]}',
     );
-    final p = AppleFoundationModelsProvider(service: fake, supportsVision: true);
+    final p = OnDeviceRecipeProvider(service: fake, supportsVision: true);
     final detected = await p.recognizeIngredients([Uint8List.fromList([1, 2, 3])]);
     expect(detected, hasLength(1));
     expect(detected.single.name, '牛乳');
@@ -94,7 +94,7 @@ void main() {
   });
 
   test('生成失敗(OnDeviceAiException) → RecipeProviderException(statusCode 0)', () async {
-    final p = AppleFoundationModelsProvider(
+    final p = OnDeviceRecipeProvider(
       service: _FakeOnDeviceAiService(
         error: const OnDeviceAiException('model error', code: 'generate_failed'),
       ),
@@ -108,7 +108,7 @@ void main() {
   });
 
   test('壊れた JSON(FormatException) → RecipeProviderException(statusCode 0)', () async {
-    final p = AppleFoundationModelsProvider(
+    final p = OnDeviceRecipeProvider(
       service: _FakeOnDeviceAiService(response: 'これはJSONではありません'),
     );
     await expectLater(

@@ -19,7 +19,8 @@ android {
         applicationId = "com.futo4.tsukaikiri"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        // AICore（Gemini Nano / オンデバイス AI）が minSdk 31 を要求するため 31 に設定。
+        minSdk = 31
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -42,4 +43,9 @@ kotlin {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    // オンデバイス AI（Gemini Nano / AICore）。対応端末のみで動作。
+    implementation("com.google.ai.edge.aicore:aicore:0.0.1-exp01")
 }

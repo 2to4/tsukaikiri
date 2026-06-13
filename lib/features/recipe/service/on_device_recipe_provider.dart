@@ -6,16 +6,18 @@ import '../domain/detected_ingredient.dart';
 import '../domain/recipe_constraints.dart';
 import '../domain/suggested_recipe.dart';
 import 'on_device_ai_service.dart';
-import 'recipe_prompts.dart';
 import 'recipe_provider.dart';
+import 'recipe_provider_factory.dart';
+import 'recipe_prompts.dart';
 
-/// Apple Foundation Models（オンデバイス LLM）による [RecipeProvider] 実装。
+/// オンデバイス LLM（iOS/macOS=Apple Foundation Models / Android=Gemini Nano）
+/// による [RecipeProvider] 実装。プラットフォーム非依存。
 ///
 /// プロンプト生成・JSON パースは `recipe_prompts.dart` をクラウド実装と共有し、
-/// ネイティブ側（[OnDeviceAiService]）は「プロンプト→テキスト」のみを担う。
-/// これによりプロバイダを切り替えても挙動・スキーマが一致する。
-class AppleFoundationModelsProvider implements RecipeProvider {
-  AppleFoundationModelsProvider({
+/// ネイティブ側（[OnDeviceAiService] = platform channel）は「プロンプト→テキスト」
+/// のみを担う。これによりプロバイダを切り替えても挙動・スキーマが一致する。
+class OnDeviceRecipeProvider implements RecipeProvider {
+  OnDeviceRecipeProvider({
     required this.service,
     this.supportsVision = false,
   });
@@ -23,23 +25,20 @@ class AppleFoundationModelsProvider implements RecipeProvider {
   final OnDeviceAiService service;
 
   /// プロバイダ識別子（クラウド4社と区別する）。
-  static const providerId = 'ondevice';
+  static const providerId = onDeviceProviderId;
 
   @override
-  String get displayName => 'Apple Intelligence';
+  String get displayName => onDeviceDisplayName();
 
   @override
-  String get modelId => 'apple-foundation-models';
+  String get modelId => 'on-device';
 
   @override
   final bool supportsVision;
 
   @override
-  Future<List<AiModel>> listModels() async => const [
-        AiModel(
-          id: 'apple-foundation-models',
-          displayName: 'Apple Intelligence (オンデバイス)',
-        ),
+  Future<List<AiModel>> listModels() async => [
+        AiModel(id: 'on-device', displayName: onDeviceDisplayName()),
       ];
 
   @override

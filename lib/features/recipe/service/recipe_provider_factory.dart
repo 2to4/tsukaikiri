@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:http/http.dart' as http;
 
 import 'claude_provider.dart';
@@ -11,8 +13,13 @@ const supportedProviderIds = ['gemini', 'grok', 'openai', 'claude'];
 
 /// オンデバイス AI（既定。キー不要）を表す selectedProvider の sentinel 値。
 /// クラウド4社と異なり factory では生成せず、`recipeProviderProvider` が
-/// `OnDeviceAiService` 経由で `AppleFoundationModelsProvider` を解決する。
+/// `OnDeviceAiService` 経由で `OnDeviceRecipeProvider` を解決する。
 const onDeviceProviderId = 'ondevice';
+
+/// オンデバイス AI の表示名（プラットフォーム別のブランド名）。
+/// iOS/macOS = Apple Foundation Models、Android = Gemini Nano。
+String onDeviceDisplayName() =>
+    Platform.isAndroid ? 'Gemini Nano' : 'Apple Intelligence';
 
 /// API キー取得ページの URL（設定・オンボーディングの画面で共用）。
 const providerKeyUrls = <String, String>{
@@ -29,7 +36,7 @@ const providerKeyUrls = <String, String>{
 ({String displayName, bool supportsVision}) providerDisplayInfo(String id) {
   if (id == onDeviceProviderId) {
     // Vision 可否は実機の availability で決まるためここでは false 既定。
-    return (displayName: 'Apple Intelligence', supportsVision: false);
+    return (displayName: onDeviceDisplayName(), supportsVision: false);
   }
   if (!supportedProviderIds.contains(id)) {
     return (displayName: id, supportsVision: false);
