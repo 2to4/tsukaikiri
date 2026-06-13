@@ -374,24 +374,32 @@ class CameraCaptureController extends Notifier<CameraCaptureState> {
     final table = ref.read(shelfLifeTableProvider);
     final now = DateTime.now();
 
-    for (final c in checked) {
-      final category = c.category;
-      final expiry = expiryFromName(table, c.name, category, now);
-      final ingredient = Ingredient(
-        id: _uuid.v4(),
-        name: c.name,
-        // AI が normalizedName を返した場合はそれを使い、なければ name を流用する。
-        normalizedName: c.normalizedName ?? c.name,
-        category: category,
-        quantity: c.quantity,
-        unit: c.unit,
-        expiryDate: expiry,
-        updatedAt: now,
-      );
-      await repo.save(ingredient);
+    try {
+      for (final c in checked) {
+        final category = c.category;
+        final expiry = expiryFromName(table, c.name, category, now);
+        final ingredient = Ingredient(
+          id: _uuid.v4(),
+          name: c.name,
+          // AI が normalizedName を返した場合はそれを使い、なければ name を流用する。
+          normalizedName: c.normalizedName ?? c.name,
+          category: category,
+          quantity: c.quantity,
+          unit: c.unit,
+          expiryDate: expiry,
+          updatedAt: now,
+        );
+        await repo.save(ingredient);
+      }
+    } catch (_) {
+      // DB save 失敗（稀: ディスク・制約・競合）。analyze() は catch 完備だが
+      // confirm は保存ループで try 外だったため、部分保存 + reset 未到達で
+      // review フェーズに取り残されるリスクがあった。
+      // ここでキャッチし強制リセット（部分成功時は在庫に一部入るが、操作不能を回避）。
+      // 通知は呼び出し側（desktop/mobile view）の onConfirm ナビで在庫遷移する前提。
+    } finally {
+      _resetToCapture();
     }
-
-    _resetToCapture();
   }
 
   void _resetToCapture() {

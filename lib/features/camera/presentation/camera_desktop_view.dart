@@ -18,28 +18,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../inventory/domain/category_style.dart';
 import '../../inventory/domain/ingredient_category.dart';
 import '../../shell/presentation/shell_providers.dart';
 import 'camera_capture_controller.dart';
-
-// ──────────────────────────────────────────────────────────────
-// カテゴリ絵文字（デザイン準拠の代替表示）
-// ──────────────────────────────────────────────────────────────
-
-const _catEmoji = {
-  IngredientCategory.meat: '🥩',
-  IngredientCategory.fish: '🐟',
-  IngredientCategory.vegetable: '🥬',
-  IngredientCategory.fruit: '🍎',
-  IngredientCategory.dairy: '🧀',
-  IngredientCategory.egg: '🥚',
-  IngredientCategory.grain: '🌾',
-  IngredientCategory.seasoning: '🧂',
-  IngredientCategory.frozen: '🧊',
-  IngredientCategory.beverage: '🧃',
-  IngredientCategory.staple: '🥫',
-  IngredientCategory.other: '🛒',
-};
 
 // ──────────────────────────────────────────────────────────────
 // 確信度カラー定義
@@ -604,7 +586,7 @@ class _CandidateRowState extends State<_CandidateRow> {
                 ),
                 // 絵文字
                 Text(
-                  _catEmoji[c.category] ?? '🛒',
+                  c.category.style.emoji,
                   style: const TextStyle(fontSize: 20),
                 ),
                 const SizedBox(width: 10),
@@ -755,7 +737,7 @@ class _EditPaneState extends ConsumerState<_EditPane> {
           Column(
             children: [
               Text(
-                _catEmoji[sel.category] ?? '🛒',
+                sel.category.style.emoji,
                 style: const TextStyle(fontSize: 64),
               ),
               const SizedBox(height: 6),
@@ -865,7 +847,7 @@ class _EditPaneState extends ConsumerState<_EditPane> {
                       (c) => DropdownMenuItem(
                         value: c,
                         child: Text(
-                          '${_catEmoji[c] ?? ''} ${c.label(l10n)}',
+                          '${c.style.emoji} ${c.label(l10n)}',
                           style: const TextStyle(fontSize: 13),
                         ),
                       ),

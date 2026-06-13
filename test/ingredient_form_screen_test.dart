@@ -60,9 +60,12 @@ void main() {
 
   /// drift の stream 購読解除が Timer(0) を予約するため、各テストの最後に
   /// 画面をアンマウントしてタイマーを消化させる（pending timer 検出の回避）。
+  /// addTearDown では不変条件チェックに間に合わないので本体末尾で呼ぶこと。
   Future<void> unmountApp(WidgetTester tester) async {
     await tester.pumpWidget(const SizedBox.shrink());
-    await tester.pump();
+    // 引数なしの pump() は fake クロックを進めず Timer が発火しないため、
+    // 明示的に時間を進めて破棄時の Timer(0) を消化する。
+    await tester.pump(const Duration(milliseconds: 1));
   }
 
   testWidgets('名前が空のまま保存するとエラーを表示し保存しない', (tester) async {

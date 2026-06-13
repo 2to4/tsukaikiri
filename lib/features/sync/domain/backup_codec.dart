@@ -4,6 +4,7 @@ import 'package:drift/drift.dart';
 
 import '../../../core/db/app_database.dart';
 import '../../inventory/domain/ingredient_category.dart';
+import '../../recipe/service/recipe_provider_factory.dart';
 
 // ──────────────────────────────────────────────────────────────
 // 独自例外
@@ -220,7 +221,11 @@ abstract class BackupCodec {
     final localePref = raw['localePref'] as String? ?? 'system';
     final shoppingListId = raw['shoppingListId'] as String?;
     final shoppingListName = raw['shoppingListName'] as String?;
-    final selectedProvider = raw['selectedProvider'] as String? ?? 'gemini';
+    final rawProvider = raw['selectedProvider'] as String? ?? 'gemini';
+    // 未知の providerId（旧版・破損バックアップ）は 'gemini' にフォールバック（クラッシュ/誤動作防止）。
+    // supportedProviderIds は recipe_provider_factory の単一真実源。
+    final selectedProvider =
+        supportedProviderIds.contains(rawProvider) ? rawProvider : 'gemini';
     final modelOverridesJson = raw['modelOverridesJson'] as String? ?? '{}';
     final syncEnabled = raw['syncEnabled'] as bool? ?? false;
     final lastSyncedAtStr = raw['lastSyncedAt'] as String?;

@@ -128,6 +128,13 @@ final autoBackupWatcherProvider = Provider<void>((ref) {
 final recipeProviderProvider = FutureProvider<RecipeProvider?>((ref) async {
   final settings = await ref.watch(userSettingsProvider.future);
   final providerId = settings.selectedProvider;
+  if (!supportedProviderIds.contains(providerId)) {
+    // 未知/legacy の providerId（旧設定・壊れたバックアップ由来など）は
+    // 安全に null 扱い（= APIキー未設定と同じく設定誘導）。これにより
+    // createRecipeProvider の ArgumentError を避け、コントローラ側の
+    // network誤分類も防止。providerDisplayInfo と同等の耐性を runtime に。
+    return null;
+  }
   final apiKey =
       await ref.watch(secureStorageProvider).getApiKey(providerId);
   if (apiKey == null || apiKey.isEmpty) return null;
