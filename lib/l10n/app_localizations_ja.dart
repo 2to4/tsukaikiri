@@ -1285,6 +1285,27 @@ class AppLocalizationsJa extends AppLocalizations {
   String get helpStep4Body => '献立に足りない食材は、お使いのリマインダーの買い物リストへまとめて追加できます。';
 
   @override
+  String get helpAiEyebrow => 'AI';
+
+  @override
+  String get helpAiTitle => 'AI について';
+
+  @override
+  String get helpAiBody1 =>
+      '献立提案と食材の認識には AI を使います。対応端末では AI が端末内（オンデバイス）で動作し、無料・キー不要・オフラインで使えます。';
+
+  @override
+  String get helpAiBody2 =>
+      'より賢い提案がほしいときは、設定の「AI」からご自分の API キー（Gemini・OpenAI・Claude など）を登録すると、クラウドの上位モデルに切り替えられます。';
+
+  @override
+  String get helpAiCalloutTitle => 'プライバシー';
+
+  @override
+  String get helpAiCalloutBody =>
+      'オンデバイス AI の利用時、写真や在庫データは端末内で処理され、外部に送信されません。';
+
+  @override
   String get helpDataEyebrow => 'DATA';
 
   @override

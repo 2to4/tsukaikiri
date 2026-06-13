@@ -129,6 +129,34 @@ class HelpContent extends StatelessWidget {
           child: Divider(color: AppColors.line, height: 1, thickness: 1),
         ),
 
+        // AI について（オンデバイス・無料・プライバシー）
+        _Block(
+          eyebrow: l10n.helpAiEyebrow,
+          title: l10n.helpAiTitle,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _P(l10n.helpAiBody1),
+              _P(l10n.helpAiBody2),
+              _Callout(
+                backgroundColor: AppColors.greenSoft,
+                icon: Icons.verified_user_outlined,
+                iconColor: AppColors.green,
+                title: l10n.helpAiCalloutTitle,
+                titleColor: AppColors.greenInk,
+                body: l10n.helpAiCalloutBody,
+                bodyColor: const Color(0xFF3F6A53),
+              ),
+            ],
+          ),
+        ),
+
+        // 区切り線
+        const Padding(
+          padding: EdgeInsets.only(top: 30),
+          child: Divider(color: AppColors.line, height: 1, thickness: 1),
+        ),
+
         // 賞味期限データについて
         _Block(
           eyebrow: l10n.helpDataEyebrow,

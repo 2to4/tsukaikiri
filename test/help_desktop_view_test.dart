@@ -55,11 +55,28 @@ void main() {
     // かんたんな使い方
     expect(find.text('かんたんな使い方'), findsOneWidget);
 
+    // AI について
+    expect(find.text('AI について'), findsOneWidget);
+
     // 賞味期限データについて
     expect(find.text('賞味期限データについて'), findsOneWidget);
 
     // 出典・参考データ
     expect(find.text('出典・参考データ'), findsOneWidget);
+
+    await unmountApp(tester);
+  });
+
+  // ═══════════════════════════════════════════════════════
+  // ①' AI セクション: オンデバイス説明 + プライバシーコールアウト
+  // ═══════════════════════════════════════════════════════
+  testWidgets('AI セクションにオンデバイス説明とプライバシーが表示される',
+      (tester) async {
+    await pumpView(tester);
+
+    expect(find.text('AI について'), findsOneWidget);
+    expect(find.textContaining('端末内（オンデバイス）で動作'), findsOneWidget);
+    expect(find.text('プライバシー'), findsOneWidget);
 
     await unmountApp(tester);
   });

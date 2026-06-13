@@ -2452,6 +2452,42 @@ abstract class AppLocalizations {
   /// **'Ingredients you need for your chosen meals are added in bulk to your Reminders shopping list.'**
   String get helpStep4Body;
 
+  /// No description provided for @helpAiEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'AI'**
+  String get helpAiEyebrow;
+
+  /// No description provided for @helpAiTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About AI'**
+  String get helpAiTitle;
+
+  /// No description provided for @helpAiBody1.
+  ///
+  /// In en, this message translates to:
+  /// **'Tsukaikiri uses AI for meal suggestions and ingredient recognition. On supported devices the AI runs on your device (on-device): free, no API key, and works offline.'**
+  String get helpAiBody1;
+
+  /// No description provided for @helpAiBody2.
+  ///
+  /// In en, this message translates to:
+  /// **'If you\'d like smarter suggestions, you can register your own API key (Gemini, OpenAI, Claude, etc.) in Settings → AI to switch to a higher-end cloud model.'**
+  String get helpAiBody2;
+
+  /// No description provided for @helpAiCalloutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get helpAiCalloutTitle;
+
+  /// No description provided for @helpAiCalloutBody.
+  ///
+  /// In en, this message translates to:
+  /// **'When using on-device AI, your photos and inventory are processed on your device and are not sent anywhere.'**
+  String get helpAiCalloutBody;
+
   /// No description provided for @helpDataEyebrow.
   ///
   /// In en, this message translates to:

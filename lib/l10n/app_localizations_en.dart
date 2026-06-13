@@ -1321,6 +1321,27 @@ class AppLocalizationsEn extends AppLocalizations {
       'Ingredients you need for your chosen meals are added in bulk to your Reminders shopping list.';
 
   @override
+  String get helpAiEyebrow => 'AI';
+
+  @override
+  String get helpAiTitle => 'About AI';
+
+  @override
+  String get helpAiBody1 =>
+      'Tsukaikiri uses AI for meal suggestions and ingredient recognition. On supported devices the AI runs on your device (on-device): free, no API key, and works offline.';
+
+  @override
+  String get helpAiBody2 =>
+      'If you\'d like smarter suggestions, you can register your own API key (Gemini, OpenAI, Claude, etc.) in Settings → AI to switch to a higher-end cloud model.';
+
+  @override
+  String get helpAiCalloutTitle => 'Privacy';
+
+  @override
+  String get helpAiCalloutBody =>
+      'When using on-device AI, your photos and inventory are processed on your device and are not sent anywhere.';
+
+  @override
   String get helpDataEyebrow => 'DATA';
 
   @override
