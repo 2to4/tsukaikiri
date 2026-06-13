@@ -466,6 +466,13 @@ class AppLocalizationsJa extends AppLocalizations {
       'オンデバイス AI はキー不要で使えます。データは端末外に出ません。';
 
   @override
+  String get aiUnavailableTitle => 'AI を利用できません';
+
+  @override
+  String get aiUnavailableBody =>
+      'この端末はオンデバイス AI に対応していません。設定の「AI」からご自分の API キーを登録すると、クラウドの AI を使えます。在庫管理・買い物リストは AI なしでも使えます。';
+
+  @override
   String get settingsApiKeyHeading => 'APIキー';
 
   @override

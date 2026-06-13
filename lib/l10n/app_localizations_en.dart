@@ -472,6 +472,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'On-device AI works with no API key. Nothing leaves your device.';
 
   @override
+  String get aiUnavailableTitle => 'AI isn\'t available';
+
+  @override
+  String get aiUnavailableBody =>
+      'This device doesn\'t support on-device AI. You can add your own API key in Settings → AI to use cloud AI. Inventory and shopping list still work without AI.';
+
+  @override
   String get settingsApiKeyHeading => 'API Key';
 
   @override

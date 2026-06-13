@@ -1,4 +1,18 @@
-# C: オンボーディングから API キー入力を削除（オンデバイス既定前提）— 2026-06-13（最新）
+# E: AI 非対応端末での AI 機能無効化＋案内 — 2026-06-13（最新）
+
+**要件**: Gemini Nano 非対応 Android 等（オンデバイス不可かつキー未登録）で AI 機能（献立提案・カメラ登録）を無効化し案内。在庫・買い物リストは通常利用可。
+
+**実装 (TDD: 設計書反映 → Red(新テスト) → Green → Refactor)**:
+- `aiAvailableProvider`（FutureProvider<bool> = `recipeProviderProvider` 非 null）を追加。
+- 共有 `AiUnavailableNotice`（`recipe/presentation/ai_unavailable_notice.dart`）+ l10n `aiUnavailableTitle/Body`（en/ja/es）。
+- 4 view で入口を出し分け: meals desktop（提案ボタン無効化 + before に案内）/ meals mobile（content を案内に差し替え・戻る維持）/ camera desktop（capture を案内に差し替え）/ camera mobile（戻るヘッダー維持で案内）。`aiAvailable = ref.watch(aiAvailableProvider).maybeWhen(data:(v)=>v, orElse:()=>true)`（解決中は true で誤フラッシュ防止）。
+- テスト: meals_desktop / camera_desktop に「provider=null 上書き→案内表示・入口無効」を追加。既存テストは fake provider 上書きで aiAvailable=true のため不変。
+- 検証: **flutter analyze 0 / 全244テスト / macOS + Android APK ビルド 成功**。
+- 補足: CLAUDE.md「オフライン時は事前判定で無効化しない」は通信(transient)の話。本件は端末capability(不変)のため事前無効化が適切。残: F(ヘルプ AI 文言)。
+
+---
+
+# C: オンボーディングから API キー入力を削除（オンデバイス既定前提）— 2026-06-13
 
 **要件**: 初回フローから「API キー入力」を削除（キーなしで即使える前提）。オンデバイス可否のみ判定し、使えない場合のみ案内。家電・買い物リスト等の既存ステップはそのまま。自前キーは設定の「詳細（AI）」へ。
 

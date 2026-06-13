@@ -198,6 +198,8 @@
   "settingsAiOnDeviceDesc": "Gratis · sin clave de API · sin conexión",
   "settingsAiOnDeviceUnavailable": "No disponible en este dispositivo",
   "settingsAiOnDeviceNoKeyNote": "La IA en el dispositivo funciona sin clave de API. Nada sale de tu dispositivo.",
+  "aiUnavailableTitle": "La IA no está disponible",
+  "aiUnavailableBody": "Este dispositivo no admite la IA en el dispositivo. Puedes añadir tu propia clave de API en Ajustes → IA para usar la IA en la nube. El inventario y la lista de la compra funcionan sin IA.",
   "settingsApiKeyHeading": "Clave de API",
   "settingsApiKeyPlaceholder": "Pega tu clave de API",
   "settingsApiKeyNote": "Tu clave se guarda de forma segura en este dispositivo.",

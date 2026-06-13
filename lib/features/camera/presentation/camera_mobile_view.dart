@@ -27,6 +27,7 @@ import '../../../core/widgets/mobile_nav_buttons.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../inventory/domain/category_style.dart';
 import '../../inventory/domain/ingredient_category.dart';
+import '../../recipe/presentation/ai_unavailable_notice.dart';
 import '../../settings/presentation/settings_screen.dart';
 import 'camera_capture_controller.dart';
 
@@ -143,6 +144,31 @@ class _CaptureView extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final photos = state.images;
     final full = photos.length >= 10;
+    final aiAvailable = ref.watch(aiAvailableProvider).maybeWhen(data: (v) => v, orElse: () => true);
+
+    // AI 非対応端末（オンデバイス不可かつキー未登録）ではカメラ登録を無効化し案内。
+    // 戻るボタン（ヘッダー）は残す。
+    if (!aiAvailable) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+            child: Row(
+              children: [
+                const MobileNavBackButton(),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(l10n.cameraMobileCaptureTitle,
+                      style: brandTextStyle(fontSize: 22, height: 1.1)),
+                ),
+              ],
+            ),
+          ),
+          const Expanded(child: AiUnavailableNotice()),
+        ],
+      );
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

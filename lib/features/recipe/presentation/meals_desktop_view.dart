@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/db/app_database.dart';
+import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
+import 'ai_unavailable_notice.dart';
 import '../../inventory/presentation/inventory_providers.dart';
 import '../../shell/presentation/shell_providers.dart';
 import '../../shopping/service/missing_ingredients_service.dart';
@@ -88,6 +90,8 @@ class _ListPane extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final generating = state.status == MealSuggestionStatus.generating;
+    // この端末で AI が使えるか（オンデバイス対応 or 自前キー登録済み）。
+    final aiAvailable = ref.watch(aiAvailableProvider).maybeWhen(data: (v) => v, orElse: () => true);
 
     return Container(
       width: _kListPaneWidth,
@@ -137,8 +141,8 @@ class _ListPane extends ConsumerWidget {
                 _SuggestButton(
                   label: l10n.mealsSuggestButton,
                   shortcut: l10n.mealsSuggestShortcut,
-                  disabled: generating,
-                  onTap: generating ? null : onSuggest,
+                  disabled: generating || !aiAvailable,
+                  onTap: (generating || !aiAvailable) ? null : onSuggest,
                 ),
                 // 起点食材バナー（詳細の「レシピを見る」から来た場合）
                 if (state.focusIngredient != null)
@@ -158,6 +162,7 @@ class _ListPane extends ConsumerWidget {
               selectedTitle: selectedTitle,
               onSelect: onSelect,
               onRetry: onSuggest,
+              aiAvailable: aiAvailable,
             ),
           ),
         ],
@@ -182,12 +187,14 @@ class _ListBody extends ConsumerWidget {
     required this.selectedTitle,
     required this.onSelect,
     required this.onRetry,
+    required this.aiAvailable,
   });
 
   final MealSuggestionState state;
   final String? selectedTitle;
   final ValueChanged<String> onSelect;
   final VoidCallback onRetry;
+  final bool aiAvailable;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -195,6 +202,8 @@ class _ListBody extends ConsumerWidget {
 
     switch (state.status) {
       case MealSuggestionStatus.before:
+        // AI 非対応端末（オンデバイス不可かつキー未登録）では入口を無効化し案内。
+        if (!aiAvailable) return const AiUnavailableNotice();
         return _CenteredHint(emoji: '🍳', text: l10n.mealsBeforeBody);
 
       case MealSuggestionStatus.generating:

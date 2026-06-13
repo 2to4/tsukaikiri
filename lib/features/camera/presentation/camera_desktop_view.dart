@@ -15,11 +15,13 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../inventory/domain/category_style.dart';
 import '../../inventory/domain/ingredient_category.dart';
+import '../../recipe/presentation/ai_unavailable_notice.dart';
 import '../../shell/presentation/shell_providers.dart';
 import 'camera_capture_controller.dart';
 
@@ -102,6 +104,9 @@ class _CaptureViewState extends ConsumerState<_CaptureView> {
     final l10n = AppLocalizations.of(context);
     final state = widget.state;
     final photos = state.images;
+    // AI 非対応端末（オンデバイス不可かつキー未登録）ではカメラ登録を無効化し案内。
+    final aiAvailable = ref.watch(aiAvailableProvider).maybeWhen(data: (v) => v, orElse: () => true);
+    if (!aiAvailable) return const AiUnavailableNotice();
 
     return Center(
       child: SingleChildScrollView(

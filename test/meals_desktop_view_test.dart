@@ -121,6 +121,45 @@ void main() {
   });
 
   // ═══════════════════════════════════════════════════════
+  // ①' AI 非対応端末（provider 解決不可）では案内を表示し提案を無効化
+  // ═══════════════════════════════════════════════════════
+  testWidgets('AI 非対応端末では提案を無効化し案内を表示する', (tester) async {
+    await seedPlenty();
+    tester.view.physicalSize = const Size(1280, 800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          databaseProvider.overrideWithValue(db),
+          // オンデバイス不可 + キー無し相当（解決が null）。
+          recipeProviderProvider.overrideWith((ref) async => null),
+        ],
+        child: const MaterialApp(
+          locale: Locale('ja'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(body: MealsDesktopView()),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // 案内が表示され、提案前の通常ヒントは出ない。
+    expect(find.text('AI を利用できません'), findsOneWidget);
+    expect(find.text('「在庫から提案する」をクリックしてください'), findsNothing);
+
+    // 提案ボタンは無効（タップしても案内のまま＝生成に進まない）。
+    await tester.tap(find.text('在庫から提案する'));
+    await tester.pumpAndSettle();
+    expect(find.text('AI を利用できません'), findsOneWidget);
+
+    await unmountApp(tester);
+  });
+
+  // ═══════════════════════════════════════════════════════
   // ② 提案実行 → 結果リスト → 行クリックで詳細
   // ═══════════════════════════════════════════════════════
   testWidgets('提案を実行すると結果が並び、行クリックで詳細が出る', (tester) async {

@@ -136,6 +136,16 @@ final onDeviceAiAvailabilityProvider =
   (ref) => ref.read(onDeviceAiServiceProvider).availability(),
 );
 
+/// この端末で AI 機能（献立提案・カメラ登録）が使えるか。
+///
+/// `recipeProviderProvider` が解決できれば true（オンデバイス対応 or 自前キー登録済み）。
+/// false のときは AI 専用画面で「この端末では AI を使えない」案内を出し、入口を無効化する。
+/// 設定でキーを登録するなどで再解決される。
+final aiAvailableProvider = FutureProvider<bool>((ref) async {
+  final provider = await ref.watch(recipeProviderProvider.future);
+  return provider != null;
+});
+
 /// 実際に使う RecipeProvider を解決する（2段構え・オンデバイス既定）。
 ///
 /// 解決順:

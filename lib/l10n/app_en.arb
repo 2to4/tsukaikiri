@@ -198,6 +198,8 @@
   "settingsAiOnDeviceDesc": "Free · no API key · offline",
   "settingsAiOnDeviceUnavailable": "Not available on this device",
   "settingsAiOnDeviceNoKeyNote": "On-device AI works with no API key. Nothing leaves your device.",
+  "aiUnavailableTitle": "AI isn't available",
+  "aiUnavailableBody": "This device doesn't support on-device AI. You can add your own API key in Settings → AI to use cloud AI. Inventory and shopping list still work without AI.",
   "settingsApiKeyHeading": "API Key",
   "settingsApiKeyPlaceholder": "Paste your API key",
   "settingsApiKeyNote": "Your key is stored securely on this device.",

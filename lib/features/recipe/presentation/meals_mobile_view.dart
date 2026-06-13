@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/db/app_database.dart';
+import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/mobile_nav_buttons.dart';
 import '../../../l10n/app_localizations.dart';
+import 'ai_unavailable_notice.dart';
 import '../../inventory/presentation/inventory_providers.dart';
 import '../../settings/presentation/settings_screen.dart';
 import '../../shopping/presentation/shopping_mobile_view.dart';
@@ -205,6 +207,7 @@ class _BeforeView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final aiAvailable = ref.watch(aiAvailableProvider).maybeWhen(data: (v) => v, orElse: () => true);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -234,27 +237,33 @@ class _BeforeView extends ConsumerWidget {
             ],
           ),
         ),
-        const SizedBox(height: 18),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(18, 0, 18, 8),
-          child: Text(l10n.mealsConditionsPrompt,
-              style: const TextStyle(
-                  fontSize: 13.5,
-                  fontWeight: FontWeight.w800,
-                  color: AppColors.ink)),
-        ),
-        _ConditionChips(selected: state.kind),
-        const Spacer(),
-        // 主要 CTA
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-          child: _PrimaryButton(
-            icon: Icons.auto_awesome,
-            label: l10n.mealsSuggestButton,
-            onTap: () =>
-                ref.read(mealSuggestionControllerProvider.notifier).suggest(),
+        // AI 非対応端末では条件・提案 CTA を出さず案内を表示（入口無効化）。
+        if (!aiAvailable)
+          const Expanded(child: AiUnavailableNotice())
+        else ...[
+          const SizedBox(height: 18),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(18, 0, 18, 8),
+            child: Text(l10n.mealsConditionsPrompt,
+                style: const TextStyle(
+                    fontSize: 13.5,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.ink)),
           ),
-        ),
+          _ConditionChips(selected: state.kind),
+          const Spacer(),
+          // 主要 CTA
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+            child: _PrimaryButton(
+              icon: Icons.auto_awesome,
+              label: l10n.mealsSuggestButton,
+              onTap: () => ref
+                  .read(mealSuggestionControllerProvider.notifier)
+                  .suggest(),
+            ),
+          ),
+        ],
       ],
     );
   }

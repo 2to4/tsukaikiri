@@ -121,6 +121,38 @@ void main() {
   });
 
   // ═══════════════════════════════════════════════════════
+  // ①' AI 非対応端末（provider 解決不可）ではカメラ登録を無効化し案内
+  // ═══════════════════════════════════════════════════════
+  testWidgets('AI 非対応端末ではカメラ登録を無効化し案内を表示する', (tester) async {
+    tester.view.physicalSize = const Size(1280, 800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          databaseProvider.overrideWithValue(db),
+          recipeProviderProvider.overrideWith((ref) async => null),
+        ],
+        child: const MaterialApp(
+          locale: Locale('ja'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(body: CameraDesktopView()),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // 案内が表示され、ドロップゾーンは出ない。
+    expect(find.text('AI を利用できません'), findsOneWidget);
+    expect(find.text('写真をドロップ、または クリックして選択'), findsNothing);
+
+    await unmountApp(tester);
+  });
+
+  // ═══════════════════════════════════════════════════════
   // ② addImages → サムネイル + 解析ボタン表示
   // ═══════════════════════════════════════════════════════
   testWidgets('addImages 後: サムネイルと解析ボタンが表示される', (tester) async {

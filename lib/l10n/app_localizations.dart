@@ -976,6 +976,18 @@ abstract class AppLocalizations {
   /// **'On-device AI works with no API key. Nothing leaves your device.'**
   String get settingsAiOnDeviceNoKeyNote;
 
+  /// No description provided for @aiUnavailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AI isn\'t available'**
+  String get aiUnavailableTitle;
+
+  /// No description provided for @aiUnavailableBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This device doesn\'t support on-device AI. You can add your own API key in Settings → AI to use cloud AI. Inventory and shopping list still work without AI.'**
+  String get aiUnavailableBody;
+
   /// No description provided for @settingsApiKeyHeading.
   ///
   /// In en, this message translates to:

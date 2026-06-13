@@ -191,6 +191,8 @@
   "settingsAiOnDeviceDesc": "無料・キー不要・オフライン",
   "settingsAiOnDeviceUnavailable": "この端末では利用できません",
   "settingsAiOnDeviceNoKeyNote": "オンデバイス AI はキー不要で使えます。データは端末外に出ません。",
+  "aiUnavailableTitle": "AI を利用できません",
+  "aiUnavailableBody": "この端末はオンデバイス AI に対応していません。設定の「AI」からご自分の API キーを登録すると、クラウドの AI を使えます。在庫管理・買い物リストは AI なしでも使えます。",
   "settingsApiKeyHeading": "APIキー",
   "settingsApiKeyPlaceholder": "APIキーを貼り付け",
   "settingsApiKeyNote": "キーはこの端末内に安全に保存されます。",

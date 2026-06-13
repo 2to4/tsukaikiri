@@ -478,6 +478,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'La IA en el dispositivo funciona sin clave de API. Nada sale de tu dispositivo.';
 
   @override
+  String get aiUnavailableTitle => 'La IA no está disponible';
+
+  @override
+  String get aiUnavailableBody =>
+      'Este dispositivo no admite la IA en el dispositivo. Puedes añadir tu propia clave de API en Ajustes → IA para usar la IA en la nube. El inventario y la lista de la compra funcionan sin IA.';
+
+  @override
   String get settingsApiKeyHeading => 'Clave de API';
 
   @override
