@@ -105,7 +105,8 @@ void main() {
   // ① capture 初期表示
   // ═══════════════════════════════════════════════════════
   testWidgets('capture 初期表示: タイトル・枚数チップ・追加導線が表示される', (tester) async {
-    await pumpView(tester, fake: FakeRecipeProvider());
+    // カメラ入口は vision 対応で出し分けるため、capture UI を見るには vision 可。
+    await pumpView(tester, fake: FakeRecipeProvider(supportsVisionOverride: true));
 
     expect(find.text('冷蔵庫を撮影'), findsOneWidget);
     expect(find.text('0 / 10 枚'), findsOneWidget);
@@ -120,7 +121,7 @@ void main() {
   // ② addImages → サムネイル + 枚数 + 解析ボタン
   // ═══════════════════════════════════════════════════════
   testWidgets('addImages 後: サムネイルと枚数・解析ボタンが更新される', (tester) async {
-    await pumpView(tester, fake: FakeRecipeProvider());
+    await pumpView(tester, fake: FakeRecipeProvider(supportsVisionOverride: true));
 
     await controllerOf(tester).addImages([_makeJpegBytes()]);
     await tester.pump();

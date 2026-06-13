@@ -104,9 +104,18 @@ class _CaptureViewState extends ConsumerState<_CaptureView> {
     final l10n = AppLocalizations.of(context);
     final state = widget.state;
     final photos = state.images;
-    // AI 非対応端末（オンデバイス不可かつキー未登録）ではカメラ登録を無効化し案内。
-    final aiAvailable = ref.watch(aiAvailableProvider).maybeWhen(data: (v) => v, orElse: () => true);
-    if (!aiAvailable) return const AiUnavailableNotice();
+    // カメラ登録は画像認識が要るため vision 対応で入口を出し分ける。
+    // オンデバイス AI はテキスト専用（vision 非対応）なので、AI が使えても
+    // 画像認識ができない端末では入口を開かず案内する（解析時の必敗を防ぐ）。
+    final visionAvailable = ref.watch(cameraEntryEnabledProvider);
+    if (!visionAvailable) {
+      // AI 自体は使える（vision 非対応）なら、クラウドキー登録を促す専用文言。
+      final aiAvailable = ref.watch(aiEntryEnabledProvider);
+      return AiUnavailableNotice(
+        title: aiAvailable ? l10n.cameraVisionUnavailableTitle : null,
+        body: aiAvailable ? l10n.cameraVisionUnavailableBody : null,
+      );
+    }
 
     return Center(
       child: SingleChildScrollView(

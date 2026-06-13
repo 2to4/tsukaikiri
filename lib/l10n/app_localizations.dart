@@ -988,6 +988,18 @@ abstract class AppLocalizations {
   /// **'This device doesn\'t support on-device AI. You can add your own API key in Settings → AI to use cloud AI. Inventory and shopping list still work without AI.'**
   String get aiUnavailableBody;
 
+  /// No description provided for @aiCloudKeyMissingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No API key registered'**
+  String get aiCloudKeyMissingTitle;
+
+  /// No description provided for @aiCloudKeyMissingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The selected cloud AI has no API key, or the key is invalid. Add a key in Settings → AI, or switch to on-device AI on supported devices. Inventory and shopping list still work without AI.'**
+  String get aiCloudKeyMissingBody;
+
   /// No description provided for @settingsApiKeyHeading.
   ///
   /// In en, this message translates to:
@@ -1461,6 +1473,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No AI API key is registered. Add an API key in Settings.'**
   String get mealsErrorNoApiKey;
+
+  /// No description provided for @mealsErrorOnDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'The AI couldn\'t generate a response. The model may be warming up, or there may be too many items. Try with fewer items, or wait a moment and retry.'**
+  String get mealsErrorOnDevice;
+
+  /// No description provided for @cameraVisionUnavailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t register from photos on this device'**
+  String get cameraVisionUnavailableTitle;
+
+  /// No description provided for @cameraVisionUnavailableBody.
+  ///
+  /// In en, this message translates to:
+  /// **'On-device AI can\'t read photos. Add a vision-capable cloud AI key in Settings → AI, or add items by hand.'**
+  String get cameraVisionUnavailableBody;
 
   /// No description provided for @mealsRetry.
   ///

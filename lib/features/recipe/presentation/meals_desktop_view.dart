@@ -91,7 +91,7 @@ class _ListPane extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final generating = state.status == MealSuggestionStatus.generating;
     // この端末で AI が使えるか（オンデバイス対応 or 自前キー登録済み）。
-    final aiAvailable = ref.watch(aiAvailableProvider).maybeWhen(data: (v) => v, orElse: () => true);
+    final aiAvailable = ref.watch(aiEntryEnabledProvider);
 
     return Container(
       width: _kListPaneWidth,
@@ -203,7 +203,7 @@ class _ListBody extends ConsumerWidget {
     switch (state.status) {
       case MealSuggestionStatus.before:
         // AI 非対応端末（オンデバイス不可かつキー未登録）では入口を無効化し案内。
-        if (!aiAvailable) return const AiUnavailableNotice();
+        if (!aiAvailable) return const AiUnavailableNotice(); // 文言は aiStatus で出し分け
         return _CenteredHint(emoji: '🍳', text: l10n.mealsBeforeBody);
 
       case MealSuggestionStatus.generating:
@@ -743,8 +743,11 @@ class _ErrorBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final isNoKey = error == MealSuggestionError.noApiKey;
-    final message =
-        isNoKey ? l10n.mealsErrorNoApiKey : l10n.mealsErrorNetwork;
+    final message = switch (error) {
+      MealSuggestionError.noApiKey => l10n.mealsErrorNoApiKey,
+      MealSuggestionError.onDeviceFailed => l10n.mealsErrorOnDevice,
+      MealSuggestionError.network => l10n.mealsErrorNetwork,
+    };
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),

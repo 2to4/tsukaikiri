@@ -70,14 +70,15 @@ void main() {
     expect(map['鶏むね'], 'chicken_breast');
   });
 
-  test('recognizeIngredients: supportsVision=false なら UnsupportedError', () async {
+  test('recognizeIngredients: supportsVision=false なら RecipeProviderException', () async {
     final p = OnDeviceRecipeProvider(
       service: _FakeOnDeviceAiService(response: '{}'),
       supportsVision: false,
     );
+    // 設計方針どおり共通の RecipeProviderException で返す（呼び出し側は本例外型のみ catch する想定）。
     expect(
       () => p.recognizeIngredients([Uint8List(0)]),
-      throwsA(isA<UnsupportedError>()),
+      throwsA(isA<RecipeProviderException>()),
     );
   });
 

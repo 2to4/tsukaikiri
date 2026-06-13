@@ -110,7 +110,8 @@ void main() {
   // ① capture 初期表示
   // ═══════════════════════════════════════════════════════
   testWidgets('capture 初期表示: ドロップゾーン文言が表示される', (tester) async {
-    await pumpView(tester, FakeRecipeProvider());
+    // カメラ入口は vision 対応で出し分けるため、capture UI を見るには vision 可。
+    await pumpView(tester, FakeRecipeProvider(supportsVisionOverride: true));
 
     expect(find.text('写真をドロップ、または クリックして選択'), findsOneWidget);
     expect(find.text('冷蔵庫の写真を最大10枚追加できます'), findsOneWidget);
@@ -134,6 +135,8 @@ void main() {
         overrides: [
           databaseProvider.overrideWithValue(db),
           recipeProviderProvider.overrideWith((ref) async => null),
+          // オンデバイス非対応かつキー無し相当（案内文言を unavailable に固定）。
+          aiStatusProvider.overrideWith((ref) async => AiStatus.unavailable),
         ],
         child: const MaterialApp(
           locale: Locale('ja'),
@@ -156,7 +159,7 @@ void main() {
   // ② addImages → サムネイル + 解析ボタン表示
   // ═══════════════════════════════════════════════════════
   testWidgets('addImages 後: サムネイルと解析ボタンが表示される', (tester) async {
-    await pumpView(tester, FakeRecipeProvider());
+    await pumpView(tester, FakeRecipeProvider(supportsVisionOverride: true));
 
     // コントローラに直接画像を注入する。
     final container = ProviderScope.containerOf(tester.element(find.byType(CameraDesktopView)));

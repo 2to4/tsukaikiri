@@ -19,6 +19,11 @@ import FoundationModels
 /// プロンプト生成・JSON パースは Dart 側（recipe_prompts.dart）に置き、ここは
 /// 「プロンプト→テキスト」のみを担う。FoundationModels 非対応 SDK / OS では
 /// コンパイル・実行とも安全に縮退（available=false を返す）。
+///
+/// ⚠️ 同期必須: macOS / iOS で同一実装（Flutter import と messenger の差は条件
+/// コンパイルで吸収）。`ios/Runner/OnDeviceAiPlugin.swift` と
+/// `macos/Runner/OnDeviceAiPlugin.swift` は完全に同一内容に保つこと。別 Xcode
+/// プロジェクトのため、一方だけ変更してもコンパイラは乖離を検知しない。
 class OnDeviceAiPlugin: NSObject, FlutterPlugin {
   static func register(with registrar: FlutterPluginRegistrar) {
     #if os(iOS)

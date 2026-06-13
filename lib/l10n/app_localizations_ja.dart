@@ -473,6 +473,13 @@ class AppLocalizationsJa extends AppLocalizations {
       'この端末はオンデバイス AI に対応していません。設定の「AI」からご自分の API キーを登録すると、クラウドの AI を使えます。在庫管理・買い物リストは AI なしでも使えます。';
 
   @override
+  String get aiCloudKeyMissingTitle => 'API キーが未登録です';
+
+  @override
+  String get aiCloudKeyMissingBody =>
+      '選択中のクラウド AI の API キーが未登録または無効です。設定の「AI」でキーを登録するか、対応端末ではオンデバイス AI に切り替えてください。在庫管理・買い物リストは AI なしでも使えます。';
+
+  @override
   String get settingsApiKeyHeading => 'APIキー';
 
   @override
@@ -739,6 +746,17 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get mealsErrorNoApiKey => 'AI の API キーが未登録です。設定で API キーを登録してください。';
+
+  @override
+  String get mealsErrorOnDevice =>
+      'AI が応答を生成できませんでした。モデルの準備中か、在庫が多すぎる可能性があります。在庫を絞るか、しばらく待ってから再試行してください。';
+
+  @override
+  String get cameraVisionUnavailableTitle => 'この端末では写真から登録できません';
+
+  @override
+  String get cameraVisionUnavailableBody =>
+      'オンデバイス AI は写真の読み取りに未対応です。設定の「AI」から画像に対応したクラウド AI のキーを登録するか、手入力で食材を追加してください。';
 
   @override
   String get mealsRetry => '再試行';

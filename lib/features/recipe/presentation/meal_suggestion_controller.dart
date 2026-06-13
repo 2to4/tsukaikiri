@@ -6,6 +6,7 @@ import '../../../core/providers.dart';
 import '../domain/recipe_constraints.dart';
 import '../domain/suggested_recipe.dart';
 import '../service/recipe_provider.dart';
+import '../service/recipe_provider_factory.dart';
 
 // ──────────────────────────────────────────────────────────────
 // 献立提案の状態（5状態）
@@ -69,6 +70,10 @@ enum MealSuggestionError {
 
   /// 通信失敗・レスポンス異常（オフライン文言＋再試行）。
   network,
+
+  /// オンデバイス AI の生成失敗（モデル準備中・出力過多・形式異常など）。
+  /// ネットワークは使わないため「Wi-Fi に接続」ではなく専用文言を出す。
+  onDeviceFailed,
 }
 
 // ──────────────────────────────────────────────────────────────
@@ -169,10 +174,13 @@ class MealSuggestionController extends Notifier<MealSuggestionState> {
             : MealSuggestionStatus.results,
         recipes: recipes,
       );
-    } on RecipeProviderException {
+    } on RecipeProviderException catch (e) {
+      // オンデバイス AI の失敗はネットワーク誤案内を避け専用文言に分岐する。
       state = state.copyWith(
         status: MealSuggestionStatus.error,
-        error: MealSuggestionError.network,
+        error: e.provider == onDeviceProviderId
+            ? MealSuggestionError.onDeviceFailed
+            : MealSuggestionError.network,
       );
     } catch (_) {
       state = state.copyWith(

@@ -146,44 +146,106 @@ final aiAvailableProvider = FutureProvider<bool>((ref) async {
   return provider != null;
 });
 
-/// 実際に使う RecipeProvider を解決する（2段構え・オンデバイス既定）。
+/// この端末で AI 画像認識（カメラ登録）が使えるか。
+///
+/// 解決された [RecipeProvider] が `supportsVision` を満たすときだけ true。
+/// オンデバイス AI はテキスト専用（`supportsVision=false`）のため、オンデバイス
+/// 既定の端末では false になる。カメラ登録の入口はこれで出し分ける
+/// （`aiAvailableProvider`（非 null）だけだと vision 非対応でも入口が開き、
+/// 解析時に必ず失敗するため）。
+final aiVisionAvailableProvider = FutureProvider<bool>((ref) async {
+  final provider = await ref.watch(recipeProviderProvider.future);
+  return provider?.supportsVision ?? false;
+});
+
+/// AI 入口（献立提案）を表示・有効化してよいか。
+/// 解決中は誤フラッシュ防止で true、エラーは案内を出すため false にする
+/// （この方針を4ビューに散らさず一箇所に集約する）。
+final aiEntryEnabledProvider = Provider<bool>((ref) =>
+    ref.watch(aiAvailableProvider).maybeWhen(
+        data: (v) => v, loading: () => true, orElse: () => false));
+
+/// カメラ登録の入口（画像認識）を表示・有効化してよいか。
+/// オンデバイス AI は vision 非対応のため [aiVisionAvailableProvider] で判定する。
+final cameraEntryEnabledProvider = Provider<bool>((ref) =>
+    ref.watch(aiVisionAvailableProvider).maybeWhen(
+        data: (v) => v, loading: () => true, orElse: () => false));
+
+/// AI 機能の利用可否の種別（UI の案内文言を出し分けるため）。
+enum AiStatus {
+  /// 使える（クラウド or オンデバイス）。
+  available,
+
+  /// クラウドプロバイダが選択されているが API キーが未登録/無効。
+  /// オンデバイスへ無言フォールバックせず、キー登録 or オンデバイス切替を促す。
+  cloudKeyMissing,
+
+  /// オンデバイス非対応かつクラウドキーも無い → AI 不可。
+  unavailable,
+}
+
+/// AI の解決結果（実際に使う [RecipeProvider] と、その可否種別）。
 ///
 /// 解決順:
-///   1. クラウドのプロバイダが選択され、その API キーが登録済み → そのクラウド
-///   2. それ以外（キー無し / `'ondevice'` 選択など）でオンデバイス AI が使える
-///      端末 → [OnDeviceRecipeProvider]
-///   3. どちらも使えない → null（AI 機能は無効。UI が案内）
+///   1. クラウドのプロバイダが選択されている
+///      - キー登録済み → そのクラウド（[AiStatus.available]）
+///      - キー無し/無効 → null（[AiStatus.cloudKeyMissing]）。
+///        **オンデバイスへ無言フォールバックしない**（ユーザーが選んだプロバイダと
+///        実際に動くエンジンが食い違う混乱を避け、設定変更を促すため）。
+///   2. `'ondevice'` 選択 / 未知 ID → オンデバイスが使えるなら使う（[AiStatus.available]）
+///   3. どちらも使えない → null（[AiStatus.unavailable]）
 ///
 /// モデルはユーザーの上書き設定があればそれを、なければ実装の既定値を使う。
-final recipeProviderProvider = FutureProvider<RecipeProvider?>((ref) async {
-  // 設定変更（プロバイダ選択・キー登録は別経路だが）で再解決されるよう依存を張る。
+final aiResolutionProvider =
+    FutureProvider<({RecipeProvider? provider, AiStatus status})>((ref) async {
+  // 設定変更で再解決されるよう依存を張る。
   // 値自体は一発クエリで取る（CLAUDE.md: 非 UI は repo クエリ / .future を使わない）。
   ref.watch(userSettingsProvider);
   final settings = await ref.read(settingsRepositoryProvider).get();
   final providerId = settings.selectedProvider;
 
-  // 1. クラウドプロバイダが選択され、キーが登録済みならそれを使う。
+  // 1. クラウドプロバイダが選択されている。
   if (supportedProviderIds.contains(providerId)) {
     final apiKey = await ref.read(secureStorageProvider).getApiKey(providerId);
     if (apiKey != null && apiKey.isNotEmpty) {
-      return createRecipeProvider(
-        providerId: providerId,
-        apiKey: apiKey,
-        model: settings.modelOverrides[providerId],
+      return (
+        provider: createRecipeProvider(
+          providerId: providerId,
+          apiKey: apiKey,
+          model: settings.modelOverrides[providerId],
+        ),
+        status: AiStatus.available,
       );
     }
+    // キー未登録/無効 → オンデバイスへ落とさず、案内のみ。
+    return (provider: null, status: AiStatus.cloudKeyMissing);
   }
 
-  // 2. キー無し / 'ondevice' 選択 / 未知 ID → オンデバイスが使えるなら使う。
+  // 2. 'ondevice' 選択 / 未知 ID → オンデバイスが使えるなら使う。
+  //    可否はキャッシュ済みの onDeviceAiAvailabilityProvider を共有し、
+  //    設定 UI・起動時判定と二重プローブにならないようにする。
   final service = ref.read(onDeviceAiServiceProvider);
-  final availability = await service.availability();
+  final availability = await ref.watch(onDeviceAiAvailabilityProvider.future);
   if (availability.available) {
-    return OnDeviceRecipeProvider(
-      service: service,
-      supportsVision: availability.supportsVision,
+    return (
+      provider: OnDeviceRecipeProvider(
+        service: service,
+        supportsVision: availability.supportsVision,
+      ),
+      status: AiStatus.available,
     );
   }
 
   // 3. オンデバイス非対応かつキー無し → AI 無効。
-  return null;
+  return (provider: null, status: AiStatus.unavailable);
+});
+
+/// 実際に使う [RecipeProvider]（解決できなければ null）。
+final recipeProviderProvider = FutureProvider<RecipeProvider?>((ref) async {
+  return (await ref.watch(aiResolutionProvider.future)).provider;
+});
+
+/// AI 利用可否の種別（案内文言の出し分け用）。
+final aiStatusProvider = FutureProvider<AiStatus>((ref) async {
+  return (await ref.watch(aiResolutionProvider.future)).status;
 });

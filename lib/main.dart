@@ -30,9 +30,11 @@ Future<void> main() async {
 
   // 初回起動時のみ、端末のオンデバイス AI 可否で既定プロバイダを決める。
   // 対応端末 → オンデバイス / 非対応 → Gemini。以降はユーザー選択を尊重。
+  // 可否は onDeviceAiAvailabilityProvider 経由で取得してキャッシュを温め、
+  // 以降の設定 UI・provider 解決と同じ1回のプローブを共有する。
   try {
     final availability =
-        await container.read(onDeviceAiServiceProvider).availability();
+        await container.read(onDeviceAiAvailabilityProvider.future);
     await container
         .read(settingsRepositoryProvider)
         .initializeDefaultProviderIfUnset(

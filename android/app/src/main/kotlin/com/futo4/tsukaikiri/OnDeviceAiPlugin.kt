@@ -93,7 +93,10 @@ class OnDeviceAiPlugin(private val appContext: Context) :
                         context = appContext
                         temperature = 0.2f
                         topK = 16
-                        maxOutputTokens = 1024
+                        // 献立提案は複数レシピの JSON（材料・手順）を返すため
+                        // 1024 では途中で切れ FormatException になりやすい。
+                        // Gemini Nano の総コンテキスト（~4096）内で出力枠を広げる。
+                        maxOutputTokens = 2048
                     },
                 )
                 val response = model.generateContent(prompt)

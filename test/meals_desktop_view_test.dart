@@ -136,6 +136,7 @@ void main() {
           databaseProvider.overrideWithValue(db),
           // オンデバイス不可 + キー無し相当（解決が null）。
           recipeProviderProvider.overrideWith((ref) async => null),
+          aiStatusProvider.overrideWith((ref) async => AiStatus.unavailable),
         ],
         child: const MaterialApp(
           locale: Locale('ja'),

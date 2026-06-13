@@ -479,6 +479,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'This device doesn\'t support on-device AI. You can add your own API key in Settings → AI to use cloud AI. Inventory and shopping list still work without AI.';
 
   @override
+  String get aiCloudKeyMissingTitle => 'No API key registered';
+
+  @override
+  String get aiCloudKeyMissingBody =>
+      'The selected cloud AI has no API key, or the key is invalid. Add a key in Settings → AI, or switch to on-device AI on supported devices. Inventory and shopping list still work without AI.';
+
+  @override
   String get settingsApiKeyHeading => 'API Key';
 
   @override
@@ -750,6 +757,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get mealsErrorNoApiKey =>
       'No AI API key is registered. Add an API key in Settings.';
+
+  @override
+  String get mealsErrorOnDevice =>
+      'The AI couldn\'t generate a response. The model may be warming up, or there may be too many items. Try with fewer items, or wait a moment and retry.';
+
+  @override
+  String get cameraVisionUnavailableTitle =>
+      'Can\'t register from photos on this device';
+
+  @override
+  String get cameraVisionUnavailableBody =>
+      'On-device AI can\'t read photos. Add a vision-capable cloud AI key in Settings → AI, or add items by hand.';
 
   @override
   String get mealsRetry => 'Retry';

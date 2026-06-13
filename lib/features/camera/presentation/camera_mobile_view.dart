@@ -144,11 +144,14 @@ class _CaptureView extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final photos = state.images;
     final full = photos.length >= 10;
-    final aiAvailable = ref.watch(aiAvailableProvider).maybeWhen(data: (v) => v, orElse: () => true);
+    // カメラ登録は画像認識が要るため vision 対応で入口を出し分ける。
+    // オンデバイス AI はテキスト専用（vision 非対応）なので、AI が使えても
+    // 画像認識ができない端末では入口を開かず案内する（解析時の必敗を防ぐ）。
+    final visionAvailable = ref.watch(cameraEntryEnabledProvider);
 
-    // AI 非対応端末（オンデバイス不可かつキー未登録）ではカメラ登録を無効化し案内。
-    // 戻るボタン（ヘッダー）は残す。
-    if (!aiAvailable) {
+    // AI 非対応端末ではカメラ登録を無効化し案内。戻るボタン（ヘッダー）は残す。
+    if (!visionAvailable) {
+      final aiAvailable = ref.watch(aiEntryEnabledProvider);
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -165,7 +168,13 @@ class _CaptureView extends ConsumerWidget {
               ],
             ),
           ),
-          const Expanded(child: AiUnavailableNotice()),
+          Expanded(
+            child: AiUnavailableNotice(
+              title:
+                  aiAvailable ? l10n.cameraVisionUnavailableTitle : null,
+              body: aiAvailable ? l10n.cameraVisionUnavailableBody : null,
+            ),
+          ),
         ],
       );
     }

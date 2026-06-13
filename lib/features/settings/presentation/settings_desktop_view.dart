@@ -536,6 +536,11 @@ class _ApiKeyCardState extends ConsumerState<_ApiKeyCard> {
 
   Future<void> _delete() async {
     await ref.read(secureStorageProvider).deleteApiKey(widget.providerId);
+    // キーが無いとこのプロバイダは使えないため、モデル上書きも残さない
+    // （古いモデル ID が再選択時に蘇るのを防ぐ）。
+    await ref
+        .read(settingsRepositoryProvider)
+        .setModelOverride(widget.providerId, null);
     ref.invalidate(recipeProviderProvider);
     if (!mounted) return;
     setState(() {

@@ -485,6 +485,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este dispositivo no admite la IA en el dispositivo. Puedes añadir tu propia clave de API en Ajustes → IA para usar la IA en la nube. El inventario y la lista de la compra funcionan sin IA.';
 
   @override
+  String get aiCloudKeyMissingTitle => 'No hay clave de API registrada';
+
+  @override
+  String get aiCloudKeyMissingBody =>
+      'La IA en la nube seleccionada no tiene clave de API, o la clave no es válida. Añade una clave en Ajustes → IA, o cambia a la IA en el dispositivo en dispositivos compatibles. El inventario y la lista de la compra funcionan sin IA.';
+
+  @override
   String get settingsApiKeyHeading => 'Clave de API';
 
   @override
@@ -760,6 +767,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get mealsErrorNoApiKey =>
       'No hay ninguna clave de API de IA registrada. Añade una clave de API en Ajustes.';
+
+  @override
+  String get mealsErrorOnDevice =>
+      'La IA no pudo generar una respuesta. Puede que el modelo se esté preparando o que haya demasiados artículos. Inténtalo con menos artículos o espera un momento y reinténtalo.';
+
+  @override
+  String get cameraVisionUnavailableTitle =>
+      'No se puede registrar desde fotos en este dispositivo';
+
+  @override
+  String get cameraVisionUnavailableBody =>
+      'La IA en el dispositivo no puede leer fotos. Añade en Ajustes → IA una clave de IA en la nube compatible con imágenes, o añade los artículos manualmente.';
 
   @override
   String get mealsRetry => 'Reintentar';

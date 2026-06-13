@@ -67,7 +67,13 @@ class OnDeviceRecipeProvider implements RecipeProvider {
   Future<List<DetectedIngredient>> recognizeIngredients(
       List<Uint8List> images) {
     if (!supportsVision) {
-      throw UnsupportedError('on-device model does not support vision');
+      // 設計方針どおり共通の RecipeProviderException で返す
+      // （呼び出し側は本例外型のみを catch する想定）。
+      throw RecipeProviderException(
+        providerId,
+        0,
+        'on-device model does not support vision',
+      );
     }
     return _run(
       () async => parseRecognizeResponse(

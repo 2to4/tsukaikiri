@@ -207,7 +207,7 @@ class _BeforeView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final aiAvailable = ref.watch(aiAvailableProvider).maybeWhen(data: (v) => v, orElse: () => true);
+    final aiAvailable = ref.watch(aiEntryEnabledProvider);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -827,7 +827,14 @@ class _ErrorView extends ConsumerWidget {
                     ),
                     alignment: Alignment.center,
                     child: Icon(
-                      isNoKey ? Icons.key_off_outlined : Icons.wifi_off_outlined,
+                      switch (error) {
+                        MealSuggestionError.noApiKey =>
+                          Icons.key_off_outlined,
+                        MealSuggestionError.onDeviceFailed =>
+                          Icons.auto_awesome_outlined,
+                        MealSuggestionError.network =>
+                          Icons.wifi_off_outlined,
+                      },
                       size: 44,
                       color: AppColors.near,
                     ),
@@ -840,7 +847,12 @@ class _ErrorView extends ConsumerWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    isNoKey ? l10n.mealsErrorNoApiKey : l10n.mealsErrorNetwork,
+                    switch (error) {
+                      MealSuggestionError.noApiKey => l10n.mealsErrorNoApiKey,
+                      MealSuggestionError.onDeviceFailed =>
+                        l10n.mealsErrorOnDevice,
+                      MealSuggestionError.network => l10n.mealsErrorNetwork,
+                    },
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                         fontSize: 14,

@@ -644,3 +644,24 @@
 ---
 
 ## コードレビュー セッション Notes (全体コードベース) — 完了更新 (前回)
+
+---
+
+## 2026-06-14 コードレビュー（オンデバイス AI 移行 a39e132..HEAD）+ 指摘修正
+
+- `/code-review` 高負荷4角度で 47ファイル差分をレビュー → 指摘10件を進捗管理 §4 に記録（バグ6 + 整理4）。
+- 重要バグ5件を TDD 修正: #1 カメラ入口を vision 対応で出し分け（`aiVisionAvailableProvider` 新設 + 専用文言）/ #2 オンデバイス失敗を network 誤表示せず `onDeviceFailed` に分岐 / #4 AI 可否ゲートをエラー時 false に / #5 Android maxOutputTokens 1024→2048 / #6 vision 非対応ガードを RecipeProviderException に。
+- 回帰テスト +5（controller 2 / vision gating 3）、既存カメラ capture テスト4件を vision 可フェイクに更新。**analyze 0 / 全 250 テストパス**。
+- 残: #3（クラウド選択＋キー無し時の UI 不一致＝要ユーザー判断）・#7〜#10（整理: Swift 重複・可用性多重プローブ・gate コピペ・旧設定残置）。
+
+### #3 対応（2026-06-14・ユーザー判断: フォールバックしない）
+- 決定: クラウド選択＋キー未登録/無効 → オンデバイスへ無言フォールバックせず、キー未登録エラーを出しオンデバイス切替を促す。
+- 実装: `aiResolutionProvider`（{provider,status}）に解決集約 + `AiStatus{available,cloudKeyMissing,unavailable}`。`recipeProviderProvider`/`aiStatusProvider` は射影。クラウド+キー無し→null/cloudKeyMissing。`AiUnavailableNotice` を ConsumerWidget 化し status で文言出し分け（`aiCloudKeyMissing*` 追加・en/ja/es）。
+- テスト: 解決②を null に変更・⑨ cloudKeyMissing 追加、AI非対応 widget テスト2件に aiStatusProvider=unavailable override。**全251テスト緑・analyze 0**。残: #7〜#10（整理系）。
+
+### #7〜#10 整理系（2026-06-14）
+- #8: main()/provider解決/設定UI が onDeviceAiAvailabilityProvider（キャッシュ）を共有 → 二重プローブ解消。
+- #9: aiEntryEnabledProvider / cameraEntryEnabledProvider 新設で4ビューの maybeWhen コピペ集約（loading=true/error=false 方針を一箇所に）。
+- #10: APIキー削除時に当該 modelOverride も解除（desktop/mobile _delete）。残置キーは #3 方針で保持。
+- #7: 部分対応。別Xcodeプロジェクト2つの共有ファイル化は iOS ビルド未検証 & per-platform慣習に反するため見送り、両 swift をバイト一致＋「同期必須」ヘッダー追加で drift 抑止。完全共有は iOS ビルド検証時に。
+- 検証: analyze 0 / 全251テスト緑 / macOS debug ビルド成功。レビュー指摘10件すべて対応完了。
