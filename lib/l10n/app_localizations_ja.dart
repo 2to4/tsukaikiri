@@ -1116,11 +1116,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get onboardingWelcomeStart => 'はじめる';
 
   @override
-  String get onboardingAiTitle => 'AIプロバイダを選択';
+  String get onboardingAiTitle => 'AI はそのまま使えます';
 
   @override
-  String get onboardingAiSub =>
-      '食材の認識と献立提案に使うAIを選んでください。APIキーはこのMac内に安全に保存されます。';
+  String get onboardingAiSub => 'AI は端末内で動くので、API キーの入力は不要です。';
+
+  @override
+  String onboardingAiOnDeviceReady(String name) {
+    return '$name が端末内で動作します。無料・キー不要・オフラインで、データは端末の外に出ません。';
+  }
+
+  @override
+  String get onboardingAiOnDeviceMissing =>
+      'この端末ではオンデバイス AI を使えません。あとで設定の「AI」からご自分の API キーを登録すると、クラウドの AI を使えます。';
 
   @override
   String get onboardingAiSkip => 'あとで設定';

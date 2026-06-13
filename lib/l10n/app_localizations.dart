@@ -2131,14 +2131,26 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingAiTitle.
   ///
   /// In en, this message translates to:
-  /// **'Choose an AI Provider'**
+  /// **'AI is ready to use'**
   String get onboardingAiTitle;
 
   /// No description provided for @onboardingAiSub.
   ///
   /// In en, this message translates to:
-  /// **'Select the AI to use for recognizing ingredients and suggesting meals.\nYour API key is stored securely on this Mac.'**
+  /// **'The AI runs on your device, so no API key is needed.'**
   String get onboardingAiSub;
+
+  /// No description provided for @onboardingAiOnDeviceReady.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} runs on your device — free, no API key, offline. Nothing leaves your device.'**
+  String onboardingAiOnDeviceReady(String name);
+
+  /// No description provided for @onboardingAiOnDeviceMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'On-device AI isn\'t available on this device. You can add your own API key later in Settings → AI to use cloud AI.'**
+  String get onboardingAiOnDeviceMissing;
 
   /// No description provided for @onboardingAiSkip.
   ///

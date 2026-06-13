@@ -505,8 +505,13 @@
   "onboardingWelcomeFeature3Body": "Auto-adds missing items to Reminders",
   "onboardingWelcomeStart": "Get Started",
 
-  "onboardingAiTitle": "Choose an AI Provider",
-  "onboardingAiSub": "Select the AI to use for recognizing ingredients and suggesting meals.\nYour API key is stored securely on this Mac.",
+  "onboardingAiTitle": "AI is ready to use",
+  "onboardingAiSub": "The AI runs on your device, so no API key is needed.",
+  "onboardingAiOnDeviceReady": "{name} runs on your device — free, no API key, offline. Nothing leaves your device.",
+  "@onboardingAiOnDeviceReady": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "onboardingAiOnDeviceMissing": "On-device AI isn't available on this device. You can add your own API key later in Settings → AI to use cloud AI.",
   "onboardingAiSkip": "Set up later",
   "onboardingAiKeyLabel": "API Key",
   "onboardingAiGetKeyLink": "Get {provider} API key",

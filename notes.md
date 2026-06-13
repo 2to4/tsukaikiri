@@ -1,4 +1,19 @@
-# B2: Android オンデバイス AI（Gemini Nano / AICore）実装 — 2026-06-13（最新）
+# C: オンボーディングから API キー入力を削除（オンデバイス既定前提）— 2026-06-13（最新）
+
+**要件**: 初回フローから「API キー入力」を削除（キーなしで即使える前提）。オンデバイス可否のみ判定し、使えない場合のみ案内。家電・買い物リスト等の既存ステップはそのまま。自前キーは設定の「詳細（AI）」へ。
+
+**実装 (TDD: 仕様書/設計書反映 → Red(既存テスト破壊=タイトル/③) → Green → Refactor)**:
+- desktop `_AiStep` / mobile `_MobileAiStep` を「プロバイダ選択+APIキー入力」から **オンデバイス可否表示のみ**に変更。共有 `OnDeviceStatusCard`（available→「{name} が端末内で動作」/ 不可→設定で自前キー案内）。`onDeviceAiAvailabilityProvider` を watch。
+- 完了サマリーの `_resolveAiName`（desktop/mobile）に `'ondevice'`→`onDeviceDisplayName()` を追加。
+- l10n: onboardingAiTitle/Sub を「AI はそのまま使えます/端末内で動くのでキー不要」に変更、onboardingAiOnDeviceReady({name})/Missing を en/ja/es 追加。
+- 旧 `OnboardingProviderGrid`/`OnboardingApiKeyCard` は未使用化（public・analyze 非対象。境界に共有ヘルパー混在のため今回は残置＝将来削除、設計書に明記）。
+- テスト: onboarding ① ② ④ のタイトル文言更新、③ を「オンデバイス可なら準備OK表示・プロバイダ選択は出ない」に書換（pumpView に availability override 追加）。
+- 検証: **flutter analyze 0 / 全242テスト / macOS ビルド 成功**。
+- 残: E(Android 非対応端末 gating UI)・F(ヘルプ AI 文言)。OnboardingProviderGrid/ApiKeyCard の物理削除も任意で。
+
+---
+
+# B2: Android オンデバイス AI（Gemini Nano / AICore）実装 — 2026-06-13
 
 **環境確認**: Android SDK あり・`flutter build apk --debug` 成功（Kotlin コンパイル検証可。SDK platform 35/34 自動取得済み）。実機 Gemini Nano での生成品質確認はユーザー（対応端末）。
 

@@ -495,8 +495,13 @@
   "onboardingWelcomeFeature3Body": "足りない食材を自動追加",
   "onboardingWelcomeStart": "はじめる",
 
-  "onboardingAiTitle": "AIプロバイダを選択",
-  "onboardingAiSub": "食材の認識と献立提案に使うAIを選んでください。APIキーはこのMac内に安全に保存されます。",
+  "onboardingAiTitle": "AI はそのまま使えます",
+  "onboardingAiSub": "AI は端末内で動くので、API キーの入力は不要です。",
+  "onboardingAiOnDeviceReady": "{name} が端末内で動作します。無料・キー不要・オフラインで、データは端末の外に出ません。",
+  "@onboardingAiOnDeviceReady": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "onboardingAiOnDeviceMissing": "この端末ではオンデバイス AI を使えません。あとで設定の「AI」からご自分の API キーを登録すると、クラウドの AI を使えます。",
   "onboardingAiSkip": "あとで設定",
   "onboardingAiKeyLabel": "APIキー",
   "onboardingAiGetKeyLink": "{provider} のAPIキーを取得する",

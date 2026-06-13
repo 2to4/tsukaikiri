@@ -11,6 +11,7 @@ import 'package:tsukaikiri/core/providers.dart';
 import 'package:tsukaikiri/core/secure_storage/secure_storage_service.dart';
 import 'package:tsukaikiri/features/onboarding/presentation/onboarding_desktop_view.dart';
 import 'package:tsukaikiri/features/onboarding/presentation/onboarding_mobile_view.dart';
+import 'package:tsukaikiri/features/recipe/service/on_device_ai_service.dart';
 import 'package:tsukaikiri/features/settings/data/settings_repository.dart';
 import 'package:tsukaikiri/features/settings/presentation/locale_controller.dart';
 import 'package:tsukaikiri/features/shell/presentation/shell_providers.dart';
@@ -58,12 +59,21 @@ class _FailingShoppingListService implements ShoppingListService {
 // テストヘルパー
 // ──────────────────────────────────────────────────────────────
 
+/// availability を固定で返すオンデバイスサービスのフェイク。
+class _FakeOnDeviceAiService extends OnDeviceAiService {
+  _FakeOnDeviceAiService(this._availability);
+  final OnDeviceAiAvailability _availability;
+  @override
+  Future<OnDeviceAiAvailability> availability() async => _availability;
+}
+
 /// オンボーディングビューをデスクトップ幅でビルドするヘルパー。
 Future<void> pumpView(
   WidgetTester tester, {
   required AppDatabase db,
   required SecureStorageService secure,
   ShoppingListService? shoppingService,
+  OnDeviceAiAvailability? onDeviceAvailability,
 }) async {
   tester.view.physicalSize = const Size(1280, 800);
   tester.view.devicePixelRatio = 1.0;
@@ -77,6 +87,9 @@ Future<void> pumpView(
         secureStorageProvider.overrideWithValue(secure),
         if (shoppingService != null)
           shoppingListServiceProvider.overrideWithValue(shoppingService),
+        if (onDeviceAvailability != null)
+          onDeviceAiServiceProvider
+              .overrideWithValue(_FakeOnDeviceAiService(onDeviceAvailability)),
       ],
       child: Consumer(builder: (context, ref, _) {
         final locale = ref.watch(localeControllerProvider);
@@ -136,7 +149,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // AI ステップのタイトルが表示される
-    expect(find.text('AIプロバイダを選択'), findsOneWidget);
+    expect(find.text('AI はそのまま使えます'), findsOneWidget);
 
     await unmountApp(tester);
   });
@@ -161,30 +174,34 @@ void main() {
     await tester.tap(find.text('はじめる'));
     await tester.pumpAndSettle();
 
-    // ステップ1のコンテンツタイトル「AIプロバイダを選択」が出る
-    expect(find.text('AIプロバイダを選択'), findsOneWidget);
+    // ステップ1のコンテンツタイトル「AI はそのまま使えます」が出る
+    expect(find.text('AI はそのまま使えます'), findsOneWidget);
 
     await unmountApp(tester);
   });
 
   // ═══════════════════════════════════════════════════════
-  // ③ AI ステップでプロバイダ選択 → settings の selectedProvider に保存される
+  // ③ AI ステップはオンデバイス可なら準備OKを表示し、キー入力はしない
   // ═══════════════════════════════════════════════════════
-  testWidgets('③ AIステップでプロバイダカードをタップすると selectedProvider が保存される',
+  testWidgets('③ AIステップはオンデバイス可なら準備OKを表示しプロバイダ選択は出さない',
       (tester) async {
     await repo.setLocalePref('ja');
-    await pumpView(tester, db: db, secure: secure);
+    await pumpView(
+      tester,
+      db: db,
+      secure: secure,
+      onDeviceAvailability: const OnDeviceAiAvailability(
+          available: true, supportsVision: false),
+    );
 
     // はじめる → AI ステップへ
     await tester.tap(find.text('はじめる'));
     await tester.pumpAndSettle();
 
-    // 「Claude」カードをタップ
-    await tester.tap(find.text('Claude'));
-    await tester.pumpAndSettle();
-
-    // DB に保存されている
-    expect((await repo.get()).selectedProvider, 'claude');
+    // オンデバイス準備OKメッセージ（端末内で動作）が出る。
+    expect(find.textContaining('端末内で動作します'), findsOneWidget);
+    // プロバイダ選択カード（Claude 等）は表示されない（初回フローでキー入力なし）。
+    expect(find.text('Claude'), findsNothing);
 
     await unmountApp(tester);
   });
@@ -202,7 +219,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // AI ステップにいることを確認
-    expect(find.text('AIプロバイダを選択'), findsOneWidget);
+    expect(find.text('AI はそのまま使えます'), findsOneWidget);
     expect(find.text('あとで設定'), findsOneWidget);
 
     // スキップ
@@ -382,7 +399,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // AI ステップ表示（モバイル版タイトル）
-    expect(find.text('AIプロバイダを選択'), findsOneWidget);
+    expect(find.text('AI はそのまま使えます'), findsOneWidget);
     expect(find.text('あとで設定'), findsOneWidget);
 
     // skip

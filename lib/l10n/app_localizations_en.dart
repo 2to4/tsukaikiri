@@ -1140,11 +1140,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingWelcomeStart => 'Get Started';
 
   @override
-  String get onboardingAiTitle => 'Choose an AI Provider';
+  String get onboardingAiTitle => 'AI is ready to use';
 
   @override
   String get onboardingAiSub =>
-      'Select the AI to use for recognizing ingredients and suggesting meals.\nYour API key is stored securely on this Mac.';
+      'The AI runs on your device, so no API key is needed.';
+
+  @override
+  String onboardingAiOnDeviceReady(String name) {
+    return '$name runs on your device — free, no API key, offline. Nothing leaves your device.';
+  }
+
+  @override
+  String get onboardingAiOnDeviceMissing =>
+      'On-device AI isn\'t available on this device. You can add your own API key later in Settings → AI to use cloud AI.';
 
   @override
   String get onboardingAiSkip => 'Set up later';

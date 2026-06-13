@@ -1152,11 +1152,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get onboardingWelcomeStart => 'Empezar';
 
   @override
-  String get onboardingAiTitle => 'Elige un proveedor de IA';
+  String get onboardingAiTitle => 'La IA ya está lista';
 
   @override
   String get onboardingAiSub =>
-      'Selecciona la IA que se usará para reconocer ingredientes y sugerir comidas.\nTu clave de API se guarda de forma segura en este Mac.';
+      'La IA funciona en tu dispositivo, así que no necesitas clave de API.';
+
+  @override
+  String onboardingAiOnDeviceReady(String name) {
+    return '$name funciona en tu dispositivo: gratis, sin clave de API y sin conexión. Nada sale de tu dispositivo.';
+  }
+
+  @override
+  String get onboardingAiOnDeviceMissing =>
+      'La IA en el dispositivo no está disponible aquí. Más tarde puedes añadir tu propia clave de API en Ajustes → IA para usar la IA en la nube.';
 
   @override
   String get onboardingAiSkip => 'Configurar más tarde';

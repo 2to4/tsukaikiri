@@ -626,8 +626,9 @@ class _FeatureCard extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────
 
 /// macosOnboarding.jsx の MacAIStep を再現。
-/// M3 の _ProviderGrid / _ApiKeyCard と同じリポジトリ経路（selectedProvider /
-/// SecureStorage）を使い保存する。
+/// オンデバイス AI が既定のため、初回フローでは **API キーを入力させない**。
+/// オンデバイスが使えるかだけを判定し、使えない場合のみ案内する
+/// （自前キーは設定の「AI」から任意で登録できる）。
 class _AiStep extends ConsumerWidget {
   const _AiStep({
     required this.onNext,
@@ -642,41 +643,68 @@ class _AiStep extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final settingsAsync = ref.watch(userSettingsProvider);
-
-    return settingsAsync.when(
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, _) => Center(child: Text('$e')),
-      data: (settings) {
-        final selected = settings.selectedProvider;
-        return _OBContent(
-          title: l10n.onboardingAiTitle,
-          sub: l10n.onboardingAiSub,
-          skipLabel: l10n.onboardingAiSkip,
-          onSkip: onSkip,
-          onBack: onBack,
-          onPrimary: onNext,
-          maxWidth: 520,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // プロバイダカード（M3 の _ProviderGrid を再利用）
-              OnboardingProviderGrid(
-                selected: selected,
-                onSelect: (id) => ref
-                    .read(settingsRepositoryProvider)
-                    .setSelectedProvider(id),
-              ),
-              const SizedBox(height: 16),
-              // APIキーカード（M3 の _ApiKeyCard を再利用）
-              OnboardingApiKeyCard(
-                key: ValueKey('ob_apikey_$selected'),
-                providerId: selected,
-              ),
-            ],
-          ),
+    final available = ref.watch(onDeviceAiAvailabilityProvider).maybeWhen(
+          data: (a) => a.available,
+          orElse: () => false,
         );
-      },
+
+    return _OBContent(
+      title: l10n.onboardingAiTitle,
+      sub: l10n.onboardingAiSub,
+      skipLabel: l10n.onboardingAiSkip,
+      onSkip: onSkip,
+      onBack: onBack,
+      onPrimary: onNext,
+      maxWidth: 520,
+      child: OnDeviceStatusCard(available: available),
+    );
+  }
+}
+
+/// オンデバイス AI の利用可否を伝えるカード（オンボーディング AI ステップ用）。
+class OnDeviceStatusCard extends StatelessWidget {
+  const OnDeviceStatusCard({super.key, required this.available});
+
+  final bool available;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final message = available
+        ? l10n.onboardingAiOnDeviceReady(onDeviceDisplayName())
+        : l10n.onboardingAiOnDeviceMissing;
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: available ? AppColors.greenSoft : AppColors.card,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: available ? AppColors.green : AppColors.line,
+          width: 1.5,
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            available ? Icons.verified_user_outlined : Icons.info_outline,
+            size: 22,
+            color: available ? AppColors.green : AppColors.sub,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              message,
+              style: const TextStyle(
+                fontSize: 13.5,
+                fontWeight: FontWeight.w600,
+                color: AppColors.ink,
+                height: 1.5,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -1413,6 +1441,7 @@ class _FinishStep extends ConsumerWidget {
   /// プロバイダ ID を表示名に変換。
   String? _resolveAiName(String providerId) {
     return switch (providerId) {
+      onDeviceProviderId => onDeviceDisplayName(),
       'claude' => 'Claude',
       'openai' => 'GPT-4o',
       'gemini' => 'Gemini',

@@ -11,6 +11,7 @@ import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/mobile_nav_buttons.dart';
+import '../../../features/recipe/service/recipe_provider_factory.dart';
 import '../../../features/settings/domain/appliance.dart';
 import '../../../l10n/app_localizations.dart';
 import 'onboarding_desktop_view.dart'; // OnboardingProviderGrid, OnboardingApiKeyCard, OnboardingApplianceCard を再利用
@@ -224,7 +225,7 @@ class _MobileFeatureCard extends StatelessWidget {
   }
 }
 
-// ステップ 1: AI (desktop の _AiStep をほぼそのまま、_OBContent だけ mobile 風に)
+// ステップ 1: AI（オンデバイス既定のため API キー入力はせず、可否表示のみ）
 class _MobileAiStep extends ConsumerWidget {
   const _MobileAiStep({required this.onNext, required this.onBack, required this.onSkip});
 
@@ -235,32 +236,19 @@ class _MobileAiStep extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final settingsAsync = ref.watch(userSettingsProvider);
-
-    return settingsAsync.when(
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, _) => Center(child: Text('$e')),
-      data: (settings) {
-        final selected = settings.selectedProvider;
-        return _MobileOBContent(
-          title: l10n.onboardingAiTitle,
-          sub: l10n.onboardingAiSub,
-          skipLabel: l10n.onboardingAiSkip,
-          onSkip: onSkip,
-          onBack: onBack,
-          onPrimary: onNext,
-          child: Column(
-            children: [
-              OnboardingProviderGrid(
-                selected: selected,
-                onSelect: (id) => ref.read(settingsRepositoryProvider).setSelectedProvider(id),
-              ),
-              const SizedBox(height: 16),
-              OnboardingApiKeyCard(key: ValueKey('ob_apikey_$selected'), providerId: selected),
-            ],
-          ),
+    final available = ref.watch(onDeviceAiAvailabilityProvider).maybeWhen(
+          data: (a) => a.available,
+          orElse: () => false,
         );
-      },
+
+    return _MobileOBContent(
+      title: l10n.onboardingAiTitle,
+      sub: l10n.onboardingAiSub,
+      skipLabel: l10n.onboardingAiSkip,
+      onSkip: onSkip,
+      onBack: onBack,
+      onPrimary: onNext,
+      child: OnDeviceStatusCard(available: available),
     );
   }
 }
@@ -724,7 +712,7 @@ class _MobileOBContent extends StatelessWidget {
 
 // ヘルパー（desktop から簡易コピー）
 String? _resolveAiName(String id) {
-  // 簡易版（desktop の createRecipeProviderMeta に依存せず固定名）
+  if (id == onDeviceProviderId) return onDeviceDisplayName();
   switch (id) {
     case 'gemini': return 'Gemini';
     case 'grok': return 'Grok';
