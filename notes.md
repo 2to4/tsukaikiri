@@ -9,7 +9,13 @@
 - 旧 `OnboardingProviderGrid`/`OnboardingApiKeyCard` は未使用化（public・analyze 非対象。境界に共有ヘルパー混在のため今回は残置＝将来削除、設計書に明記）。
 - テスト: onboarding ① ② ④ のタイトル文言更新、③ を「オンデバイス可なら準備OK表示・プロバイダ選択は出ない」に書換（pumpView に availability override 追加）。
 - 検証: **flutter analyze 0 / 全242テスト / macOS ビルド 成功**。
-- 残: E(Android 非対応端末 gating UI)・F(ヘルプ AI 文言)。OnboardingProviderGrid/ApiKeyCard の物理削除も任意で。
+- 残: E(Android 非対応端末 gating UI)・F(ヘルプ AI 文言)。
+
+**C 残置クラス削除（追加対応）**:
+- 慎重な依存検証の上で `OnboardingProviderGrid`/`_OBProviderCard`/`OnboardingApiKeyCard`/`_OnboardingApiKeyCardState` を削除（381行）。
+- 検証手順: ①宣言一覧で境界特定 ②`_OBProviderCard` は OnboardingProviderGrid 内のみ使用と確認 ③`OnboardingApplianceCard`(残す)が削除ブロックを参照しないこと確認（`_PillToggle` はコメントのみで実依存なし）④アンカー文字列ベースで削除 + アサーション（ApplianceCard 非巻き込み）。
+- 連鎖修正: 未使用化した `_OBSmallButton.primary` パラメータ+分岐を除去（残る呼出は非primaryのみ）、未使用 `url_launcher` import 削除、section コメント更新。
+- 検証: **flutter analyze 0 / 全242テスト / macOS ビルド 成功**。誤削除なし。
 
 ---
 
