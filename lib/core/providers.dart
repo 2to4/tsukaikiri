@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../features/inventory/data/inventory_repository.dart';
+import '../features/recipe/service/apple_foundation_models_provider.dart';
+import '../features/recipe/service/on_device_ai_service.dart';
 import '../features/recipe/service/recipe_provider.dart';
 import '../features/recipe/service/recipe_provider_factory.dart';
 import '../features/settings/data/settings_repository.dart';
@@ -122,25 +124,50 @@ final autoBackupWatcherProvider = Provider<void>((ref) {
   });
 });
 
-/// 選択中プロバイダの RecipeProvider を解決する。
-/// API キー未登録なら null（UI はキー登録を促す）。
+/// オンデバイス AI（Apple Foundation Models）のネイティブブリッジ。
+/// テストでは availability / generate を差し替えられるよう Provider 化する。
+final onDeviceAiServiceProvider = Provider<OnDeviceAiService>(
+  (_) => const OnDeviceAiService(),
+);
+
+/// 実際に使う RecipeProvider を解決する（2段構え・オンデバイス既定）。
+///
+/// 解決順:
+///   1. クラウドのプロバイダが選択され、その API キーが登録済み → そのクラウド
+///   2. それ以外（キー無し / `'ondevice'` 選択など）でオンデバイス AI が使える
+///      端末 → [AppleFoundationModelsProvider]
+///   3. どちらも使えない → null（AI 機能は無効。UI が案内）
+///
 /// モデルはユーザーの上書き設定があればそれを、なければ実装の既定値を使う。
 final recipeProviderProvider = FutureProvider<RecipeProvider?>((ref) async {
-  final settings = await ref.watch(userSettingsProvider.future);
+  // 設定変更（プロバイダ選択・キー登録は別経路だが）で再解決されるよう依存を張る。
+  // 値自体は一発クエリで取る（CLAUDE.md: 非 UI は repo クエリ / .future を使わない）。
+  ref.watch(userSettingsProvider);
+  final settings = await ref.read(settingsRepositoryProvider).get();
   final providerId = settings.selectedProvider;
-  if (!supportedProviderIds.contains(providerId)) {
-    // 未知/legacy の providerId（旧設定・壊れたバックアップ由来など）は
-    // 安全に null 扱い（= APIキー未設定と同じく設定誘導）。これにより
-    // createRecipeProvider の ArgumentError を避け、コントローラ側の
-    // network誤分類も防止。providerDisplayInfo と同等の耐性を runtime に。
-    return null;
+
+  // 1. クラウドプロバイダが選択され、キーが登録済みならそれを使う。
+  if (supportedProviderIds.contains(providerId)) {
+    final apiKey = await ref.read(secureStorageProvider).getApiKey(providerId);
+    if (apiKey != null && apiKey.isNotEmpty) {
+      return createRecipeProvider(
+        providerId: providerId,
+        apiKey: apiKey,
+        model: settings.modelOverrides[providerId],
+      );
+    }
   }
-  final apiKey =
-      await ref.watch(secureStorageProvider).getApiKey(providerId);
-  if (apiKey == null || apiKey.isEmpty) return null;
-  return createRecipeProvider(
-    providerId: providerId,
-    apiKey: apiKey,
-    model: settings.modelOverrides[providerId],
-  );
+
+  // 2. キー無し / 'ondevice' 選択 / 未知 ID → オンデバイスが使えるなら使う。
+  final service = ref.read(onDeviceAiServiceProvider);
+  final availability = await service.availability();
+  if (availability.available) {
+    return AppleFoundationModelsProvider(
+      service: service,
+      supportsVision: availability.supportsVision,
+    );
+  }
+
+  // 3. オンデバイス非対応かつキー無し → AI 無効。
+  return null;
 });

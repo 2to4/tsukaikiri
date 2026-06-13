@@ -5,8 +5,14 @@ import 'gemini_provider.dart';
 import 'openai_compatible_provider.dart';
 import 'recipe_provider.dart';
 
-/// 設定可能な AI プロバイダの識別子（実装優先順位順）。
+/// 設定可能なクラウド AI プロバイダの識別子（実装優先順位順）。
+/// `createRecipeProvider` で生成できるもの（自前キーが要る）。
 const supportedProviderIds = ['gemini', 'grok', 'openai', 'claude'];
+
+/// オンデバイス AI（既定。キー不要）を表す selectedProvider の sentinel 値。
+/// クラウド4社と異なり factory では生成せず、`recipeProviderProvider` が
+/// `OnDeviceAiService` 経由で `AppleFoundationModelsProvider` を解決する。
+const onDeviceProviderId = 'ondevice';
 
 /// API キー取得ページの URL（設定・オンボーディングの画面で共用）。
 const providerKeyUrls = <String, String>{
@@ -21,6 +27,10 @@ const providerKeyUrls = <String, String>{
 /// 未知の id（旧バージョンの設定や壊れたバックアップ由来）でも throw せず
 /// フォールバックを返す — 設定画面自体が開けなくなるのを防ぐため。
 ({String displayName, bool supportsVision}) providerDisplayInfo(String id) {
+  if (id == onDeviceProviderId) {
+    // Vision 可否は実機の availability で決まるためここでは false 既定。
+    return (displayName: 'Apple Intelligence', supportsVision: false);
+  }
   if (!supportedProviderIds.contains(id)) {
     return (displayName: id, supportsVision: false);
   }

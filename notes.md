@@ -1,4 +1,26 @@
-# オンデバイス AI 実装セッション — 2026-06-13（最新）
+# A: 既定プロバイダ解決ロジック実装セッション — 2026-06-13（最新）
+
+**開発ルール更新（CLAUDE.md）**: 「設計変更は随時設計書に反映する」が追加。TDD は **①仕様書作成 → ②Red（失敗テスト）→ ③Green（実装）→ ④Refactor** の順を厳守。
+
+**A の設計（確定）**:
+- 解決順（recipeProviderProvider）: ①自前クラウドプロバイダ選択＆キー有り→そのクラウド ②（上記以外/キー無し/`ondevice` 選択）オンデバイス可→`AppleFoundationModelsProvider` ③どちらも不可→null（AI 無効）。
+- `'ondevice'` を selectedProvider の有効値（sentinel）として認識。`providerDisplayInfo` に追加（'Apple Intelligence'）。`supportedProviderIds`（=factory が生成できるクラウド4社）には**加えない**（factory が throw するため、解決側で別扱い）。
+- `onDeviceAiServiceProvider` を追加（DI・テストで差し替え）。
+- **重要な設計判断**: DB 既定 selectedProvider は当面 `'gemini'` のまま維持する。理由＝既定を `'ondevice'` に変えると設定UIのプロバイダ選択グリッド（クラウド4カード）でどれも選択表示されず、オンデバイスカードも無い「壊れた中間UI」になる。解決ロジック上はキー無し→自動でオンデバイスに落ちるので、**キー未登録ユーザーは既に実質オンデバイス既定**。既定値の `'ondevice'` への変更と設定UI再構成は D タスク（UIと同時）で行う。これにより A は test 破壊なし・中間UI破綻なしで完結。
+- 現状オンデバイス available なのは macOS/iOS 26+ のみ。未対応OS/Android では②が false → ③null →（当面）既存の noApiKey 文言（E タスクで「未対応」案内に改善）。
+
+**進め方**: ①仕様書(6.2 に解決仕様) + 設計書 §5.1.1 を実装済みに更新 → ②Red: recipe_provider_resolution_test → ③Green: providers.dart 解決書換 + onDeviceAiServiceProvider + providerDisplayInfo 'ondevice' → ④Refactor → analyze/test → commit。
+
+**A 完了サマリ (2-3行)**:
+- ①仕様書: 仕様書.md §6.2 に「AI プロバイダの選択（2段構え・解決順）」を追記。設計書 §5.1.1 の解決を「実装済み」に更新（'ondevice' sentinel・既定値は当面 'gemini' 維持の理由を明記）。
+- ②③: `recipe_provider_resolution_test`（5ケース: クラウド+キー / キー無し→オンデバイス / ondevice選択+vision引継ぎ / 不可→null ×2）を Red→Green。`recipeProviderProvider` を解決順（クラウド+キー→オンデバイス→null）に書換。`onDeviceAiServiceProvider` 追加。`onDeviceProviderId='ondevice'` 定数 + `providerDisplayInfo('ondevice')`='Apple Intelligence'。
+- **CLAUDE.md 規約改善も同時達成**: 旧 recipeProviderProvider は `userSettingsProvider.future`（.future は非UIで非推奨）を使っていた → 「`ref.watch(userSettingsProvider)` で再解決依存だけ張り、値は `settingsRepository.get()` 一発クエリ」に変更。テスト容易性も向上。
+- 検証: flutter analyze 0 / 全238テストパス（テスト環境ではオンデバイス MissingPlugin→unavailable のため既存「キー無し→null」も維持）。Dart のみの変更（ネイティブ不変）。
+- 次: A は完了。残は B2(Android Gemini Nano)・C(オンボーディングのキー削除)・D(設定UI再構成+既定を'ondevice'へ)・E(Android gating)・F(ヘルプAI文言)。
+
+---
+
+# オンデバイス AI 実装セッション — 2026-06-13
 
 **タスク**: macOS/iOS のオンデバイス AI 処理（Apple Foundation Models）を実装し、その後 A〜（既定プロバイダ解決等）へ進む。まず設計書（doc/設計書.md）を更新し、それに従って実装。
 
