@@ -30,6 +30,7 @@
 		78A318202AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 78A3181F2AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage */; };
 		FA00000A2044A3C600000001 /* RemindersPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA00000B2044A3C600000001 /* RemindersPlugin.swift */; };
 		FA00000C2044A3C600000002 /* ICloudSyncPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA00000D2044A3C600000002 /* ICloudSyncPlugin.swift */; };
+		FA00000E2044A3C600000003 /* OnDeviceAiPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA00000F2044A3C600000003 /* OnDeviceAiPlugin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		FA00000B2044A3C600000001 /* RemindersPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersPlugin.swift; sourceTree = "<group>"; };
 		FA00000D2044A3C600000002 /* ICloudSyncPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudSyncPlugin.swift; sourceTree = "<group>"; };
+		FA00000F2044A3C600000003 /* OnDeviceAiPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnDeviceAiPlugin.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +176,7 @@
 				33CC11122044BFA00003C045 /* MainFlutterWindow.swift */,
 				FA00000B2044A3C600000001 /* RemindersPlugin.swift */,
 				FA00000D2044A3C600000002 /* ICloudSyncPlugin.swift */,
+				FA00000F2044A3C600000003 /* OnDeviceAiPlugin.swift */,
 				33E51913231747F40026EE4D /* DebugProfile.entitlements */,
 				33E51914231749380026EE4D /* Release.entitlements */,
 				33CC11242044D66E0003C045 /* Resources */,
@@ -363,6 +366,7 @@
 				33CC10F12044A3C60003C045 /* AppDelegate.swift in Sources */,
 				FA00000A2044A3C600000001 /* RemindersPlugin.swift in Sources */,
 				FA00000C2044A3C600000002 /* ICloudSyncPlugin.swift in Sources */,
+				FA00000E2044A3C600000003 /* OnDeviceAiPlugin.swift in Sources */,
 				335BBD1B22A9A15E00E9071D /* GeneratedPluginRegistrant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

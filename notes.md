@@ -1,4 +1,28 @@
-# Grok 作業の検証・是正・完成セッション — 2026-06-13（最新）
+# オンデバイス AI 実装セッション — 2026-06-13（最新）
+
+**タスク**: macOS/iOS のオンデバイス AI 処理（Apple Foundation Models）を実装し、その後 A〜（既定プロバイダ解決等）へ進む。まず設計書（doc/設計書.md）を更新し、それに従って実装。
+
+**環境確認**: macOS 26.5.1 / Xcode 26.5 / FoundationModels.framework が SDK に存在（実装・ビルド検証可）。
+
+**設計（確定）**:
+- 方式: ネイティブ側は「プロンプト文字列（+任意で画像）を受け取り、モデルにJSON出力させてテキストを返す」薄いブリッジ。Dart 側で既存の recipe_prompts（buildSuggestPrompt/buildNormalizePrompt/recognizePrompt + parse*）を完全再利用 → クラウド実装と挙動・スキーマ完全一致。
+- channel `com.futo4.tsukaikiri/ondevice_ai`: `availability()`→{available, supportsVision, reason}, `generate(prompt, images?)`→String。
+- Dart: `OnDeviceAiService`(channel wrapper) + `AppleFoundationModelsProvider implements RecipeProvider`（supportsVision は availability から注入、displayName='Apple Intelligence', modelId='apple-foundation-models'）。
+- Swift: `OnDeviceAiPlugin.swift`（`#if canImport(FoundationModels)` ガード、`SystemLanguageModel.availability`、`LanguageModelSession.respond`）。macOS は MainFlutterWindow で手動登録。iOS も同 Swift を流用（FlutterMacOS/Flutter は条件 import）。
+- @Generable 構造化出力は将来の堅牢化として doc に記載（MVP は JSON テキスト→既存 parser）。
+
+**進め方**: 設計書更新 → Dart(provider+service+test) → Swift(macOS) → 登録 → macOS ビルド検証 → Dart test → iOS 登録（ビルドは iOS 環境次第）。その後 A（既定解決・sentinel）へ。
+
+**B1 完了サマリ (2-3行)**:
+- Dart: `OnDeviceAiService`（channel ラッパ + availability/generate + 例外）, `AppleFoundationModelsProvider implements RecipeProvider`（recipe_prompts 完全再利用、supportsVision 注入、displayName='Apple Intelligence'）。テスト13件（provider 8 + service 5）。
+- Swift: `OnDeviceAiPlugin.swift`（macos/Runner + ios/Runner、`#if canImport(FoundationModels)` + `@available(26)` ガード、`SystemLanguageModel.default.availability` / `LanguageModelSession.respond`）。macOS=MainFlutterWindow、iOS=AppDelegate で登録。両 pbxproj に追加。
+- 検証: **macOS debug ビルド成功 / iOS simulator ビルド成功 / flutter analyze 0 / 全233テストパス**。Swift6 Sendable 警告も解消。
+- 注記: 現状オンデバイスはテキスト専用のため supportsVision=false（カメラ登録はオンデバイスでは無効、画像理解は将来）。実機での実際の生成品質確認はユーザー（Apple Intelligence 有効端末）が必要。
+- 次: A（既定プロバイダ解決ロジック・ondevice sentinel・recipeProviderProvider 配線）。オンデバイス実装済みなので既定切替が安全に可能に。
+
+---
+
+# Grok 作業の検証・是正・完成セッション — 2026-06-13
 
 **タスク**: Grok がレートリミット中に進めた未コミット作業を検証・是正し、未決機能を完成させてクリーンにコミット。計画は `~/.claude/plans/zany-squishing-kite.md`（承認済み）。
 
