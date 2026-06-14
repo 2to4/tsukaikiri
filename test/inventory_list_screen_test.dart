@@ -96,4 +96,64 @@ void main() {
     expect(find.text('削除'), findsOneWidget);
     await unmountApp(tester);
   });
+
+  testWidgets('検索アイコンで検索欄を開き、入力で一覧を絞り込む', (tester) async {
+    await seed('豚肉');
+    await seed('牛乳');
+    await pumpApp(tester);
+
+    expect(find.text('豚肉'), findsOneWidget);
+    expect(find.text('牛乳'), findsOneWidget);
+
+    // 検索アイコンで検索欄を開く。
+    await tester.tap(find.byIcon(Icons.search));
+    await tester.pumpAndSettle();
+    expect(find.byType(TextField), findsOneWidget);
+    // ヘッダーの検索アイコンは隠れ、検索欄の prefix だけ（再タップでクエリが消えない）。
+    expect(find.byIcon(Icons.search), findsOneWidget);
+
+    // 「豚」で絞り込む（部分一致・大文字小文字無視）。
+    await tester.enterText(find.byType(TextField), '豚');
+    await tester.pumpAndSettle();
+    expect(find.text('豚肉'), findsOneWidget);
+    expect(find.text('牛乳'), findsNothing);
+
+    await unmountApp(tester);
+  });
+
+  testWidgets('一致なしのとき「該当なし」を表示する', (tester) async {
+    await seed('豚肉');
+    await pumpApp(tester);
+
+    await tester.tap(find.byIcon(Icons.search));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'りんご');
+    await tester.pumpAndSettle();
+
+    expect(find.text('豚肉'), findsNothing);
+    expect(find.text('「りんご」に一致する食材はありません'), findsOneWidget);
+
+    await unmountApp(tester);
+  });
+
+  testWidgets('検索を閉じると一覧が元に戻る', (tester) async {
+    await seed('豚肉');
+    await seed('牛乳');
+    await pumpApp(tester);
+
+    await tester.tap(find.byIcon(Icons.search));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), '豚');
+    await tester.pumpAndSettle();
+    expect(find.text('牛乳'), findsNothing);
+
+    // 閉じる（×）で検索解除。
+    await tester.tap(find.byIcon(Icons.close));
+    await tester.pumpAndSettle();
+    expect(find.text('豚肉'), findsOneWidget);
+    expect(find.text('牛乳'), findsOneWidget);
+    expect(find.byType(TextField), findsNothing);
+
+    await unmountApp(tester);
+  });
 }

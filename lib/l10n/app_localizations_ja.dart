@@ -358,6 +358,14 @@ class AppLocalizationsJa extends AppLocalizations {
   String get desktopSearchPlaceholder => '食材を検索…';
 
   @override
+  String get inventorySearchHint => '食材を検索…';
+
+  @override
+  String inventorySearchEmpty(String query) {
+    return '「$query」に一致する食材はありません';
+  }
+
+  @override
   String get desktopNoResults => '該当する食材がありません';
 
   @override

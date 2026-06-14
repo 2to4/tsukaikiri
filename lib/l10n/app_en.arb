@@ -148,6 +148,11 @@
   "desktopGroupWeek": "This Week",
   "desktopGroupPlenty": "Plenty of Time",
   "desktopSearchPlaceholder": "Search ingredients…",
+  "inventorySearchHint": "Search items…",
+  "inventorySearchEmpty": "No items match “{query}”",
+  "@inventorySearchEmpty": {
+    "placeholders": { "query": { "type": "String" } }
+  },
   "desktopNoResults": "No matching ingredients",
   "desktopSelectPrompt": "Select an ingredient",
   "desktopSelectBody": "Click an item in the list to view details and edit.",

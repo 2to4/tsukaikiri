@@ -778,6 +778,18 @@ abstract class AppLocalizations {
   /// **'Search ingredients…'**
   String get desktopSearchPlaceholder;
 
+  /// No description provided for @inventorySearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search items…'**
+  String get inventorySearchHint;
+
+  /// No description provided for @inventorySearchEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No items match “{query}”'**
+  String inventorySearchEmpty(String query);
+
   /// No description provided for @desktopNoResults.
   ///
   /// In en, this message translates to:

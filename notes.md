@@ -665,3 +665,9 @@
 - #10: APIキー削除時に当該 modelOverride も解除（desktop/mobile _delete）。残置キーは #3 方針で保持。
 - #7: 部分対応。別Xcodeプロジェクト2つの共有ファイル化は iOS ビルド未検証 & per-platform慣習に反するため見送り、両 swift をバイト一致＋「同期必須」ヘッダー追加で drift 抑止。完全共有は iOS ビルド検証時に。
 - 検証: analyze 0 / 全251テスト緑 / macOS debug ビルド成功。レビュー指摘10件すべて対応完了。
+
+### 実機抜きタスク A→ 着手（2026-06-14）
+- A レシピを見る: 既に実装済み（ingredient_detail_view が suggestFromIngredient + 遷移配線済み。doc が古かった）。
+- B モバイル設定 comingSoon: ほぼ済み（Help/Onboarding/About 配線済み・残 Buy Me a Coffee は URL 待ち）。
+- C モバイル在庫検索: TDD で実装。検索アイコン→_SearchField（autofocus・×解除）、名前部分一致で絞り込み、該当なしは _SearchEmpty。ローカル状態（provider 不要）。l10n inventorySearchHint/Empty 追加。テスト +3。analyze 0 / 全254緑。
+- キリのいいC完了でコードレビューへ。D（テスト拡充・任意）E（Android骨組み・価値小）は未着手。

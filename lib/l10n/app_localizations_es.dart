@@ -365,6 +365,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get desktopSearchPlaceholder => 'Buscar ingredientes…';
 
   @override
+  String get inventorySearchHint => 'Buscar artículos…';
+
+  @override
+  String inventorySearchEmpty(String query) {
+    return 'Ningún artículo coincide con «$query»';
+  }
+
+  @override
   String get desktopNoResults => 'No hay ingredientes que coincidan';
 
   @override

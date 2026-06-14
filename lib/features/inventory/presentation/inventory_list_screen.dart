@@ -58,6 +58,22 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
   /// スワイプで開いている行の id（同時に1つだけ）。
   String? _openId;
 
+  /// 検索欄を開いているか。
+  bool _searching = false;
+
+  /// 検索クエリ（名前の部分一致・大文字小文字無視）。
+  String _query = '';
+
+  void _openSearch() => setState(() {
+        _searching = true;
+        _query = '';
+      });
+
+  void _closeSearch() => setState(() {
+        _searching = false;
+        _query = '';
+      });
+
   void _openForm({Ingredient? ingredient}) {
     Navigator.of(context).push(MaterialPageRoute<void>(
       builder: (_) => IngredientFormScreen(ingredient: ingredient),
@@ -68,13 +84,6 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
     Navigator.of(context).push(
       MaterialPageRoute<void>(builder: (_) => const SettingsScreen()),
     );
-  }
-
-  void _comingSoon() {
-    final l10n = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context)
-      ..clearSnackBars()
-      ..showSnackBar(SnackBar(content: Text(l10n.comingSoon)));
   }
 
   void _openMeals() {
@@ -133,23 +142,47 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
           error: (e, _) => Center(child: Text('$e')),
           data: (items) {
             if (items.isEmpty &&
-                ref.watch(categoryFilterProvider) == null) {
+                ref.watch(categoryFilterProvider) == null &&
+                !_searching) {
               return _EmptyState(
                 onCamera: _openCamera,
                 onManual: () => _openForm(),
                 onSettings: _openSettings,
               );
             }
+            // 検索クエリで名前を絞り込む（デスクトップと同じ部分一致）。
+            final q = _query.trim().toLowerCase();
+            final filtered = q.isEmpty
+                ? items
+                : items
+                    .where((i) => i.name.toLowerCase().contains(q))
+                    .toList();
             return LayoutBuilder(
               builder: (context, constraints) {
                 final isWide = constraints.maxWidth >= _tabletBreakpoint;
-                if (!isWide) return _narrow(items);
-                return _wide(items);
+                if (!isWide) return _narrow(filtered);
+                return _wide(filtered);
               },
             );
           },
         ),
       ),
+    );
+  }
+
+  /// 検索中で一致がないとき専用メッセージ、それ以外は通常の一覧。
+  Widget _listOrSearchEmpty(List<Ingredient> items,
+      {bool selectable = false, String? selectedId, void Function(Ingredient)? onTap}) {
+    if (_searching && _query.trim().isNotEmpty && items.isEmpty) {
+      return _SearchEmpty(query: _query.trim());
+    }
+    return _GroupedList(
+      items: items,
+      openId: _openId,
+      selectable: selectable,
+      selectedId: selectedId,
+      onOpenChanged: (id) => setState(() => _openId = id),
+      onTap: onTap ?? _openDetailNarrow,
     );
   }
 
@@ -159,18 +192,18 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
         _Header(
           count: items.length,
           onSettings: _openSettings,
-          onSearch: _comingSoon,
+          // 検索中はヘッダーの検索アイコンを隠す（再タップでクエリが消えるのを防ぐ）。
+          onSearch: _searching ? null : _openSearch,
           onAdd: () => _openForm(),
         ),
-        const _CategoryChips(),
-        Expanded(
-          child: _GroupedList(
-            items: items,
-            openId: _openId,
-            onOpenChanged: (id) => setState(() => _openId = id),
-            onTap: _openDetailNarrow,
+        if (_searching)
+          _SearchField(
+            initial: _query,
+            onChanged: (q) => setState(() => _query = q),
+            onClose: _closeSearch,
           ),
-        ),
+        const _CategoryChips(),
+        Expanded(child: _listOrSearchEmpty(items)),
         _BottomActions(
           onSuggest: _openMeals,
           onCamera: _openCamera,
@@ -190,17 +223,22 @@ class _InventoryListScreenState extends ConsumerState<InventoryListScreen> {
               _Header(
                 count: items.length,
                 onSettings: _openSettings,
-                onSearch: _comingSoon,
+                // 検索中はヘッダーの検索アイコンを隠す。
+                onSearch: _searching ? null : _openSearch,
                 onAdd: () => _openForm(),
               ),
+              if (_searching)
+                _SearchField(
+                  initial: _query,
+                  onChanged: (q) => setState(() => _query = q),
+                  onClose: _closeSearch,
+                ),
               const _CategoryChips(),
               Expanded(
-                child: _GroupedList(
-                  items: items,
-                  openId: _openId,
+                child: _listOrSearchEmpty(
+                  items,
                   selectable: true,
                   selectedId: selectedId,
-                  onOpenChanged: (id) => setState(() => _openId = id),
                   onTap: (ing) => ref
                       .read(selectedIngredientIdProvider.notifier)
                       .set(ing.id),
@@ -309,6 +347,98 @@ class _HeaderBtn extends StatelessWidget {
             border: Border.all(color: AppColors.line, width: 1.5),
           ),
           child: Icon(icon, size: 21, color: AppColors.ink),
+        ),
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// 検索欄（モバイル）
+// ─────────────────────────────────────────────────────────────
+class _SearchField extends StatefulWidget {
+  const _SearchField({
+    required this.initial,
+    required this.onChanged,
+    required this.onClose,
+  });
+
+  final String initial;
+  final ValueChanged<String> onChanged;
+  final VoidCallback onClose;
+
+  @override
+  State<_SearchField> createState() => _SearchFieldState();
+}
+
+class _SearchFieldState extends State<_SearchField> {
+  late final TextEditingController _controller =
+      TextEditingController(text: widget.initial);
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 2, 16, 6),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _controller,
+              autofocus: true,
+              onChanged: widget.onChanged,
+              textInputAction: TextInputAction.search,
+              style: const TextStyle(
+                  fontSize: 15, fontWeight: FontWeight.w600),
+              decoration: InputDecoration(
+                hintText: l10n.inventorySearchHint,
+                prefixIcon: const Icon(Icons.search,
+                    size: 20, color: AppColors.sub),
+                isDense: true,
+                filled: true,
+                fillColor: AppColors.card,
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: const BorderSide(color: AppColors.line, width: 1.5),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: const BorderSide(color: AppColors.line, width: 1.5),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 9),
+          _HeaderBtn(icon: Icons.close, onTap: widget.onClose),
+        ],
+      ),
+    );
+  }
+}
+
+class _SearchEmpty extends StatelessWidget {
+  const _SearchEmpty({required this.query});
+  final String query;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(40),
+        child: Text(
+          l10n.inventorySearchEmpty(query),
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+              color: AppColors.faint, fontWeight: FontWeight.w600),
         ),
       ),
     );

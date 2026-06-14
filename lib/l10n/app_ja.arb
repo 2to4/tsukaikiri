@@ -141,6 +141,11 @@
   "desktopGroupWeek": "今週のうちに",
   "desktopGroupPlenty": "まだ余裕",
   "desktopSearchPlaceholder": "食材を検索…",
+  "inventorySearchHint": "食材を検索…",
+  "inventorySearchEmpty": "「{query}」に一致する食材はありません",
+  "@inventorySearchEmpty": {
+    "placeholders": { "query": { "type": "String" } }
+  },
   "desktopNoResults": "該当する食材がありません",
   "desktopSelectPrompt": "食材を選択してください",
   "desktopSelectBody": "一覧から食材をクリックすると\n詳細・編集できます",

@@ -148,6 +148,11 @@
   "desktopGroupWeek": "Esta semana",
   "desktopGroupPlenty": "Tiempo de sobra",
   "desktopSearchPlaceholder": "Buscar ingredientes…",
+  "inventorySearchHint": "Buscar artículos…",
+  "inventorySearchEmpty": "Ningún artículo coincide con «{query}»",
+  "@inventorySearchEmpty": {
+    "placeholders": { "query": { "type": "String" } }
+  },
   "desktopNoResults": "No hay ingredientes que coincidan",
   "desktopSelectPrompt": "Selecciona un ingrediente",
   "desktopSelectBody": "Haz clic en un elemento de la lista para ver los detalles y editar.",
