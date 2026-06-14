@@ -671,3 +671,8 @@
 - B モバイル設定 comingSoon: ほぼ済み（Help/Onboarding/About 配線済み・残 Buy Me a Coffee は URL 待ち）。
 - C モバイル在庫検索: TDD で実装。検索アイコン→_SearchField（autofocus・×解除）、名前部分一致で絞り込み、該当なしは _SearchEmpty。ローカル状態（provider 不要）。l10n inventorySearchHint/Empty 追加。テスト +3。analyze 0 / 全254緑。
 - キリのいいC完了でコードレビューへ。D（テスト拡充・任意）E（Android骨組み・価値小）は未着手。
+
+### D / E 処置（2026-06-14）
+- D: 既存カバレッジ厚いため穴のみ補填。backup_codec に「未知 selectedProvider → gemini フォールバック」テスト追加（c9235b4 回帰防止）。
+- E: shopping/sync provider が常に macOS/iOS 実装を返していた（Android で MissingPluginException）→ defaultTargetPlatform で GoogleTasks/GoogleDrive スケルトンに切替。Drive isAvailable=false で縮退、Tasks は UnimplementedError（controller が catch）。実 Google 連携は OAuth 待ちで TODO 明記。テスト +5。
+- 既存 8 テストは該当 provider を override 済みのため platform 分岐の影響なし。全260緑/analyze 0。

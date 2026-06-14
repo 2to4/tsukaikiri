@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../features/inventory/data/inventory_repository.dart';
@@ -7,9 +8,11 @@ import '../features/recipe/service/recipe_provider.dart';
 import '../features/recipe/service/recipe_provider_factory.dart';
 import '../features/settings/data/settings_repository.dart';
 import '../features/settings/domain/user_settings.dart';
+import '../features/shopping/service/google_tasks_shopping_list_service.dart';
 import '../features/shopping/service/reminders_shopping_list_service.dart';
 import '../features/shopping/service/shopping_list_service.dart';
 import '../features/sync/presentation/sync_controller.dart';
+import '../features/sync/service/google_drive_sync_service.dart';
 import '../features/sync/service/icloud_sync_service.dart';
 import '../features/sync/service/sync_service.dart';
 import 'db/app_database.dart';
@@ -49,16 +52,26 @@ final shelfLifeTableProvider = Provider<ShelfLifeTable>(
   (_) => ShelfLifeTable.empty(),
 );
 
-/// 買い物リストサービス（macOS / iOS は EventKit リマインダー）。
-/// Android 版（Google Tasks）はプラットフォームに応じて差し替える。
-final shoppingListServiceProvider = Provider<ShoppingListService>(
-  (_) => RemindersShoppingListService(),
-);
+/// 買い物リストサービス。
+/// macOS / iOS = EventKit リマインダー、Android = Google Tasks（現状は未実装スケルトン）。
+/// Android 専用端末で macOS/iOS 用チャネルを呼んで MissingPluginException にならないよう
+/// プラットフォームで実装を切り替える。
+final shoppingListServiceProvider = Provider<ShoppingListService>((_) {
+  if (defaultTargetPlatform == TargetPlatform.android) {
+    return const GoogleTasksShoppingListService();
+  }
+  return RemindersShoppingListService();
+});
 
-/// データ同期サービス（iCloud ubiquity コンテナ実装）。
-final syncServiceProvider = Provider<SyncService>(
-  (_) => const ICloudSyncService(),
-);
+/// データ同期サービス。
+/// macOS / iOS = iCloud、Android = Google Drive App Data（現状は未実装スケルトン・
+/// isAvailable=false で同期 UI を無効表示に縮退）。
+final syncServiceProvider = Provider<SyncService>((_) {
+  if (defaultTargetPlatform == TargetPlatform.android) {
+    return const GoogleDriveSyncService();
+  }
+  return const ICloudSyncService();
+});
 
 /// バックアップ / 復元操作のコントローラ（Riverpod v3 Notifier）。
 final syncControllerProvider = NotifierProvider<SyncController, SyncState>(

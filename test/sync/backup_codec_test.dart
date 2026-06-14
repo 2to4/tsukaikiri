@@ -53,6 +53,30 @@ void main() {
     expect(data.settingsCompanion.selectedProvider.value, 'gemini');
   });
 
+  test('1b. 未知/旧版の selectedProvider は gemini にフォールバックして復元する', () {
+    // 旧版・破損バックアップ由来の未知 providerId を復元してもクラッシュせず、
+    // 既知のプロバイダ（gemini）に縮退する（restore 耐性・c9235b4 の回帰防止）。
+    const settings = AppSettings(
+      id: 0,
+      localePref: 'ja',
+      shoppingListId: null,
+      shoppingListName: null,
+      selectedProvider: 'legacy_unknown_xyz',
+      modelOverridesJson: '{}',
+      syncEnabled: false,
+      lastSyncedAt: null,
+      appliancesJson: '[]',
+      cameraPreserveState: true,
+      syncKeepOnFailure: true,
+    );
+    final json = BackupCodec.encodeBackup(
+      ingredients: [sampleIngredient()],
+      settings: settings,
+    );
+    final data = BackupCodec.decodeBackup(json);
+    expect(data.settingsCompanion.selectedProvider.value, 'gemini');
+  });
+
   test('2. API キー非含有（encode 結果に "api_key" が含まれない）', () {
     final json = BackupCodec.encodeBackup(
       ingredients: [sampleIngredient()],
